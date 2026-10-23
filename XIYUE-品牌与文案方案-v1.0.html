@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>XIYUE 品牌与文案方案 v1.0</title>
+<style>
+  :root{
+    --ink:#0f172a; --ink-2:#344054; --ink-3:#667085; --ink-4:#98a2b3;
+    --line:#e4e7ec; --line-2:#f2f4f7; --bg:#ffffff; --bg-2:#f9fafb;
+    --ok:#067647; --ok-bg:#ecfdf3;
+    --warn:#b54708; --warn-bg:#fffaeb;
+    --todo:#6941c6; --todo-bg:#f4f3ff;
+    --accent:#1d4ed8;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg-2); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Inter,sans-serif;
+    font-size:15px; line-height:1.75; letter-spacing:.01em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:980px; margin:0 auto; padding:48px 28px 80px}
+  .sheet{background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:56px 56px 64px}
+  @media(max-width:760px){ .page{padding:16px 12px 40px} .sheet{padding:28px 20px 40px} }
+
+  .eyebrow{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-4); font-weight:600}
+  h1{font-size:36px; line-height:1.2; letter-spacing:-.025em; margin:16px 0 10px; font-weight:700}
+  .sub{color:var(--ink-3); font-size:15px; margin:0; max-width:640px}
+
+  .brandmark{
+    display:flex; align-items:baseline; gap:14px; padding-bottom:22px;
+    border-bottom:2px solid var(--ink); margin-bottom:6px;
+  }
+  .brandmark .en{font-size:13px; letter-spacing:.34em; font-weight:700; text-transform:uppercase}
+  .brandmark .cn{font-size:13px; letter-spacing:.18em; color:var(--ink-3)}
+
+  .meta{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin:32px 0 0; border-radius:4px; overflow:hidden}
+  .meta div{background:var(--bg); padding:14px 16px}
+  .meta dt{font-size:11px; color:var(--ink-4); letter-spacing:.08em; text-transform:uppercase; margin:0 0 4px}
+  .meta dd{margin:0; font-size:13px; font-weight:600; color:var(--ink)}
+  @media(max-width:760px){ .meta{grid-template-columns:repeat(2,1fr)} }
+
+  h2{font-size:20px; letter-spacing:-.01em; margin:56px 0 6px; padding-top:24px; border-top:1px solid var(--line); font-weight:700}
+  h2 .n{color:var(--ink-4); font-weight:600; margin-right:10px; font-variant-numeric:tabular-nums}
+  h3{font-size:15.5px; margin:30px 0 4px; font-weight:650}
+  h3 .pg{font-family:"SF Mono",ui-monospace,Menlo,monospace; font-size:11.5px; color:var(--ink-4); font-weight:500; margin-left:8px}
+  h4{font-size:13.5px; margin:22px 0 6px; font-weight:650; color:var(--ink-2); letter-spacing:.02em}
+  p{margin:10px 0; color:var(--ink-2)}
+  ul,ol{margin:10px 0; padding-left:22px; color:var(--ink-2)}
+  li{margin:5px 0}
+  strong{color:var(--ink); font-weight:650}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; background:var(--bg-2); border:1px solid var(--line); padding:1px 5px; border-radius:3px; color:#0b1220}
+
+  /* copy slots */
+  .slot{border-left:2px solid var(--ink); padding:2px 0 2px 18px; margin:16px 0 18px}
+  .slot .role{font-family:"SF Mono",ui-monospace,Menlo,monospace; font-size:10.5px; letter-spacing:.06em; color:var(--ink-4); text-transform:uppercase; font-weight:600}
+  .slot .hint{font-size:11.5px; color:var(--ink-4); margin-left:10px}
+  .slot .en{font-size:17px; line-height:1.55; color:var(--ink); margin:5px 0 0; letter-spacing:-.005em}
+  .slot .en.big{font-size:26px; line-height:1.35; letter-spacing:-.02em; font-weight:650}
+  .slot .en.mid{font-size:19px; font-weight:600; letter-spacing:-.01em}
+  .slot .en.quote{font-size:15.5px; color:var(--ink-2); font-style:normal}
+  .slot.muted{border-left-color:var(--line)}
+  .slot.muted .en{color:var(--ink-3)}
+
+  .tag{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.05em; padding:1px 6px; border-radius:3px; vertical-align:2px; margin-left:8px; white-space:nowrap}
+  .t-ok{color:var(--ok); background:var(--ok-bg); border:1px solid #abefc6}
+  .t-warn{color:var(--warn); background:var(--warn-bg); border:1px solid #fedf89}
+  .t-todo{color:var(--todo); background:var(--todo-bg); border:1px solid #d9d6fe}
+  .t-mono{color:var(--ink-3); background:var(--bg-2); border:1px solid var(--line)}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px}
+  th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-4); font-weight:600; padding:10px 12px; border-bottom:1px solid var(--line); background:var(--bg-2)}
+  td{padding:11px 12px; border-bottom:1px solid var(--line-2); vertical-align:top; color:var(--ink-2)}
+  tr:last-child td{border-bottom:0}
+  td.en-cell{color:var(--ink); font-weight:500}
+  .cc{font-family:"SF Mono",ui-monospace,Menlo,monospace; font-size:11px; color:var(--ink-4); margin-left:6px; white-space:nowrap}
+  .cc.ok{color:var(--ok)}
+  .cc.warn{color:var(--warn)}
+
+  .callout{border:1px solid var(--line); background:var(--bg-2); border-radius:4px; padding:16px 18px; margin:18px 0; font-size:13.5px; color:var(--ink-2)}
+  .callout b{color:var(--ink)}
+  .callout.warn{background:var(--warn-bg); border-color:#fedf89}
+  .callout.todo{background:var(--todo-bg); border-color:#d9d6fe}
+
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+  @media(max-width:760px){ .cols{grid-template-columns:1fr} }
+  .card{border:1px solid var(--line); border-radius:4px; padding:16px 18px}
+  .card h4{margin-top:0}
+  .card.dont{background:#fffbfa; border-color:#fecdca}
+  .card.do{background:#f6fef9; border-color:#abefc6}
+
+  .swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:16px 0}
+  .sw{border:1px solid var(--line); border-radius:4px; overflow:hidden}
+  .sw .chip{height:52px}
+  .sw .lab{padding:8px 10px; font-size:11px; color:var(--ink-3); line-height:1.5}
+  .sw .lab b{display:block; color:var(--ink); font-size:11.5px; font-weight:600}
+  @media(max-width:760px){ .swatches{grid-template-columns:repeat(2,1fr)} }
+
+  .toc{margin:30px 0 0; border:1px solid var(--line); border-radius:4px; padding:18px 22px; background:var(--bg-2)}
+  .toc ol{columns:2; column-gap:32px; margin:6px 0 0; padding-left:18px; font-size:13.5px}
+  .toc li{margin:3px 0; break-inside:avoid}
+  .toc a{color:var(--ink-2); text-decoration:none}
+  .toc a:hover{color:var(--accent); text-decoration:underline}
+  @media(max-width:760px){ .toc ol{columns:1} }
+
+  footer{margin-top:48px; padding-top:20px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-4)}
+  @media print{
+    body{background:#fff} .page{padding:0} .sheet{border:0; padding:0}
+    h2,h3{page-break-after:avoid} .slot,.callout{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<article class="sheet">
+
+  <div class="brandmark">
+    <span class="en">XIYUE</span>
+    <span class="cn">喜阅</span>
+  </div>
+  <div class="eyebrow" style="margin-top:18px">Brand &amp; Copy Deck · v1.0</div>
+  <h1>品牌规范与全站文案方案</h1>
+  <p class="sub">面向 Creator AI Tools 定位的英文主站文案。可直接交付开发落地，含 SEO 元数据与微文案。</p>
+
+  <dl class="meta">
+    <div><dt>品牌</dt><dd>XIYUE / 喜阅</dd></div>
+    <div><dt>定位</dt><dd>Creator AI Tools</dd></div>
+    <div><dt>语言</dt><dd>英文为主</dd></div>
+    <div><dt>视觉</dt><dd>黑白极简</dd></div>
+  </dl>
+
+  <div class="callout" style="margin-top:28px">
+    <b>使用说明：</b>文中所有英文均为可直接上线的最终文案。<span class="tag t-todo">待确认</span> 标记的内容包含需你方核实的事实性表述（功能能力、价格、集成列表等），其余为基于定位的提案文案。第 9 节汇总了全部待确认项。
+  </div>
+
+  <nav class="toc">
+    <div class="eyebrow">目录</div>
+    <ol>
+      <li><a href="#s1">品牌内核</a></li>
+      <li><a href="#s2">命名与用法规范</a></li>
+      <li><a href="#s3">语调与文案原则</a></li>
+      <li><a href="#s4">视觉基调</a></li>
+      <li><a href="#s5">信息架构与导航</a></li>
+      <li><a href="#s6">首页文案</a></li>
+      <li><a href="#s7">内页文案</a></li>
+      <li><a href="#s8">微文案与状态</a></li>
+      <li><a href="#s9">SEO 元数据</a></li>
+      <li><a href="#s10">待确认清单</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= 1 ================= -->
+  <h2 id="s1"><span class="n">01</span>品牌内核</h2>
+
+  <h3>定位陈述</h3>
+  <div class="slot">
+    <span class="role">Positioning</span><span class="hint">内部使用，不直接上站</span>
+    <p class="en quote">XIYUE makes AI tools for creators — the people who write, shoot, record, and publish. We take the repetitive parts of production off your desk so your hours go to the work that needs a human.</p>
+  </div>
+
+  <h3>一句话介绍</h3>
+  <p>这是品牌最核心的资产，所有对外物料的第一句都应回到它。</p>
+  <div class="slot">
+    <span class="role">One-liner</span><span class="hint">7 词 · 首页主标题同款</span>
+    <p class="en big">AI tools for people who make things.</p>
+  </div>
+  <p><strong>为什么是这句：</strong>"people who make things" 同时覆盖写作、影像、播客、设计等全部创作者类型，不把品牌锁死在单一品类；"make things" 是英文里最朴素的动作词，与"Creator AI Tools"的定位形成一对完整的解释——定位说的是品类，这句话说的是对象。</p>
+
+  <h3>电梯陈述</h3>
+  <div class="slot">
+    <span class="role">Elevator</span><span class="hint">关于页 / 媒体资料 / 应用商店描述</span>
+    <p class="en quote">Most AI tools are built for companies. XIYUE is built for the person doing the work. Draft, edit, translate, and publish from one place — without switching tabs or losing your voice.</p>
+  </div>
+
+  <h3>Tagline 备选</h3>
+  <table>
+    <thead><tr><th style="width:40px">#</th><th style="width:290px">文案</th><th style="width:100px">调性</th><th>适用场景</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="en-cell">AI tools for people who make things.<span class="tag t-ok">推荐</span></td><td>平实、定位直译</td><td>官网主标、全站通用</td></tr>
+      <tr><td>2</td><td class="en-cell">Make more. Grind less.</td><td>锋利、节奏感强</td><td>投放素材、社交简介</td></tr>
+      <tr><td>3</td><td class="en-cell">Keep the craft. Lose the busywork.</td><td>尊重创作、有态度</td><td>品牌片、关于页首屏</td></tr>
+    </tbody>
+  </table>
+  <p><strong>取舍建议：</strong>主标用 1 号保证定位清晰；2 号留给付费投放做 A/B，它的转化潜力更高但品牌感较弱；3 号只做氛围文案，不进主标题——"craft"与"busywork"的对比需要上下文支撑。</p>
+
+  <!-- ================= 2 ================= -->
+  <h2 id="s2"><span class="n">02</span>命名与用法规范</h2>
+
+  <table>
+    <thead><tr><th style="width:170px">场景</th><th style="width:230px">正确写法</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>英文语境</td><td class="en-cell"><code>XIYUE</code></td><td>全大写，作为图形化字标使用，字距建议 +0.3em</td></tr>
+      <tr><td>中文语境</td><td class="en-cell">喜阅</td><td>不加书名号、不加引号</td></tr>
+      <tr><td>首次提及</td><td class="en-cell">XIYUE（喜阅）</td><td>仅在同一页面首次出现时并列，之后只用单一形式</td></tr>
+      <tr><td>正文指代</td><td class="en-cell">XIYUE</td><td>不用 "the XIYUE"、不用 "we at XIYUE" 之外的多余修饰</td></tr>
+      <tr><td>产品线命名</td><td class="en-cell">XIYUE Write / XIYUE Cut</td><td>品牌名 + 动词式功能名，保持前缀一致<span class="tag t-todo">待确认</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="cols">
+    <div class="card do">
+      <h4>✅ 正确</h4>
+      <ul style="margin-bottom:0">
+        <li>XIYUE</li>
+        <li>喜阅</li>
+        <li>XIYUE（喜阅）</li>
+        <li>xiyue.ai</li>
+      </ul>
+    </div>
+    <div class="card dont">
+      <h4>❌ 错误</h4>
+      <ul style="margin-bottom:0">
+        <li>Xiyue / XiYue / xiyue（大小写混用）</li>
+        <li>Xi Yue（拆写）</li>
+        <li>Joy Reading / Happy Read（意译）</li>
+        <li>喜阅科技 / 喜阅AI（自加后缀）</li>
+      </ul>
+    </div>
+  </div>
+
+  <p><strong>关于"喜阅"的英文处理：</strong>不要在英文文案里解释中文含义。"喜阅"在中文语境自带"愉悦地阅读/阅览"的联想，这对内容创作者是加分的；但一旦译成英文就会丢失双关，反而削弱记忆点。英文语境只出现 XIYUE，中文语境只出现喜阅，两者靠视觉一致性（同为字标形态）建立关联。</p>
+
+  <!-- ================= 3 ================= -->
+  <h2 id="s3"><span class="n">03</span>语调与文案原则</h2>
+
+  <p>四条原则，按优先级排列。冲突时上位原则优先。</p>
+
+  <table>
+    <thead><tr><th style="width:150px">原则</th><th style="width:280px">含义</th><th>写法要求</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Plain, not clever</strong></td><td>说人话，不炫技</td><td>一句能说完不用两句；不用双关、不用谐音；每个句子只承载一个信息</td></tr>
+      <tr><td><strong>Show the outcome</strong></td><td>讲结果，不讲技术</td><td>写"省下两小时"，不写"基于多模态大模型"；不提参数量、不提榜单</td></tr>
+      <tr><td><strong>Respect the craft</strong></td><td>AI 是助手，不是替代者</td><td>不说"取代剪辑师"；不说"无需天赋"；主语始终是创作者</td></tr>
+      <tr><td><strong>Quiet confidence</strong></td><td>克制，不喊口号</td><td>不用感叹号；不用"颠覆/革命性/颠覆式"；不用三个形容词堆叠</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Do / Don't 对照</h3>
+  <table>
+    <thead><tr><th style="width:50%">✅ 这样写</th><th>❌ 不要这样写</th></tr></thead>
+    <tbody>
+      <tr><td class="en-cell">Cut a 40-minute interview to 8 minutes by editing the transcript.</td><td style="color:var(--ink-3)">Revolutionary AI-powered video editing suite!!!</td></tr>
+      <tr><td class="en-cell">Free to try. No card.</td><td style="color:var(--ink-3)">Unlock unparalleled creative potential.</td></tr>
+      <tr><td class="en-cell">We're a small team.</td><td style="color:var(--ink-3)">A world-leading AI innovation hub.</td></tr>
+      <tr><td class="en-cell">It takes about 30 seconds.</td><td style="color:var(--ink-3)">Lightning-fast, blazing performance.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>一条硬规则：</b>任何一句话删掉"AI"二字后如果仍然成立，就说明它没有说清产品在做什么，需要重写。这条规则能过滤掉 80% 的空话。
+  </div>
+
+  <!-- ================= 4 ================= -->
+  <h2 id="s4"><span class="n">04</span>视觉基调</h2>
+
+  <p>沿用项目现有的黑白极简体系——它已经具备完整的 Tailwind v4 设计令牌与组件实现，无需重建。以下是需要锁定的规范值。</p>
+
+  <h3>色板</h3>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0f172a"></div><div class="lab"><b>Ink</b>#0F172A<br>标题、主按钮底</div></div>
+    <div class="sw"><div class="chip" style="background:#344054"></div><div class="lab"><b>Body</b>#344054<br>正文</div></div>
+    <div class="sw"><div class="chip" style="background:#667085"></div><div class="lab"><b>Muted</b>#667085<br>辅助说明</div></div>
+    <div class="sw"><div class="chip" style="background:#e4e7ec"></div><div class="lab"><b>Line</b>#E4E7EC<br>描边、分隔</div></div>
+    <div class="sw"><div class="chip" style="background:#f9fafb"></div><div class="lab"><b>Surface</b>#F9FAFB<br>区块底色</div></div>
+  </div>
+
+  <p><strong>色彩纪律：</strong>不引入品牌彩色。颜色只用于状态——成功 <code>#067647</code>、错误 <code>#B42318</code>、聚焦环 <code>#1D4ED8</code>。任何装饰性用色都会削弱"工具"的可信感。</p>
+  <p style="font-size:13.5px;color:var(--ink-3)"><strong>一处例外建议：</strong>若未来需要品牌识别度，最克制的做法是在 favicon 与 OG 图中使用单一高饱和色块（如纯黑底 + 白字），而非在网页 UI 中铺色。</p>
+
+  <h3>字体与字阶</h3>
+  <table>
+    <thead><tr><th style="width:150px">用途</th><th style="width:230px">字体</th><th>规格</th></tr></thead>
+    <tbody>
+      <tr><td>标题 Display</td><td>Bricolage Grotesque Variable</td><td>字距 -0.02em，行高 1.15，字重 600–700</td></tr>
+      <tr><td>正文 Body</td><td>Inter Variable</td><td>16px / 行高 1.7，字重 400</td></tr>
+      <tr><td>等宽 Mono</td><td>系统等宽栈</td><td>标签、代码、数据，12.5px</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13.5px">字阶：72 / 56 / 40 / 28 / 20 / 16 / 14。首页 H1 取 56–72，内页 H1 取 40，区块 H2 取 28。不超过六级，避免层级失控。</p>
+
+  <h3>组件调性</h3>
+  <ul>
+    <li><strong>圆角</strong> 4px（现有 <code>rounded-sm</code>），不用 8px 以上的大圆角——圆角越大越"消费级"，越小越"专业工具"。</li>
+    <li><strong>描边</strong> 1px <code>#E4E7EC</code>，不做阴影层级。需要强调时用位移（hover <code>-translate-y-1</code>）而非投影。</li>
+    <li><strong>按钮</strong> 仅两种：黑底白字（主）、白底黑框（次）。无渐变、无投影、无图标浮层。</li>
+    <li><strong>留白</strong> 区块垂直间距 80–120px，宁大勿小。极简体系里，留白就是质感的来源。</li>
+  </ul>
+
+  <!-- ================= 5 ================= -->
+  <h2 id="s5"><span class="n">05</span>信息架构与导航</h2>
+
+  <h3>导航结构</h3>
+  <p>现有导航含 "Features" 下拉（内含 Action / Another action / Dropdown Submenu / 404 Page 四个占位项），需替换为真实的 "Product" 入口。</p>
+
+  <table>
+    <thead><tr><th style="width:180px">位置</th><th style="width:200px">标签</th><th>目标</th></tr></thead>
+    <tbody>
+      <tr><td>主导航 1</td><td class="en-cell">Product</td><td><code>/</code> 或独立产品页；下拉项见下</td></tr>
+      <tr><td>主导航 2</td><td class="en-cell">Pricing</td><td><code>/pricing</code></td></tr>
+      <tr><td>主导航 3</td><td class="en-cell">About</td><td><code>/about</code></td></tr>
+      <tr><td>主导航 4</td><td class="en-cell">Blog</td><td><code>/blog</code></td></tr>
+      <tr><td>主导航 5</td><td class="en-cell">Contact</td><td><code>/contact</code></td></tr>
+      <tr><td>右侧主 CTA</td><td class="en-cell">Start free</td><td>注册流程</td></tr>
+      <tr><td>右侧次链接</td><td class="en-cell">Log in</td><td>登录</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>下拉菜单建议（4 项，对齐 6 大功能）：</strong></p>
+  <div class="slot muted">
+    <span class="role">Nav · Dropdown</span>
+    <p class="en">Write · Visuals · Video · Voice</p>
+  </div>
+  <p style="font-size:13.5px">用四个动词做下拉项，比 "Features / Solutions / Use Cases" 更直接，也天然复用了首页的功能命名，减少用户的理解成本。<span class="tag t-todo">待确认</span> 需与实际产品模块一致。</p>
+
+  <p><strong>移除项：</strong>"Pro Version" 外链必须删除（指向模板作者的付费版，属品牌泄漏）；页脚 "Made by Web3Templates" 一并移除。</p>
+
+  <h3>页面清单</h3>
+  <table>
+    <thead><tr><th style="width:130px">路由</th><th style="width:180px">页面</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td>Home</td><td>需重写全部文案</td></tr>
+      <tr><td><code>/about</code></td><td>About</td><td>需重写，团队信息待补</td></tr>
+      <tr><td><code>/pricing</code></td><td>Pricing</td><td>需重写，价格待确认</td></tr>
+      <tr><td><code>/blog</code></td><td>Blog</td><td>需重写标题，正文待产出</td></tr>
+      <tr><td><code>/blog/[slug]</code></td><td>Post</td><td>结构保留，样式微调</td></tr>
+      <tr><td><code>/contact</code></td><td>Contact</td><td>需重写，联系方式待补</td></tr>
+      <tr><td><code>/404</code></td><td>Not Found</td><td>需重写</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ================= 6 ================= -->
+  <h2 id="s6"><span class="n">06</span>首页文案</h2>
+
+  <h3>Hero<span class="pg">src/components/hero.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">Eyebrow</span><span class="hint">主标题上方小标签</span>
+    <p class="en">CREATOR AI TOOLS</p>
+  </div>
+
+  <div class="slot">
+    <span class="role">H1</span><span class="hint">7 词 · 两行内可容纳</span>
+    <p class="en big">AI tools for people who make things.</p>
+  </div>
+
+  <div class="slot">
+    <span class="role">Subhead</span><span class="hint">约 30 词 · 解释"做了什么"</span>
+    <p class="en">XIYUE handles the repetitive parts of creation — drafting, editing, translating, resizing, voicing — so your hours go to the work that actually needs you.</p>
+  </div>
+
+  <div class="slot">
+    <span class="role">CTA · Primary</span>
+    <p class="en mid">Start free</p>
+  </div>
+  <div class="slot">
+    <span class="role">CTA · Secondary</span>
+    <p class="en mid">See what's inside</p>
+  </div>
+
+  <div class="callout">
+    <b>两个 CTA 的分工：</b>"Start free" 是唯一转化动作，全站重复出现；"See what's inside" 是给尚未建立信任的访客的软出口，指向首页下方的功能区块（锚点），不要做成第二个注册按钮。原模板的 "Download for Free" + "GitHub Repo" 组合属于开发者受众，与创作者定位不符，需整体替换。
+  </div>
+
+  <h3>功能区块<span class="pg">src/components/features.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H2</span>
+    <p class="en big">Everything around the work, handled.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Subhead</span>
+    <p class="en">Six tools that cover the parts of publishing nobody enjoys. One account, one library, no tab-hopping.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:40px">#</th><th style="width:200px">标题</th><th>描述</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="en-cell">Write without the blank page<span class="tag t-todo">待确认</span></td><td>Draft scripts, captions, and long-form posts from a single brief. Keep your voice; skip the first-hour stall.</td></tr>
+      <tr><td>2</td><td class="en-cell">Visuals that fit the brief<span class="tag t-todo">待确认</span></td><td>Generate and resize images for every channel from one prompt. No more exporting six versions of the same post.</td></tr>
+      <tr><td>3</td><td class="en-cell">Cut video by text<span class="tag t-todo">待确认</span></td><td>Edit footage by editing the transcript. Remove filler words, tighten pacing, export in one pass.</td></tr>
+      <tr><td>4</td><td class="en-cell">Voice in any language<span class="tag t-todo">待确认</span></td><td>Voiceover and subtitles that stay in sync with your cut, across the languages your audience actually speaks.</td></tr>
+      <tr><td>5</td><td class="en-cell">One library, every asset</td><td>Every prompt, draft, and export in one searchable place. Nothing gets lost between tools.</td></tr>
+      <tr><td>6</td><td class="en-cell">Built for teams of one</td><td>No seats to buy, no onboarding call. Open the tab and ship.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>重要：</b>上表 1–4 项的具体能力（"edit by transcript"、"voiceover in any language"）是基于 Creator AI Tools 定位推导的<b>提案</b>，尚未与你方实际产品能力核对。这几句描述越具体，转化越好，但虚假描述的反噬也越强——上线前必须逐条确认，能力不成立就整条替换，不要改写措辞硬凑。
+  </div>
+
+  <h3>集成 / 生态条<span class="pg">src/components/logos.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H2</span>
+    <p class="en mid">Fits the stack you already use.</p>
+  </div>
+  <p style="font-size:13.5px">原模板此处为 "Works with your technologies" 并展示 React / Svelte / Astro / Tailwind 等前端框架图标——这是面向开发者的表达，与创作者受众完全错位。</p>
+
+  <p><strong>建议展示对象：</strong>创作工具而非框架。若确无官方集成，<b>不要放 logo 墙</b>——暗示未实现的集成会直接损害信任。可退化为一句能力陈述：</p>
+  <div class="slot muted">
+    <span class="role">Alternative</span><span class="hint">无真实集成时的替代方案</span>
+    <p class="en quote">Export anywhere. Standard formats, no lock-in — your files work in the tools you already have.</p>
+  </div>
+
+  <h3>底部 CTA 区块<span class="pg">src/components/cta.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H2</span>
+    <p class="en big">Start with one project.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Subhead</span>
+    <p class="en">Free to try. No card, no call, no onboarding deck.</p>
+  </div>
+  <div class="slot">
+    <span class="role">CTA</span>
+    <p class="en mid">Start free</p>
+  </div>
+
+  <p style="font-size:13.5px"><strong>为什么是"one project"：</strong>降低启动门槛。创作者对"注册一个平台"的抵触远高于"试一个具体任务"，把动作缩小到一个项目，转化阻力最小。</p>
+
+  <!-- ================= 7 ================= -->
+  <h2 id="s7"><span class="n">07</span>内页文案</h2>
+
+  <h3>About<span class="pg">src/pages/about.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H1</span>
+    <p class="en big">Built for the people who ship.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Section desc</span>
+    <p class="en">A small team of creators and engineers, making the tools we wanted for ourselves.</p>
+  </div>
+  <div class="slot">
+    <span class="role">H2</span>
+    <p class="en mid">We got tired of the busywork.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Body · para 1</span>
+    <p class="en">Every tool we tried was built for a company buying software, not for a person making something on a Tuesday night. They sold seats, dashboards, and workflows. None of it helped with the actual bottleneck: the hours spent resizing, re-cutting, re-writing, re-uploading.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Body · para 2</span>
+    <p class="en">So we built the opposite. Tools that do one job, do it well, and get out of the way. No dashboards to learn. No output that sounds like a robot wrote it. Just the repetitive parts, handled.</p>
+  </div>
+
+  <p><strong>三条价值观</strong>（关于页可用三栏卡片呈现）：</p>
+  <table>
+    <thead><tr><th style="width:170px">标题</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td class="en-cell">Craft first</td><td>The output has to be good enough to publish. We'd rather ship three things that work than thirty that almost do.</td></tr>
+      <tr><td class="en-cell">Plain tools</td><td>If it needs a tutorial, it's not finished. Every feature has to be obvious by the second use.</td></tr>
+      <tr><td class="en-cell">Your work stays yours</td><td>You keep full rights to everything you make. We don't train on your projects.<span class="tag t-todo">待确认</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>第三项是法律承诺，不是文案：</b>"We don't train on your projects" 涉及数据处理政策，必须与真实隐私条款一致。若当前不具备该条件，改为 "You keep full rights to everything you make." 并删去后半句。
+  </div>
+
+  <p style="font-size:13.5px"><strong>团队区块：</strong>现有 3 名成员（Janette Lynch / Marcell Ziemann / Robert Palmer）为模板虚构数据，需替换为真实成员或整块隐藏。若团队规模小于 3 人，建议改为一段文字介绍 + 创始人单人照片，比强行凑三人更可信。</p>
+
+  <h3>Pricing<span class="pg">src/pages/pricing.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H1</span>
+    <p class="en big">Pricing</p>
+  </div>
+  <div class="slot">
+    <span class="role">Section desc</span>
+    <p class="en">Simple pricing. No seats to count, no annual lock-in.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:110px">档位</th><th style="width:100px">价格</th><th style="width:170px">副标</th><th>包含项</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="en-cell">Free</td>
+        <td class="en-cell">$0</td>
+        <td>For trying things out</td>
+        <td>1 project · 20 generations / month · Watermark on exports · Community support</td>
+      </tr>
+      <tr>
+        <td class="en-cell">Creator<span class="tag t-ok">推荐主推</span></td>
+        <td class="en-cell">$19/mo<br><span style="font-size:12px;color:var(--ink-3)">$16 billed yearly</span></td>
+        <td>For people who publish every week</td>
+        <td>Unlimited projects · 1,000 generations / month · No watermark · Full export formats · Priority support</td>
+      </tr>
+      <tr>
+        <td class="en-cell">Studio</td>
+        <td class="en-cell">Custom</td>
+        <td>For teams with a pipeline</td>
+        <td>Everything in Creator · Shared library · Up to 10 members · SSO · Dedicated contact</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>按钮文案：</strong>Free → <span class="en-cell">Start free</span> ｜ Creator → <span class="en-cell">Start free</span> ｜ Studio → <span class="en-cell">Talk to us</span></p>
+  <p><strong>价格页脚注：</strong><span class="en-cell">Prices in USD. Cancel anytime.</span><span class="tag t-todo">待确认</span></p>
+
+  <div class="callout warn">
+    <b>价格与额度全部为提案：</b>三档命名（Free / Creator / Studio）、$19 与 $16 的价格、1,000 次生成额度均为占位建议，用于验证信息层级与文案长度。真实定价确定后需同步核对：① 功能差异是否足够支撑升级动机；② 中间档的 "推荐" 标识是否与实际主推一致。原模板的 "Personal / Startup / Enterprise" 命名面向 B 端 SaaS，与创作者受众不符。
+  </div>
+
+  <h3>Blog<span class="pg">src/pages/blog.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H1</span>
+    <p class="en big">Notes on making things</p>
+  </div>
+  <div class="slot">
+    <span class="role">Section desc</span>
+    <p class="en">Process notes, tool teardowns, and the occasional post-mortem — from our team and the creators we work with.</p>
+  </div>
+  <p style="font-size:13.5px">保留 "Blog" 作为导航标签（用户预期明确），但页面 H1 用更具品牌感的长标题。现有 4 篇 Lorem ipsum 文章需全部替换；<code>snippet</code> 字段已在 schema 中定义但从未渲染，建议在列表卡片中启用，作为两行摘要。</p>
+
+  <h3>Contact<span class="pg">src/pages/contact.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H1</span>
+    <p class="en big">Contact</p>
+  </div>
+  <div class="slot">
+    <span class="role">Section desc</span>
+    <p class="en">Questions, bugs, or a project you want to talk through — we read everything.</p>
+  </div>
+  <div class="slot">
+    <span class="role">H2 · 左栏</span>
+    <p class="en mid">Talk to a human.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Body</span>
+    <p class="en">No ticket queue, no chatbot loop. Send a note and one of us will reply — usually within two business days.</p>
+  </div>
+
+  <p><strong>表单字段标签</strong>（现有表单仅有 placeholder，无 label，需补）：</p>
+  <table>
+    <thead><tr><th style="width:170px">字段</th><th style="width:230px">Label</th><th>Placeholder</th></tr></thead>
+    <tbody>
+      <tr><td>姓名</td><td class="en-cell">Full name</td><td class="en-cell">Jane Chen</td></tr>
+      <tr><td>邮箱</td><td class="en-cell">Email</td><td class="en-cell">you@studio.com</td></tr>
+      <tr><td>留言</td><td class="en-cell">What are you working on?</td><td class="en-cell">A rough idea is enough.</td></tr>
+    </tbody>
+  </table>
+  <p><strong>提交按钮：</strong><span class="en-cell">Send message</span></p>
+  <p style="font-size:13.5px">原模板的联系方式（"1734 Sanfransico, CA 93063" 地址拼写错误且邮编不符、"hello@astroshipstarter.com"、"+1 (987) 4587 899"）需全部替换为真实信息，或整块删除只保留表单。</p>
+
+  <h3>404<span class="pg">src/pages/404.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">H1</span>
+    <p class="en big">404</p>
+  </div>
+  <div class="slot">
+    <span class="role">Message</span>
+    <p class="en mid">This page took a different path.</p>
+  </div>
+  <div class="slot">
+    <span class="role">Body</span>
+    <p class="en">The link may be out of date, or the page moved. Head back home, or tell us what you were looking for.</p>
+  </div>
+  <div class="slot">
+    <span class="role">CTA</span>
+    <p class="en mid">← Back to home</p>
+  </div>
+
+  <h3>Footer<span class="pg">src/components/footer.astro</span></h3>
+
+  <div class="slot">
+    <span class="role">Tagline</span>
+    <p class="en quote">AI tools for people who make things.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:140px">栏位</th><th>链接</th></tr></thead>
+    <tbody>
+      <tr><td>Product</td><td>Tools · Pricing · Changelog</td></tr>
+      <tr><td>Company</td><td>About · Blog · Contact</td></tr>
+      <tr><td>Legal</td><td>Privacy · Terms</td></tr>
+    </tbody>
+  </table>
+
+  <div class="slot">
+    <span class="role">Copyright</span>
+    <p class="en">© 2026 XIYUE. All rights reserved.</p>
+  </div>
+  <p style="font-size:13.5px">删除模板反链 "Made by Web3Templates"。注意：该反链是模板作者在源码注释中的请求（非 GPL 强制条款），但保留会构成品牌泄漏；若出于道义考量需保留，可降级为一行极小的 "Built with Astro" 并置于版权行末尾。</p>
+
+  <!-- ================= 8 ================= -->
+  <h2 id="s8"><span class="n">08</span>微文案与状态</h2>
+
+  <p>微文案是极简设计中最容易被忽略、却最影响可信度的部分。以下是需替换的全部状态文案。</p>
+
+  <table>
+    <thead><tr><th style="width:170px">场景</th><th style="width:290px">文案</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>表单 · 提交中</td><td class="en-cell">Sending…</td><td>按钮同时置为 disabled，避免重复提交</td></tr>
+      <tr><td>表单 · 成功</td><td class="en-cell">Got it — we'll reply within two business days.</td><td>给出明确预期，不用 "Thank you!" 这类空话</td></tr>
+      <tr><td>表单 · 失败</td><td class="en-cell">That didn't go through. Email hello@xiyue.ai and we'll pick it up there.</td><td>必须给兜底通道，否则线索彻底丢失</td></tr>
+      <tr><td>校验 · 姓名空</td><td class="en-cell">Please add your name.</td><td>—</td></tr>
+      <tr><td>校验 · 邮箱空</td><td class="en-cell">We need an email to reply to.</td><td>说明"为什么需要"，而非只报错</td></tr>
+      <tr><td>校验 · 邮箱格式</td><td class="en-cell">That email doesn't look right.</td><td>—</td></tr>
+      <tr><td>校验 · 留言空</td><td class="en-cell">Add a message so we know what you need.</td><td>—</td></tr>
+      <tr><td>博客 · 空状态</td><td class="en-cell">Nothing published yet. Check back soon.</td><td>当前模板无空状态处理</td></tr>
+      <tr><td>按钮 · 加载</td><td class="en-cell">Sending…</td><td>替换文字而非加 spinner，减少布局跳动</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>一个必须修的实现细节：</strong>现有表单脚本在提交 5 秒后执行 <code>result.style.display = "none"</code>，成功提示同样会被隐藏。改文案的同时必须改为只隐藏错误态，或延长至 15 秒并保留成功态常驻。</p>
+
+  <!-- ================= 9 ================= -->
+  <h2 id="s9"><span class="n">09</span>SEO 元数据</h2>
+
+  <p>标题控制在 60 字符内、描述 155 字符内，符合搜索结果截断规则。当前项目所有页面共用一条硬编码描述，需按页拆分。</p>
+
+  <table>
+    <thead><tr><th style="width:110px">页面</th><th style="width:46%">Title</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Home</td>
+        <td class="copy" data-limit="60">XIYUE — Creator AI Tools<span class="cc ok">24/60</span></td>
+        <td class="copy" data-limit="155">XIYUE makes AI tools for creators: draft scripts, edit video by transcript, generate visuals, and publish from one place. Free to try, no card.<span class="cc ok">143/155</span></td>
+      </tr>
+      <tr>
+        <td>About</td>
+        <td class="copy" data-limit="60">About — XIYUE<span class="cc ok">13/60</span></td>
+        <td class="copy" data-limit="155">XIYUE is a small team of creators and engineers building AI tools for the people who make things. Here's what we believe.<span class="cc ok">121/155</span></td>
+      </tr>
+      <tr>
+        <td>Pricing</td>
+        <td class="copy" data-limit="60">Pricing — XIYUE<span class="cc ok">15/60</span></td>
+        <td class="copy" data-limit="155">Simple pricing for creators. Start free, upgrade when you publish every week. No seats to count, no annual lock-in.<span class="cc ok">115/155</span></td>
+      </tr>
+      <tr>
+        <td>Blog</td>
+        <td class="copy" data-limit="60">Notes on making things — XIYUE<span class="cc ok">30/60</span></td>
+        <td class="copy" data-limit="155">Process notes, tool teardowns, and the occasional post-mortem — from the XIYUE team and the creators we build for. Practical, not promotional.<span class="cc ok">142/155</span></td>
+      </tr>
+      <tr>
+        <td>Contact</td>
+        <td class="copy" data-limit="60">Contact — XIYUE<span class="cc ok">15/60</span></td>
+        <td class="copy" data-limit="155">Questions, bugs, or a project to talk through. Send a note and a human from XIYUE will reply within two business days.<span class="cc ok">118/155</span></td>
+      </tr>
+      <tr>
+        <td>Post</td>
+        <td class="copy" data-limit="60">{post title} — XIYUE<span class="cc ok">20/60</span></td>
+        <td class="copy" data-limit="155">由 frontmatter 的 snippet 字段提供，需控制在 155 字符内。<span class="cc ok">42/155</span></td>
+      </tr>
+      <tr>
+        <td>404</td>
+        <td class="copy" data-limit="60">Page not found — XIYUE<span class="cc ok">22/60</span></td>
+        <td class="copy" data-limit="155">This page doesn't exist. Head back to XIYUE to find AI tools for creators.<span class="cc ok">74/155</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Open Graph 规范：</strong>og:title 应随页面变化（当前硬编码为模板标题）；og:description 复用上表 description；og:image 统一为 1200×630，黑底白字品牌图；博客详情页需补 <code>og:type=article</code> 与 <code>article:published_time</code>。</p>
+  <p><strong>Twitter Card：</strong>当前仅配置 <code>creator: "@surjithctly"</code>（模板作者账号），必须替换为你方真实账号，否则社交分享会 @ 到无关的人。</p>
+
+  <!-- ================= 10 ================= -->
+  <h2 id="s10"><span class="n">10</span>待确认清单</h2>
+
+  <p>以下 9 项需要你方提供或确认。按对上线的影响排序，前 4 项为阻断级。</p>
+
+  <table>
+    <thead><tr><th style="width:50px">#</th><th style="width:210px">事项</th><th style="width:90px">影响</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>真实产品能力</strong></td><td><span class="tag t-warn">阻断</span></td><td>首页 6 个功能模块中 4 项为推导提案，需与实际能力逐条核对；不成立的整条替换，不要改措辞硬凑</td></tr>
+      <tr><td>2</td><td><strong>生产域名</strong></td><td><span class="tag t-warn">阻断</span></td><td><code>astro.config.mjs</code> 的 <code>site</code> 与 <code>robots.txt</code> 均需填写，当前指向模板官方域名</td></tr>
+      <tr><td>3</td><td><strong>定价与额度</strong></td><td><span class="tag t-warn">阻断</span></td><td>三档命名、$19/$16 价格、生成额度均为占位</td></tr>
+      <tr><td>4</td><td><strong>联系邮箱与表单密钥</strong></td><td><span class="tag t-warn">阻断</span></td><td>需真实邮箱用于失败兜底；Web3Forms access_key 当前为占位符，表单必然失败</td></tr>
+      <tr><td>5</td><td>团队信息</td><td><span class="tag t-todo">高</span></td><td>现有 3 名成员为虚构，需真实姓名/职位/照片，或整块隐藏</td></tr>
+      <tr><td>6</td><td>社交账号</td><td><span class="tag t-todo">高</span></td><td>Twitter/X handle 用于 <code>twitter:creator</code>，当前指向模板作者</td></tr>
+      <tr><td>7</td><td>数据处理承诺</td><td><span class="tag t-todo">中</span></td><td>"We don't train on your projects" 是法律承诺，需与隐私条款一致</td></tr>
+      <tr><td>8</td><td>真实集成列表</td><td><span class="tag t-todo">中</span></td><td>决定"生态条"是放 logo 墙还是退化为能力陈述</td></tr>
+      <tr><td>9</td><td>Logo 形态</td><td><span class="tag t-todo">低</span></td><td>当前为纯文字标（XIYUE 全大写 + 0.3em 字距），是否需要图形标</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>建议的推进顺序：</b>先确认 1–4 项（这四项不解决，文案无法定稿）；确认后我用 1 个工作日把全站文案与品牌落地到代码，同时修复审查报告中的 P0/P1 机械性问题（站点域名、表单密钥、草稿过滤、meta 拆分、页脚反链）。团队信息、社交账号、集成列表可延后补齐，不阻塞上线。
+  </div>
+
+  <footer>
+    XIYUE 品牌与文案方案 v1.0 · 2026-10-23 · 基于「英文为主 + 黑白极简 + Creator AI Tools」定位撰写
+  </footer>
+
+</article>
+</div>
+</body>
+</html>
