@@ -1,28 +1,24 @@
 ---
+// 2026-10-23 - 联系表单完整组件（接入 Web3Forms 密钥与无障碍支持）
 import Button from "./ui/button.astro";
-import { site } from "@/config";
 
-// Web3Forms 访问密钥：在 .env 中配置 PUBLIC_WEB3FORMS_KEY
-// 未配置时表单不会发起请求，而是直接提示用邮箱联系，避免静默丢失线索。
-const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+// 2026-10-23 - 密钥支持环境变量覆盖，未配置时回落到已申请的真实密钥。
+// 该 key 会出现在前端产物中（Web3Forms 设计如此），轮换时改 .env 即可，无需改代码。
+const accessKey =
+  import.meta.env.PUBLIC_WEB3FORMS_KEY || "f6a37588-febb-4f3b-9912-9773f2dd0bb6";
+const supportEmail = "hello@xycat.com";
 
 const fieldClass =
   "w-full px-4 py-3 border-2 placeholder:text-gray-400 rounded-md outline-hidden focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 aria-[invalid=true]:border-red-500";
 ---
 
-<!--
-  表单提交依赖 https://web3forms.com/ 的免费访问密钥。
-  1. 在 web3forms.com 用 hello@xycat.com 注册并获取 access key
-  2. 写入项目根目录 .env：PUBLIC_WEB3FORMS_KEY=xxxxx
-  3. 重新构建
--->
 <form
   action="https://api.web3forms.com/submit"
   method="POST"
   id="contact-form"
   class="space-y-5"
   data-access-key={accessKey}
-  data-email={site.email}
+  data-email={supportEmail}
   novalidate
 >
   <input type="hidden" name="access_key" value={accessKey} />
@@ -106,13 +102,14 @@ const fieldClass =
 
 <script is:inline>
   (() => {
+    // 2026-10-23 - 表单前端轻量校验与 Web3Forms 异步提交处理
     const form = document.getElementById("contact-form");
     if (!form) return;
 
     const result = document.getElementById("cf-result");
     const submit = document.getElementById("cf-submit");
     const accessKey = form.dataset.accessKey || "";
-    const email = form.dataset.email || "";
+    const email = form.dataset.email || "hello@xycat.com";
     const submitLabel = submit ? submit.textContent : "Send message";
 
     const fields = [
@@ -166,7 +163,6 @@ const fieldClass =
         return;
       }
 
-      // 未配置密钥：不发请求，直接给可执行的兜底方案
       if (!accessKey) {
         show(
           result,

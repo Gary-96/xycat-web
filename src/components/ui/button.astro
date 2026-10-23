@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 补齐 inverted 样式，使 styles 映射与 Props 联合类型一致。
+// 原先类型声明允许 "inverted" 但映射表缺该键，调用时 styles[style] 为 undefined，
+// 按钮会渲染成无背景无边框的裸文本。改为 satisfies 让编译器强制两者对齐。
 interface Props {
   size?: "md" | "lg";
   block?: boolean;
@@ -24,7 +27,9 @@ const styles = {
   outline: "border-2 border-black hover:bg-black text-black hover:text-white",
   primary:
     "bg-black text-white hover:bg-slate-900  border-2 border-transparent",
-};
+  inverted:
+    "bg-white text-black hover:bg-gray-100 border-2 border-transparent",
+} satisfies Record<NonNullable<Props["style"]>, string>;
 ---
 
 <button

@@ -6,8 +6,8 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  // 生产域名。canonical、OG 绝对地址、sitemap 均由此生成。
-  // 修改时同步 src/config.ts 的 site.url。
+  // 2026-10-23 - XIYUE rebrand: 域名由模板官域改为生产域名 https://xycat.com。
+  // 此值是 canonical、OG 绝对地址与 sitemap 的唯一来源；修改时同步 src/config.ts 的 site.url。
   site: "https://xycat.com",
 
   // 静态托管（aaPanel Nginx）使用 directory 格式：/about/ -> /about/index.html

@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 详情页改为复用 BlogLayout，消除与 BlogLayout 的重复实现；
+// getStaticPaths 补上草稿与未来日期过滤，与列表页保持同一套可见性规则
+//（原实现直接 getCollection 全量取数，草稿可被直链访问并被爬虫索引）。
 import { getCollection, render } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 

@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 站名改 XIYUE 字标；删除 "Pro Version" 模板外链；
+// 移除无目标的 Log in / Sign up 死链，右侧只保留单一主行动 "Start free"。
+// 导航项由 src/config.ts 统一维护，避免与页脚、锚点重复定义。
 import Container from "@/components/container.astro";
 import Link from "@/components/ui/link.astro";
 import Dropdown from "./dropdown.astro";
@@ -54,18 +57,13 @@ const signupHref = "/pricing";
             ))
           }
         </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <Link href={signupHref} style="muted" block size="md">Log in</Link>
+        <div class="lg:hidden flex items-center mt-3">
           <Link href={signupHref} size="md" block>Start free</Link>
         </div>
       </MenuItems>
     </Astronav>
     <div>
-      <div class="hidden lg:flex items-center gap-4">
-        <a
-          href={signupHref}
-          class="text-gray-600 hover:text-gray-900 transition">Log in</a
-        >
+      <div class="hidden lg:flex items-center">
         <Link href={signupHref} size="md">Start free</Link>
       </div>
     </div>

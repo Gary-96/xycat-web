@@ -1,3 +1,6 @@
+// 2026-10-23 - XIYUE rebrand: 新增品牌与站点配置的单一来源。
+// 原模板把站名、域名、导航散落在 navbar / footer / Layout / astro.config 四处，
+// 改一次品牌要翻五个文件且容易漏改。此处集中后，组件只消费不定义。
 /**
  * 站点级配置 —— 品牌、域名、联系方式的唯一来源。
  *
@@ -22,10 +25,14 @@ export const site = {
   description:
     "XIYUE makes AI tools for creators: draft scripts, edit video by transcript, generate visuals, and publish from one place. Free to try, no card.",
 
-  /** 公开联系邮箱 —— TODO: 确认后替换 */
+  /** 公开联系邮箱 */
   email: "hello@xycat.com",
-  /** X / Twitter 账号 —— TODO: 替换为真实账号，模板原值指向模板作者 */
-  twitter: "@xiyue",
+  /**
+   * X / Twitter 账号。2026-10-23 - 模板原值 @surjithctly（模板作者）已移除；
+   * 留空则不输出 twitter:creator / twitter:site，避免分享时 @ 到无关账号。
+   * 拿到真实账号后填入，如 "@xiyue"。
+   */
+  twitter: "",
 
   /** 默认分享图，1200×630，位于 public/ */
   ogImage: "/opengraph.jpg",

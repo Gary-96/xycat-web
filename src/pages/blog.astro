@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 列表页标题/描述按品牌方案重写；
+// 启用此前定义却未渲染的 snippet 字段作为两行摘要；
+// 日期格式统一走 getFormattedDate（原为 toDateString，与详情页不一致）；补空状态。
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";

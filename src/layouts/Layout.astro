@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: Layout 支持逐页 title / description / ogImage / article 元数据；
+// 移除模板作者的 Twitter Handle（原 @surjithctly），在拿到真实账号前不输出 creator/site，
+// 避免分享时 @ 到无关账号。canonical 与 OG 绝对地址均基于 Astro.site，域名只改一处。
 import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
@@ -65,12 +68,13 @@ const orgSchema = {
       description={description}
       canonical={canonicalURL}
       twitter={{
-        creator: site.twitter,
-        site: site.twitter,
         card: "summary_large_image",
         title: pageTitle,
         description: description,
         image: ogImageURL,
+        ...(site.twitter
+          ? { creator: site.twitter, site: site.twitter }
+          : {}),
       }}
       openGraph={{
         basic: {

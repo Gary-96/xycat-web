@@ -1,4 +1,7 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 替换模板 hero 文案为品牌主标；
+// 清理原组件重复书写的两个 href（"#" 与真实外链并存，后者覆盖前者）；
+// 图片 widths 收敛到原图 520px 以内，避免上采样导致的模糊。
 import { Picture } from "astro:assets";
 import heroImage from "@/assets/hero.png";
 import Link from "@/components/ui/link.astro";

@@ -1,4 +1,6 @@
 ---
+// 2026-10-23 - XIYUE rebrand: 移除模板作者反链 "Made by Web3Templates"，改为 "Built with Astro"；
+// 版权改为 XIYUE；底部补充邮箱直跳。品牌与导航均由 src/config.ts 提供。
 import { site, footerNav } from "@/config";
 ---
 
@@ -43,10 +45,16 @@ import { site, footerNav } from "@/config";
       }
     </div>
     <div
-      class="mt-12 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-2 justify-between text-xs text-slate-500"
+      class="mt-12 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3 justify-between text-xs text-slate-500"
     >
       <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-      <p>Made for the people who make things.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a
+          href={`mailto:${site.email}`}
+          class="hover:text-gray-900 transition">{site.email}</a
+        >
+        <span>Built with Astro</span>
+      </div>
     </div>
   </div>
 </footer>
