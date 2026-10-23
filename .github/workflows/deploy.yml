@@ -1,0 +1,48 @@
+# 2026-10-24 - XIYUE 官网 GitHub 自动构建与 aaPanel 部署工作流
+name: Deploy XIYUE Website to aaPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取仓库最新代码
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. 安装 pnpm 环境
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      # 3. 安装 Node.js 22 并开启 pnpm 缓存
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      # 4. 安装依赖并编译静态页面
+      - name: Install Dependencies and Build
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm build
+
+      # 5. 通过 SSH 免密同步 dist/ 产物到 aaPanel 网站根目录
+      - name: Sync dist to aaPanel
+        uses: easingthemes/ssh-deploy@v5.0.3
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_KEY }}
+          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+          REMOTE_PORT: ${{ secrets.SERVER_PORT }}
+          REMOTE_USER: ${{ secrets.SERVER_USER }}
+          SOURCE: "dist/"
+          TARGET: "/www/wwwroot/xycat.com"
+          ARGS: "-avz --delete"
+          
