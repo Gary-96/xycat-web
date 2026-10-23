@@ -44,5 +44,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           SOURCE: "dist/"
           TARGET: "/www/wwwroot/xycat.com"
-          ARGS: "-avz --delete"
-          
+          EXCLUDE: "/.user.ini"
+          ARGS: "-avz --delete --exclude=.user.ini"
