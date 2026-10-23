@@ -2,26 +2,54 @@
 import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
+import { site } from "@/config";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import "../styles/global.css";
 
 export interface Props {
-  title: string;
+  /** 页面标题。留空则使用品牌默认标题（仅首页） */
+  title?: string;
+  /** 页面描述，不传则回落到全站默认描述 */
+  description?: string;
+  /** 分享图，不传则回落到 site.ogImage */
+  ogImage?: string;
+  /** Open Graph 类型，博客详情页传 article */
+  type?: "website" | "article";
+  /** 文章发布时间，type=article 时使用 */
+  publishedTime?: string;
 }
 
+const {
+  title,
+  description = site.description,
+  ogImage = site.ogImage,
+  type = "website",
+  publishedTime,
+} = Astro.props;
+
+// canonical 基于 Astro.site，域名只需在 astro.config.mjs 改一处
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageURL = new URL(ogImage, Astro.site).toString();
 
-const resolvedImageWithDomain = new URL(
-  "/opengraph.jpg",
-  Astro.site
-).toString();
+// 标题已含品牌名时不再追加，避免出现 "Why we built XIYUE — XIYUE"
+const pageTitle = title
+  ? title.includes(site.name)
+    ? title
+    : `${title} — ${site.name}`
+  : `${site.name} — ${site.positioning}`;
 
-const { title } = Astro.props;
-
-const makeTitle = title
-  ? title + " | " + "Astroship"
-  : "Astroship - Starter Template for Astro with Tailwind CSS";
+// 组织信息结构化数据，全站注入一次
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  alternateName: site.nameCn,
+  url: site.url,
+  logo: new URL("/favicon.svg", site.url).toString(),
+  description: site.description,
+  email: site.email,
+};
 ---
 
 <!doctype html>
@@ -32,27 +60,39 @@ const makeTitle = title
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
-      title={makeTitle}
-      description="Astroship is a starter website template for Astro built with TailwindCSS."
+      title={pageTitle}
+      description={description}
       canonical={canonicalURL}
       twitter={{
-        creator: "@surjithctly",
-        site: "@web3templates",
+        creator: site.twitter,
+        site: site.twitter,
         card: "summary_large_image",
+        title: pageTitle,
+        description: description,
+        image: ogImageURL,
       }}
       openGraph={{
         basic: {
           url: canonicalURL,
-          type: "website",
-          title: `Astroship - Starter Template for Astro`,
-          image: resolvedImageWithDomain,
+          type: type,
+          title: pageTitle,
+          image: ogImageURL,
         },
         image: {
-          alt: "Astroship Homepage Screenshot",
+          alt: `${site.name} — ${site.positioning}`,
         },
+        article:
+          type === "article" && publishedTime
+            ? { publishedTime }
+            : undefined,
       }}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(orgSchema)}
+      is:inline
     />
   </head>
   <body>
@@ -60,9 +100,9 @@ const makeTitle = title
     <slot />
     <Footer />
     <style is:global>
-      /* Improve Page speed */
-      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-      img {
+      /* 懒加载图片延迟渲染，减少非首屏布局开销。
+         限定到 lazy，避免影响首屏 LCP 图片。 */
+      img[loading="lazy"] {
         content-visibility: auto;
       }
     </style>

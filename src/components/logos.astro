@@ -1,18 +1,26 @@
 ---
-// @ts-ignore
-import { Icon } from "astro-icon/components";
+// 原模板此处为前端框架 logo 墙（React / Svelte / Astro…），面向开发者，与创作者受众不符。
+// 在无真实官方集成之前不放 logo，改用能力陈述，避免暗示未实现的集成。
+const points = ["Standard formats", "No lock-in", "Your files stay yours"];
 ---
 
-<div class="mt-24">
-  <h2 class="text-center text-slate-500">Works with your technologies</h2>
-  <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
-
-    <Icon class="size-8 md:size-12" name="simple-icons:react" />
-    <Icon class="size-8 md:size-12" name="simple-icons:svelte" />
-    <Icon class="size-8 md:size-12" name="simple-icons:astro" />
-    <Icon class="size-8 md:size-16" name="simple-icons:tailwindcss" />
-    <Icon class="size-8 md:size-16" name="simple-icons:alpinedotjs" />
-    <Icon class="size-8 md:size-12" name="simple-icons:vercel" />
-
+<section class="mt-24">
+  <div
+    class="border-y border-gray-200 py-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-12 justify-between"
+  >
+    <p class="text-lg text-slate-600 max-w-xl">
+      Export anywhere. Standard formats, no lock-in — your files work in the
+      tools you already have.
+    </p>
+    <ul class="flex flex-wrap gap-x-8 gap-y-3">
+      {
+        points.map((point) => (
+          <li class="text-sm text-slate-500 flex items-center gap-2">
+            <span class="w-1 h-1 rounded-full bg-gray-400" />
+            {point}
+          </li>
+        ))
+      }
+    </ul>
   </div>
-</div>
+</section>

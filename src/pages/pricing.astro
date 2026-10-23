@@ -3,79 +3,70 @@ import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 import PricingCard from "@/components/pricing.astro";
+import type { Plan } from "@/types";
 
-const pricing = [
+// TODO: 三档命名、价格与额度均为提案，需按真实定价替换
+const pricing: Plan[] = [
   {
-    name: "Personal",
-    price: "Free",
-    popular: false,
+    name: "Free",
+    subtitle: "For trying things out",
+    price: "$0",
     features: [
-      "Lifetime free",
-      "Up to 3 users",
-      "Unlimited Pages",
-      "Astro Sub domain",
-      "Basic Integrations",
-      "Community Support",
+      "1 project",
+      "20 generations per month",
+      "Watermark on exports",
+      "Community support",
     ],
-    button: {
-      text: "Get Started",
-      link: "/",
-    },
+    button: { text: "Start free", link: "/pricing" },
   },
   {
-    name: "Startup",
-    price: {
-      monthly: "$19",
-      annual: "$16",
-      discount: "10%",
-      original: "$24",
-    },
+    name: "Creator",
+    subtitle: "For people who publish every week",
+    price: { monthly: "$19", annual: "$16" },
     popular: true,
     features: [
-      "All Free Features",
-      "Up to 20 users",
-      "20 Custom domains",
-      "Unlimited Collaborators",
-      "Advanced Integrations",
-      "Priority Support",
+      "Unlimited projects",
+      "1,000 generations per month",
+      "No watermark",
+      "Full export formats",
+      "Priority support",
     ],
-    button: {
-      text: "Get Started",
-      link: "#",
-    },
+    button: { text: "Start free", link: "/pricing" },
   },
   {
-    name: "Enterprise",
+    name: "Studio",
+    subtitle: "For teams with a pipeline",
     price: "Custom",
-    popular: false,
     features: [
-      "All Pro Features",
-      "Unlimited Custom domains",
-      "99.99% Uptime SLA",
-      "SAML & SSO Integration",
-      "Dedicated Account Manager",
-      "24/7 Phone Support",
+      "Everything in Creator",
+      "Shared library",
+      "Up to 10 members",
+      "SSO",
+      "Dedicated contact",
     ],
-    button: {
-      text: "Contact us",
-      link: "/contact",
-    },
+    button: { text: "Talk to us", link: "/contact" },
   },
 ];
 ---
 
-<Layout title="Pricing">
+<Layout
+  title="Pricing"
+  description="Simple pricing for creators. Start free, upgrade when you publish every week. No seats to count, no annual lock-in."
+>
   <Container>
     <Sectionhead>
       <Fragment slot="title">Pricing</Fragment>
       <Fragment slot="desc">
-        Simple & Predictable pricing. No Surprises.
+        Simple pricing. No seats to count, no annual lock-in.
       </Fragment>
     </Sectionhead>
 
-    <div
-      class="grid md:grid-cols-3 gap-10 mx-auto max-w-(--breakpoint-lg) mt-12">
+    <div class="grid md:grid-cols-3 gap-8 mx-auto max-w-(--breakpoint-lg) mt-12">
       {pricing.map((item) => <PricingCard plan={item} />)}
     </div>
+
+    <p class="text-center text-sm text-slate-500 mt-10">
+      Prices in USD. Cancel anytime.
+    </p>
   </Container>
 </Layout>

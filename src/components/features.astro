@@ -1,69 +1,73 @@
 ---
-// @ts-ignore
 import { Icon } from "astro-icon/components";
 
+// 功能模块。TODO: 4 项能力描述为提案，需与真实产品能力核对后替换
 const features = [
   {
-    title: "Bring Your Own Framework",
+    title: "Write without the blank page",
     description:
-      "Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.",
-    icon: "bx:bxs-briefcase",
+      "Draft scripts, captions, and long-form posts from a single brief. Keep your voice; skip the first-hour stall.",
+    icon: "bx:bxs-edit-alt",
   },
   {
-    title: "100% Static HTML, No JS",
+    title: "Visuals that fit the brief",
     description:
-      "Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.",
-    icon: "bx:bxs-window-alt",
+      "Generate and resize images for every channel from one prompt. No more exporting six versions of the same post.",
+    icon: "bx:bxs-image",
   },
   {
-    title: "On-Demand Components",
+    title: "Cut video by text",
     description:
-      "Need some JS? Astro can automatically hydrate interactive components when they become visible on the page.  ",
-    icon: "bx:bxs-data",
+      "Edit footage by editing the transcript. Remove filler words, tighten pacing, export in one pass.",
+    icon: "bx:bxs-video",
   },
   {
-    title: "Broad Integration",
+    title: "Voice in any language",
     description:
-      "Astro supports TypeScript, Scoped CSS, CSS Modules, Sass, Tailwind, Markdown, MDX, and any other npm packages.",
-    icon: "bx:bxs-bot",
+      "Voiceover and subtitles that stay in sync with your cut, across the languages your audience actually speaks.",
+    icon: "bx:bxs-microphone",
   },
   {
-    title: "SEO Enabled",
+    title: "One library, every asset",
     description:
-      "Automatic sitemaps, RSS feeds, pagination and collections take the pain out of SEO and syndication. It just works!",
-    icon: "bx:bxs-file-find",
+      "Every prompt, draft, and export in one searchable place. Nothing gets lost between tools.",
+    icon: "bx:bxs-folder",
   },
   {
-    title: "Community",
+    title: "Built for teams of one",
     description:
-      "Astro is an open source project powered by hundreds of contributors making thousands of individual contributions.",
+      "No seats to buy, no onboarding call. Open the tab and ship.",
     icon: "bx:bxs-user",
   },
 ];
 ---
 
-<div class="mt-16 md:mt-0">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-    Everything you need to start a website
-  </h2>
-  <p class="text-lg mt-4 text-slate-600">
-    Astro comes batteries included. It takes the best parts of state-of-the-art
-    tools and adds its own innovations.
-  </p>
-</div>
+<section id="features" class="scroll-mt-24">
+  <div class="mt-16 md:mt-0">
+    <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
+      Everything around the work, handled.
+    </h2>
+    <p class="text-lg mt-4 text-slate-600 max-w-2xl">
+      Six tools that cover the parts of publishing nobody enjoys. One account,
+      one library, no tab-hopping.
+    </p>
+  </div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
-  {
-    features.map((item) => (
-      <div class="flex gap-4 items-start">
-        <div class="mt-1 bg-black rounded-full  p-2 w-8 h-8 shrink-0">
-          <Icon class="text-white" name={item.icon} />
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-16 gap-y-12">
+    {
+      features.map((item) => (
+        <div class="flex gap-4 items-start">
+          <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0">
+            <Icon class="text-white" name={item.icon} />
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg">{item.title}</h3>
+            <p class="text-slate-500 mt-2 leading-relaxed">
+              {item.description}
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold text-lg">{item.title}</h3>{" "}
-          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
-        </div>
-      </div>
-    ))
-  }
-</div>
+      ))
+    }
+  </div>
+</section>
