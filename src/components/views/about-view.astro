@@ -1,13 +1,20 @@
 ---
+// 2026-10-24 - 底部 CTA 由单行文字链接升级为极简双按钮模块：
+// 主按钮指向价格页、次按钮指向联系页，链接按语言加 /zh 前缀。
+// 版式为「左侧一句引导 + 右侧两按钮」，md 以下自动堆叠，沿用页面既有间距节奏。
 // 2026-10-24 - 双语支持：关于页正文抽为视图组件，中英共用结构、字典提供文案。
-// 2026-10-24 - 移除团队区块：team 集合已停用（目录为空，每次构建产生两条警告），
-// 相应删除 getCollection / Picture 引入，避免留下未使用的依赖。
+// 2026-10-24 - 移除团队区块：team 集合已停用（目录为空，每次构建产生两条警告）。
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
+import Link from "@/components/ui/link.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const prefix = lang === "zh" ? "/zh" : "";
+const pricingHref = `${prefix}/pricing`;
+const contactHref = `${prefix}/contact`;
 ---
 
 <Container>
@@ -40,10 +47,19 @@ const t = useTranslations(lang);
     }
   </div>
 
-  <p class="text-center text-slate-500 mt-20">
-    {t.about.outro}<a
-      href={lang === "zh" ? "/zh/contact" : "/contact"}
-      class="underline hover:text-gray-900">{t.about.outroLink}</a
-    >{t.about.outroSuffix}
-  </p>
+  <section class="mx-auto max-w-4xl mt-24 pt-10 border-t border-gray-200">
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10"
+    >
+      <p class="text-xl md:text-2xl font-semibold tracking-tight max-w-lg">
+        {t.about.ctaTitle}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <Link href={pricingHref} size="md">{t.about.ctaPrimary}</Link>
+        <Link href={contactHref} size="md" style="outline">
+          {t.about.ctaSecondary}
+        </Link>
+      </div>
+    </div>
+  </section>
 </Container>

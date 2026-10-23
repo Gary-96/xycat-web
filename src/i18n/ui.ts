@@ -73,7 +73,7 @@ const en = {
         ],
       },
     ],
-    builtWith: "Built with Astro",
+    // 2026-10-24 - 移除 builtWith 模板签名：页脚不再展示技术栈来源
   },
 
   hero: {
@@ -181,31 +181,33 @@ const en = {
   },
 
   about: {
-    title: "Built for the people who ship.",
-    sub: "A small team of creators and engineers, making the tools we wanted for ourselves.",
-    heading: "We got tired of the busywork.",
+    title: "Built for the people who go live.",
+    sub: "A small team of creators and engineers, building low-latency translation, an on-screen teleprompter, and lossless recording — for people who actually stream.",
+    heading: "Streaming shouldn't take five apps and a second laptop.",
     paragraphs: [
-      "Every tool we tried was built for a company buying software, not for a person going live on a Tuesday night. They sold seats, dashboards, and workflows. None of it helped with the actual bottleneck: the hours spent re-exporting, re-cutting, re-uploading.",
-      "So we built the opposite. Tools that do one job, do it well, and get out of the way. No dashboards to learn. No output that sounds like a robot wrote it. Just the repetitive parts, handled.",
+      "Every tool we tried was built for a company buying software, not for someone going live at 11pm with an audience already waiting. The translation landed three seconds late. The teleprompter sat in a separate window. The recording was a screen capture that dropped frames.",
+      "So we built the three things we kept rebuilding by hand: translation that keeps up with speech, a teleprompter that floats over the stream and follows your pace, and a recorder that keeps a clean, lossless copy. They run locally wherever they can, and they never touch your footage for training.",
     ],
+    // 2026-10-24 - 三列原则保留，第三列改为强调 local-first 与不训练创作者数据。
+    // 注意：这是对外的数据处理承诺，必须与隐私条款一致，条款未落地前不要上线该表述。
     values: [
       {
         title: "Craft first",
-        body: "The output has to be good enough to publish. We'd rather ship three things that work than thirty that almost do.",
+        body: "If the output isn't good enough to publish, it isn't done. A translation that lags a second behind is worse than none at all.",
       },
       {
         title: "Plain tools",
-        body: "If it needs a tutorial, it's not finished. Every feature has to be obvious by the second use.",
+        body: "If it needs a tutorial, it's not finished. Three tools, each obvious by the second use.",
       },
       {
         title: "Your work stays yours",
-        body: "You keep full rights to everything you make. We don't train on your projects.",
+        body: "Local-first by default — your audio and footage are processed on your machine wherever possible. We don't train on creator data.",
       },
     ],
-    teamTitle: "The team",
-    outro: "Want to talk? ",
-    outroLink: "Send us a note",
-    outroSuffix: ".",
+    // 2026-10-24 - 底部 CTA 由单行文字链接改为极简双按钮模块
+    ctaTitle: "Start with the tools, or with a question.",
+    ctaPrimary: "Explore Tools & Pricing",
+    ctaSecondary: "Contact Us",
   },
 
   contact: {
@@ -308,7 +310,7 @@ const zh: typeof en = {
         ],
       },
     ],
-    builtWith: "基于 Astro 构建",
+    // 2026-10-24 - 移除 builtWith 模板签名：页脚不再展示技术栈来源
   },
 
   hero: {
@@ -416,31 +418,32 @@ const zh: typeof en = {
   },
 
   about: {
-    title: "为真正发布的人而做。",
-    sub: "一支由创作者和工程师组成的小团队，做的都是自己想用的工具。",
-    heading: "我们受够了那些杂活。",
+    title: "为真正开播的人而做。",
+    sub: "一支由创作者和工程师组成的小团队，做低延迟传译、悬浮提词和无损录制——给真正在开播的人用。",
+    heading: "开播不该需要五个软件和一台备用电脑。",
     paragraphs: [
-      "我们试过的工具，几乎都是卖给「采购软件的公司」的，而不是卖给周二晚上要开播的那个人。它们卖席位、卖仪表盘、卖工作流。可真正的瓶颈——反复导出、重剪、重新上传的那几个小时——一个都没解决。",
-      "所以我们做了相反的东西。只做一件事，做到够好，然后退到一边。没有要学的仪表盘，也没有一眼看出是机器写的文案。只把重复的部分处理掉。",
+      "我们试过的工具，几乎都是卖给「采购软件的公司」的，而不是卖给晚上十一点还在播、观众已经在等的那个人。翻译慢三秒才出来，提词器在另一个窗口，录制是掉帧的屏幕捕获。",
+      "所以我们把一直手工拼的那三件事做成了工具：跟得上语速的传译、悬浮在画面上并按你节奏滚动的提词器、以及留存干净无损副本的录制。能本地跑的就本地跑，也不会拿你的素材去训练模型。",
     ],
+    // 2026-10-24 - 三列原则保留，第三列改为强调本地优先与不训练创作者数据。
     values: [
       {
         title: "作品优先",
-        body: "产出必须好到可以直接发布。我们宁愿交付三件能用的，也不交三十件差一点的。",
+        body: "产出不够好到能直接发布，就是没做完。慢一秒的翻译，比没有翻译更糟。",
       },
       {
         title: "工具要简单",
-        body: "需要看教程才能用，就是没做完。每个功能都该在第二次使用时变得理所当然。",
+        body: "需要看教程才能用，就是没做完。三件工具，每一件在第二次使用时都该理所当然。",
       },
       {
         title: "你的作品属于你",
-        body: "你创作的一切，权利完全归你。我们不会用你的项目训练模型。",
+        body: "默认本地优先：音频与画面尽可能在你的机器上处理。我们不会用创作者的素材训练模型。",
       },
     ],
-    teamTitle: "团队",
-    outro: "想聊聊？",
-    outroLink: "给我们留言",
-    outroSuffix: "。",
+    // 2026-10-24 - 底部 CTA 由单行文字链接改为极简双按钮模块
+    ctaTitle: "从工具开始，或从一个问题开始。",
+    ctaPrimary: "查看工具与价格",
+    ctaSecondary: "联系我们",
   },
 
   contact: {
