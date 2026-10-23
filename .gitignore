@@ -27,3 +27,6 @@ pnpm-debug.log*
 # 本地环境覆盖
 .env.local
 .env.*.local
+
+# 发布产物
+release/
