@@ -1,14 +1,14 @@
 ---
-// 2026-10-24 - 双语支持：404 文案改由字典提供（跟随请求语言），并标记 noindex，
-// 避免错误页被搜索引擎收录。
+// 2026-10-24 - 404 改为中英双语并列：不依赖当前语言环境，两种文案同时呈现，
+// 避免静态站只能输出单个 404.html 导致中文用户看到纯英文错误页。
+// 返回首页按钮的默认 href 固定为 "/"（保证无 JS 与爬虫场景正确），
+// 由页底内联脚本在中文环境下动态改指 /zh/。
 import Container from "@/components/container.astro";
 import Layout from "@/layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const homeHref = lang === "zh" ? "/zh/" : "/";
-const contactHref = lang === "zh" ? "/zh/contact" : "/contact";
 ---
 
 <Layout
@@ -17,30 +17,57 @@ const contactHref = lang === "zh" ? "/zh/contact" : "/contact";
   noindex
 >
   <Container>
-    <div class="min-h-[calc(100vh-16rem)] flex items-center justify-center">
-      <div class="mt-16 text-center max-w-md">
+    <div class="min-h-[calc(100vh-16rem)] flex items-center">
+      <div class="mt-16 max-w-xl">
         <p class="text-xs uppercase tracking-[0.18em] text-gray-400 font-semibold">
-          {t.notFound.label}
+          404
         </p>
+
         <h1 class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-3">
-          {t.notFound.title}
+          This page took a different path.
         </h1>
         <p class="text-lg mt-4 text-slate-600">
-          {t.notFound.body}
+          The link may be out of date, or the page moved. Head back home, or tell
+          us what you were looking for.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+
+        <div class="mt-10 pt-8 border-t border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-800 tracking-tight">
+            这个页面走了另一条路。
+          </h2>
+          <p class="mt-2 text-slate-600">
+            链接可能过期了，或者页面已经移动。回首页看看，或者告诉我们你在找什么。
+          </p>
+        </div>
+
+        <div class="mt-10">
           <a
-            href={homeHref}
-            class="bg-black text-white px-5 py-2.5 rounded-sm text-center hover:bg-gray-800 transition"
-            >{t.notFound.backHome}</a
+            id="notfound-home"
+            href="/"
+            class="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-sm hover:bg-gray-800 transition"
           >
-          <a
-            href={contactHref}
-            class="border-2 border-black px-5 py-2.5 rounded-sm text-center hover:bg-gray-100 transition"
-            >{t.notFound.tellUs}</a
-          >
+            <span aria-hidden="true">←</span>
+            <span>Back to home · 返回首页</span>
+          </a>
         </div>
       </div>
     </div>
   </Container>
+
+  <script is:inline>
+    // 2026-10-24 - 语言自适应：路径含 /zh/ 或浏览器语言为中文时，返回首页指向中文站。
+    // 只改 href 不改文案——页面本身已是双语并列，再换文案反而割裂。
+    (function () {
+      var path = window.location.pathname;
+      var lang =
+        navigator.language ||
+        (navigator.languages && navigator.languages[0]) ||
+        "";
+      var prefersZh = /\/zh(\/|$)/.test(path) || /^zh/i.test(lang);
+      if (!prefersZh) return;
+
+      var link = document.getElementById("notfound-home");
+      if (link) link.setAttribute("href", "/zh/");
+    })();
+  </script>
 </Layout>

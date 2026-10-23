@@ -303,7 +303,7 @@ const zh: typeof en = {
         title: "公司",
         items: [
           { title: "关于我们", path: "/zh/about" },
-          { title: "博客", path: "/blog" },
+          // 2026-10-24 - 中文站隐藏博客入口，与导航保持一致（暂无中文内容）
           { title: "联系我们", path: "/zh/contact" },
         ],
       },

@@ -19,12 +19,19 @@ const pathname = Astro.url.pathname;
 // 中文页面的路径前缀；英文为空（默认语言不带前缀）
 const prefix = lang === "zh" ? "/zh" : "";
 
-const menuItems = [
+// 2026-10-24 - 中文站隐藏 Blog：博客暂无中文内容，保留入口只会把中文用户带到英文页。
+// 英文站保持原样。待中文博客上线后，删掉 lang === "en" 的判断即可恢复。
+interface MenuItem {
+  title: string;
+  path: string;
+  children?: { title: string; path: string }[];
+}
+
+const menuItems: MenuItem[] = [
   { title: t.nav.product, path: `${prefix}/#features`, children: t.nav.products },
   { title: t.nav.pricing, path: `${prefix}/pricing` },
   { title: t.nav.about, path: `${prefix}/about` },
-  // 博客暂无中文版，中文站也指向英文列表，避免出现死链
-  { title: t.nav.blog, path: "/blog" },
+  ...(lang === "en" ? [{ title: t.nav.blog, path: "/blog" }] : []),
   { title: t.nav.contact, path: `${prefix}/contact` },
 ];
 

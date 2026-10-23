@@ -1,18 +1,13 @@
 ---
 // 2026-10-24 - 双语支持：关于页正文抽为视图组件，中英共用结构、字典提供文案。
-// 团队区块仍为「有真实成员才渲染」，无数据时整块隐藏，避免展示虚假信息。
-import { getCollection } from "astro:content";
-import { Picture } from "astro:assets";
+// 2026-10-24 - 移除团队区块：team 集合已停用（目录为空，每次构建产生两条警告），
+// 相应删除 getCollection / Picture 引入，避免留下未使用的依赖。
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const publishedTeamMembers = await getCollection("team", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
-});
 ---
 
 <Container>
@@ -44,35 +39,6 @@ const publishedTeamMembers = await getCollection("team", ({ data }) => {
       ))
     }
   </div>
-
-  {
-    publishedTeamMembers.length > 0 && (
-      <div class="mx-auto max-w-4xl mt-24">
-        <h2 class="font-bold text-3xl text-gray-800">{t.about.teamTitle}</h2>
-        <div class="grid md:grid-cols-3 gap-10 mt-10">
-          {publishedTeamMembers.map((member) => (
-            <div class="group">
-              <div class="w-full aspect-square">
-                <Picture
-                  src={member.data.avatar}
-                  alt={member.data.name}
-                  sizes="(max-width: 800px) 100vw, 400px"
-                  width={400}
-                  height={400}
-                  loading="lazy"
-                  class="w-full rounded-sm transition group-hover:-translate-y-1 group-hover:shadow-xl bg-white object-cover object-center aspect-square"
-                />
-              </div>
-              <div class="mt-4">
-                <h3 class="text-lg text-gray-800">{member.data.name}</h3>
-                <p class="text-sm text-slate-500">{member.data.title}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
 
   <p class="text-center text-slate-500 mt-20">
     {t.about.outro}<a

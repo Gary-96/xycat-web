@@ -27,19 +27,25 @@ const blogCollection = defineCollection({
     }),
 });
 
-const teamCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/team" }),
-  schema: ({ image }) =>
-    z.object({
-      draft: z.boolean().default(false),
-      name: z.string(),
-      title: z.string(),
-      avatar: image(),
-      publishDate: z.coerce.date(),
-    }),
-});
+/**
+ * 2026-10-24 - team 集合暂时停用。
+ * 原因是 src/content/team 目前没有任何条目，glob loader 会在每次构建时输出
+ * 两条警告（No files found / collection is empty），而空集合本身也不产生任何页面。
+ * 需要恢复团队展示时：把下面的定义取消注释、在 collections 中加回 team 键，
+ * 并在 src/components/views/about-view.astro 恢复团队区块（可从 git 历史取回）。
+ */
+// const teamCollection = defineCollection({
+//   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/team" }),
+//   schema: ({ image }) =>
+//     z.object({
+//       draft: z.boolean().default(false),
+//       name: z.string(),
+//       title: z.string(),
+//       avatar: image(),
+//       publishDate: z.coerce.date(),
+//     }),
+// });
 
 export const collections = {
   blog: blogCollection,
-  team: teamCollection,
 };
