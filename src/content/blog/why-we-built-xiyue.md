@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "Why we built XIYUE"
-snippet: "The best part of making things is the making. The worst part is everything around it — resizing, re-cutting, re-uploading. That gap is what we're building for."
+snippet: "The best part of making things is the making. The worst part is everything around it. That gap is what we're building for."
 publishDate: "2026-10-23 10:00"
 category: "Notes"
 author: "XIYUE"

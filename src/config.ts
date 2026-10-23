@@ -23,7 +23,7 @@ export const site = {
 
   /** 全站默认描述，页面可覆盖 */
   description:
-    "XIYUE makes AI tools for creators: draft scripts, edit video by transcript, generate visuals, and publish from one place. Free to try, no card.",
+    "XIYUE builds three live tools for creators: real-time translation, an adaptive teleprompter, and automated stream recording. Free to try.",
 
   /** 公开联系邮箱 */
   email: "hello@xycat.com",
@@ -45,15 +45,16 @@ export interface NavItem {
   children?: { title: string; path: string }[];
 }
 
+// 2026-10-24 - 产品线收敛为三大直播工具 Translate / Prompter / Recorder。
+// 下拉项与页脚 Product 栏共用此定义，避免两处各写一份导致信息架构漂移。
 export const navigation: NavItem[] = [
   {
     title: "Product",
     path: "/#features",
     children: [
-      { title: "Write", path: "/#features" },
-      { title: "Visuals", path: "/#features" },
-      { title: "Video", path: "/#features" },
-      { title: "Voice", path: "/#features" },
+      { title: "Translate", path: "/#translate" },
+      { title: "Prompter", path: "/#prompter" },
+      { title: "Recorder", path: "/#recorder" },
     ],
   },
   { title: "Pricing", path: "/pricing" },
@@ -67,7 +68,9 @@ export const footerNav: { title: string; items: { title: string; path: string }[
   {
     title: "Product",
     items: [
-      { title: "Tools", path: "/#features" },
+      { title: "Translate", path: "/#translate" },
+      { title: "Prompter", path: "/#prompter" },
+      { title: "Recorder", path: "/#recorder" },
       { title: "Pricing", path: "/pricing" },
     ],
   },

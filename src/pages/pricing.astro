@@ -8,42 +8,45 @@ import Sectionhead from "@/components/sectionhead.astro";
 import PricingCard from "@/components/pricing.astro";
 import type { Plan } from "@/types";
 
-// TODO: 三档命名、价格与额度均为提案，需按真实定价替换
+// 2026-10-24 - 档位权益对齐三大产品线。原"generations per month / export formats"
+// 属通用生成式工具口径，与 Translate / Prompter / Recorder 的订阅方式不符，改为按工具列权益。
+// TODO: 具体额度（时长、分辨率、留存天数）待产品定价确认后补齐，当前不写数字以免误导。
 const pricing: Plan[] = [
   {
     name: "Free",
     subtitle: "For trying things out",
     price: "$0",
     features: [
-      "1 project",
-      "20 generations per month",
-      "Watermark on exports",
+      "All three tools, session limits apply",
+      "Translate: live subtitles",
+      "Prompter: basic script editor",
+      "Recorder: short retention",
       "Community support",
     ],
     button: { text: "Start free", link: "/pricing" },
   },
   {
     name: "Creator",
-    subtitle: "For people who publish every week",
+    subtitle: "For people who stream every week",
     price: { monthly: "$19", annual: "$16" },
     popular: true,
     features: [
-      "Unlimited projects",
-      "1,000 generations per month",
-      "No watermark",
-      "Full export formats",
+      "All three tools, no session limits",
+      "Translate: live voice + subtitles",
+      "Prompter: adaptive pacing, multi-device",
+      "Recorder: high-quality archive, long retention",
       "Priority support",
     ],
     button: { text: "Start free", link: "/pricing" },
   },
   {
     name: "Studio",
-    subtitle: "For teams with a pipeline",
+    subtitle: "For teams running a channel",
     price: "Custom",
     features: [
       "Everything in Creator",
-      "Shared library",
-      "Up to 10 members",
+      "Shared library and team seats",
+      "Recorder: extended retention",
       "SSO",
       "Dedicated contact",
     ],

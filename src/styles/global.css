@@ -36,3 +36,21 @@
     cursor: pointer;
   }
 }
+
+/*
+  2026-10-24 - 锚点跳转平滑滚动。
+  导航下拉与页脚指向 #translate / #prompter / #recorder，
+  滚动偏移由各 section 上的 scroll-mt-* 控制。
+  尊重系统「减少动态效果」偏好，避免前庭不适。
+*/
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

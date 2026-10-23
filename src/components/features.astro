@@ -1,45 +1,45 @@
 ---
-// 2026-10-23 - XIYUE rebrand: 六大功能卡片文案替换为创作者工具定位；
-// 清理 </h3> 后残留的 {" "} 文本节点；区块补 id="features" 供 hero 次按钮锚点跳转。
-import { Icon } from "astro-icon/components";
+// 2026-10-24 - 产品架构重构：功能卡片由模板的六项泛化能力（写作/图像/剪辑/配音/素材库/团队）
+// 收敛为实际三大直播工具 Translate / Prompter / Recorder。
+// 每项独立成段并挂载锚点 id，供导航下拉与页脚链接平滑定位。
+// 同时移除已不再使用的 astro-icon 引入，避免留下废弃依赖引用。
+interface Product {
+  /** 锚点 id，与 src/config.ts 中导航路径保持一致 */
+  id: string;
+  name: string;
+  kicker: string;
+  headline: string;
+  subtext: string;
+  points: string[];
+}
 
-// 功能模块。TODO: 4 项能力描述为提案，需与真实产品能力核对后替换
-const features = [
+const products: Product[] = [
   {
-    title: "Write without the blank page",
-    description:
-      "Draft scripts, captions, and long-form posts from a single brief. Keep your voice; skip the first-hour stall.",
-    icon: "bx:bxs-edit-alt",
+    id: "translate",
+    name: "Translate",
+    kicker: "Real-time voice & subtitle translation",
+    headline: "Say it once. Stream it in every language.",
+    subtext:
+      "Real-time AI voice and subtitle translation for live streamers. Your audience hears you in their own language while the subtitles keep pace with the conversation.",
+    points: ["Live voice", "Synced subtitles", "Low latency"],
   },
   {
-    title: "Visuals that fit the brief",
-    description:
-      "Generate and resize images for every channel from one prompt. No more exporting six versions of the same post.",
-    icon: "bx:bxs-image",
+    id: "prompter",
+    name: "Prompter",
+    kicker: "Adaptive teleprompter",
+    headline: "The script that keeps up with you.",
+    subtext:
+      "A smart adaptive teleprompter for creators and live shows. It follows your pace, reflows when you improvise, and stays out of the frame.",
+    points: ["Pace-adaptive", "Auto reflow", "Off-camera"],
   },
   {
-    title: "Cut video by text",
-    description:
-      "Edit footage by editing the transcript. Remove filler words, tighten pacing, export in one pass.",
-    icon: "bx:bxs-video",
-  },
-  {
-    title: "Voice in any language",
-    description:
-      "Voiceover and subtitles that stay in sync with your cut, across the languages your audience actually speaks.",
-    icon: "bx:bxs-microphone",
-  },
-  {
-    title: "One library, every asset",
-    description:
-      "Every prompt, draft, and export in one searchable place. Nothing gets lost between tools.",
-    icon: "bx:bxs-folder",
-  },
-  {
-    title: "Built for teams of one",
-    description:
-      "No seats to buy, no onboarding call. Open the tab and ship.",
-    icon: "bx:bxs-user",
+    id: "recorder",
+    name: "Recorder",
+    kicker: "Multi-platform stream recording",
+    headline: "Every platform, captured once.",
+    subtext:
+      "Automated multi-platform stream recording and archiving. Point it at a channel and it keeps a clean copy — no screen capture, no babysitting.",
+    points: ["Multi-platform", "Auto archive", "Clean source"],
   },
 ];
 ---
@@ -47,28 +47,49 @@ const features = [
 <section id="features" class="scroll-mt-24">
   <div class="mt-16 md:mt-0">
     <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-      Everything around the work, handled.
+      Three tools for going live.
     </h2>
     <p class="text-lg mt-4 text-slate-600 max-w-2xl">
-      Six tools that cover the parts of publishing nobody enjoys. One account,
-      one library, no tab-hopping.
+      Translate what you say, prompt what you planned, record what happened —
+      without switching apps mid-stream.
     </p>
   </div>
 
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-16 gap-y-12">
+  <div class="mt-16 border-t border-gray-200">
     {
-      features.map((item) => (
-        <div class="flex gap-4 items-start">
-          <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0">
-            <Icon class="text-white" name={item.icon} />
-          </div>
+      products.map((product, index) => (
+        <article
+          id={product.id}
+          class="scroll-mt-28 py-12 md:py-16 grid md:grid-cols-[200px_1fr] gap-6 md:gap-16 border-b border-gray-200"
+        >
           <div>
-            <h3 class="font-semibold text-lg">{item.title}</h3>
-            <p class="text-slate-500 mt-2 leading-relaxed">
-              {item.description}
+            <span class="text-xs tracking-[0.18em] text-gray-400 font-semibold">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3 class="text-2xl font-bold tracking-tight mt-2">
+              {product.name}
+            </h3>
+            <p class="text-sm text-slate-500 mt-1 leading-relaxed">
+              {product.kicker}
             </p>
           </div>
-        </div>
+
+          <div>
+            <p class="text-2xl md:text-3xl font-semibold tracking-tight">
+              {product.headline}
+            </p>
+            <p class="text-slate-600 mt-4 leading-relaxed max-w-2xl">
+              {product.subtext}
+            </p>
+            <ul class="mt-6 flex flex-wrap gap-2">
+              {product.points.map((point) => (
+                <li class="text-xs text-slate-600 border border-gray-200 rounded-full px-3 py-1">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
       ))
     }
   </div>
