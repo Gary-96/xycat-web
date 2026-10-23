@@ -19,3 +19,11 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# 内部文件（不进入公开仓库）
+.workbuddy-ai/
+项目技术审查报告-*.html
+
+# 本地环境覆盖
+.env.local
+.env.*.local

@@ -49,6 +49,8 @@ pnpm format   # prettier 格式化
 ├── deploy/
 │   ├── nginx-xycat.com.conf   # aaPanel Nginx 配置（含 CUSTOM BLOCK）
 │   └── DEPLOY.md              # 部署手册 + 验证清单
+├── docs/
+│   └── brand-copy-deck.html   # 品牌规范与全站文案稿
 ├── public/                 # favicon.svg · opengraph.jpg（不参与构建哈希）
 └── src/
     ├── config.ts           # ★ 品牌、域名、导航、联系方式的唯一来源
