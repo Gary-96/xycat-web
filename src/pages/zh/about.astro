@@ -1,0 +1,12 @@
+---
+// 2026-10-24 - 双语支持：中文关于页（/zh/about）。
+import Layout from "@/layouts/Layout.astro";
+import AboutView from "@/components/views/about-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout title={t.meta.about.title} description={t.meta.about.description}>
+  <AboutView />
+</Layout>

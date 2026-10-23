@@ -1,12 +1,21 @@
 ---
+// 2026-10-24 - 双语支持：字段标签、占位符、校验与状态文案改由字典提供。
+// 因为脚本是 is:inline（构建期不处理 import），状态文案通过 data-* 传给前端，
+// 校验错误文案直接由 SSR 渲染进对应节点，脚本只负责显隐，不再硬编码任何英文。
 // 2026-10-23 - 联系表单完整组件（接入 Web3Forms 密钥与无障碍支持）
 import Button from "./ui/button.astro";
+import { site } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
-// 2026-10-23 - 密钥支持环境变量覆盖，未配置时回落到已申请的真实密钥。
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const f = t.contact.form;
+
+// 密钥支持环境变量覆盖，未配置时回落到已申请的真实密钥。
 // 该 key 会出现在前端产物中（Web3Forms 设计如此），轮换时改 .env 即可，无需改代码。
 const accessKey =
   import.meta.env.PUBLIC_WEB3FORMS_KEY || "f6a37588-febb-4f3b-9912-9773f2dd0bb6";
-const supportEmail = "hello@xycat.com";
+const supportEmail = site.email;
 
 const fieldClass =
   "w-full px-4 py-3 border-2 placeholder:text-gray-400 rounded-md outline-hidden focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 aria-[invalid=true]:border-red-500";
@@ -19,10 +28,13 @@ const fieldClass =
   class="space-y-5"
   data-access-key={accessKey}
   data-email={supportEmail}
+  data-msg-sending={f.sending}
+  data-msg-success={f.success}
+  data-msg-failure={f.failure}
   novalidate
 >
   <input type="hidden" name="access_key" value={accessKey} />
-  <input type="hidden" name="subject" value="New message from xycat.com" />
+  <input type="hidden" name="subject" value={f.subject} />
   <input
     type="checkbox"
     class="hidden"
@@ -34,39 +46,39 @@ const fieldClass =
 
   <div>
     <label for="cf-name" class="block text-sm font-medium text-gray-800 mb-1.5"
-      >Full name</label
+      >{f.name.label}</label
     >
     <input
       id="cf-name"
       type="text"
       name="name"
-      placeholder="Jane Chen"
+      placeholder={f.name.placeholder}
       autocomplete="name"
       required
       aria-describedby="cf-name-error"
       class={fieldClass}
     />
     <p id="cf-name-error" class="hidden text-red-600 text-sm mt-1">
-      Please add your name.
+      {f.name.error}
     </p>
   </div>
 
   <div>
     <label for="cf-email" class="block text-sm font-medium text-gray-800 mb-1.5"
-      >Email</label
+      >{f.email.label}</label
     >
     <input
       id="cf-email"
       type="email"
       name="email"
-      placeholder="you@studio.com"
+      placeholder={f.email.placeholder}
       autocomplete="email"
       required
       aria-describedby="cf-email-error"
       class={fieldClass}
     />
     <p id="cf-email-error" class="hidden text-red-600 text-sm mt-1">
-      We need an email to reply to.
+      {f.email.error}
     </p>
   </div>
 
@@ -74,22 +86,22 @@ const fieldClass =
     <label
       for="cf-message"
       class="block text-sm font-medium text-gray-800 mb-1.5"
-      >What are you working on?</label
+      >{f.message.label}</label
     >
     <textarea
       id="cf-message"
       name="message"
       rows="6"
-      placeholder="A rough idea is enough."
+      placeholder={f.message.placeholder}
       required
       aria-describedby="cf-message-error"
       class={`${fieldClass} resize-y`}></textarea>
     <p id="cf-message-error" class="hidden text-red-600 text-sm mt-1">
-      Add a message so we know what you need.
+      {f.message.error}
     </p>
   </div>
 
-  <Button type="submit" size="lg" block id="cf-submit">Send message</Button>
+  <Button type="submit" size="lg" block id="cf-submit">{f.submit}</Button>
 
   <p
     id="cf-result"
@@ -102,32 +114,31 @@ const fieldClass =
 
 <script is:inline>
   (() => {
-    // 2026-10-23 - 表单前端轻量校验与 Web3Forms 异步提交处理
+    // 2026-10-24 - 校验只做显隐切换，错误文案由服务端按语言渲染，脚本内不再出现英文常量。
     const form = document.getElementById("contact-form");
     if (!form) return;
 
     const result = document.getElementById("cf-result");
     const submit = document.getElementById("cf-submit");
     const accessKey = form.dataset.accessKey || "";
-    const email = form.dataset.email || "hello@xycat.com";
-    const submitLabel = submit ? submit.textContent : "Send message";
+    const email = form.dataset.email || "";
+    const msgSending = form.dataset.msgSending || "";
+    const msgSuccess = form.dataset.msgSuccess || "";
+    const msgFailure = (form.dataset.msgFailure || "").replace("{email}", email);
+    const submitLabel = submit ? submit.textContent : "";
 
-    const fields = [
-      { input: "cf-name", error: "cf-name-error", message: "Please add your name." },
-      { input: "cf-email", error: "cf-email-error", message: "That email doesn't look right." },
-      { input: "cf-message", error: "cf-message-error", message: "Add a message so we know what you need." },
-    ];
+    const fieldIds = ["cf-name", "cf-email", "cf-message"];
 
-    const show = (el, text, tone) => {
-      if (!el) return;
-      el.textContent = text;
-      el.className = "text-sm text-center min-h-[1.5rem] " + tone;
+    const show = (text, tone) => {
+      if (!result) return;
+      result.textContent = text;
+      result.className = "text-sm text-center min-h-[1.5rem] " + tone;
     };
 
     const clearErrors = () => {
-      fields.forEach(({ input, error }) => {
-        const field = document.getElementById(input);
-        const node = document.getElementById(error);
+      fieldIds.forEach((id) => {
+        const field = document.getElementById(id);
+        const node = document.getElementById(id + "-error");
         if (field) field.removeAttribute("aria-invalid");
         if (node) node.classList.add("hidden");
       });
@@ -135,9 +146,9 @@ const fieldClass =
 
     const validate = () => {
       let firstInvalid = null;
-      fields.forEach(({ input, error, message }) => {
-        const field = document.getElementById(input);
-        const node = document.getElementById(error);
+      fieldIds.forEach((id) => {
+        const field = document.getElementById(id);
+        const node = document.getElementById(id + "-error");
         if (!field || !node) return;
         const valid = field.checkValidity() && field.value.trim() !== "";
         if (valid) {
@@ -145,7 +156,6 @@ const fieldClass =
           node.classList.add("hidden");
         } else {
           field.setAttribute("aria-invalid", "true");
-          node.textContent = message;
           node.classList.remove("hidden");
           if (!firstInvalid) firstInvalid = field;
         }
@@ -155,7 +165,7 @@ const fieldClass =
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      show(result, "", "");
+      show("", "");
 
       const firstInvalid = validate();
       if (firstInvalid) {
@@ -163,21 +173,18 @@ const fieldClass =
         return;
       }
 
+      // 未配置密钥：不发请求，直接给可执行的兜底方案
       if (!accessKey) {
-        show(
-          result,
-          `That didn't go through. Email ${email} and we'll pick it up there.`,
-          "text-red-600"
-        );
+        show(msgFailure, "text-red-600");
         return;
       }
 
       const payload = Object.fromEntries(new FormData(form));
       if (submit) {
         submit.disabled = true;
-        submit.textContent = "Sending…";
+        submit.textContent = msgSending;
       }
-      show(result, "Sending…", "text-slate-500");
+      show(msgSending, "text-slate-500");
 
       try {
         const response = await fetch("https://api.web3forms.com/submit", {
@@ -192,20 +199,12 @@ const fieldClass =
         if (response.ok) {
           form.reset();
           clearErrors();
-          show(result, "Got it — we'll reply within two business days.", "text-green-700");
+          show(msgSuccess, "text-green-700");
         } else {
-          show(
-            result,
-            `That didn't go through. Email ${email} and we'll pick it up there.`,
-            "text-red-600"
-          );
+          show(msgFailure, "text-red-600");
         }
       } catch (error) {
-        show(
-          result,
-          `That didn't go through. Email ${email} and we'll pick it up there.`,
-          "text-red-600"
-        );
+        show(msgFailure, "text-red-600");
       } finally {
         if (submit) {
           submit.disabled = false;

@@ -1,0 +1,83 @@
+---
+// 2026-10-24 - 双语支持：关于页正文抽为视图组件，中英共用结构、字典提供文案。
+// 团队区块仍为「有真实成员才渲染」，无数据时整块隐藏，避免展示虚假信息。
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const publishedTeamMembers = await getCollection("team", ({ data }) => {
+  return !data.draft && data.publishDate < new Date();
+});
+---
+
+<Container>
+  <Sectionhead>
+    <Fragment slot="title">{t.about.title}</Fragment>
+    <Fragment slot="desc">{t.about.sub}</Fragment>
+  </Sectionhead>
+
+  <div class="flex flex-col gap-4 mx-auto max-w-3xl mt-16">
+    <h2 class="font-bold text-3xl text-gray-800">
+      {t.about.heading}
+    </h2>
+    {
+      t.about.paragraphs.map((paragraph) => (
+        <p class="text-lg leading-relaxed text-slate-500">{paragraph}</p>
+      ))
+    }
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-4xl mt-16">
+    {
+      t.about.values.map((value) => (
+        <div class="border-t border-gray-200 pt-5">
+          <h3 class="font-semibold text-lg text-gray-800">{value.title}</h3>
+          <p class="text-slate-500 mt-2 leading-relaxed text-[15px]">
+            {value.body}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    publishedTeamMembers.length > 0 && (
+      <div class="mx-auto max-w-4xl mt-24">
+        <h2 class="font-bold text-3xl text-gray-800">{t.about.teamTitle}</h2>
+        <div class="grid md:grid-cols-3 gap-10 mt-10">
+          {publishedTeamMembers.map((member) => (
+            <div class="group">
+              <div class="w-full aspect-square">
+                <Picture
+                  src={member.data.avatar}
+                  alt={member.data.name}
+                  sizes="(max-width: 800px) 100vw, 400px"
+                  width={400}
+                  height={400}
+                  loading="lazy"
+                  class="w-full rounded-sm transition group-hover:-translate-y-1 group-hover:shadow-xl bg-white object-cover object-center aspect-square"
+                />
+              </div>
+              <div class="mt-4">
+                <h3 class="text-lg text-gray-800">{member.data.name}</h3>
+                <p class="text-sm text-slate-500">{member.data.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  <p class="text-center text-slate-500 mt-20">
+    {t.about.outro}<a
+      href={lang === "zh" ? "/zh/contact" : "/contact"}
+      class="underline hover:text-gray-900">{t.about.outroLink}</a
+    >{t.about.outroSuffix}
+  </p>
+</Container>

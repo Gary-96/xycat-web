@@ -1,0 +1,12 @@
+---
+// 2026-10-24 - 双语支持：中文价格页（/zh/pricing）。
+import Layout from "@/layouts/Layout.astro";
+import PricingView from "@/components/views/pricing-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout title={t.meta.pricing.title} description={t.meta.pricing.description}>
+  <PricingView />
+</Layout>

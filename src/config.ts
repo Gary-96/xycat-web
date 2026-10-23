@@ -38,48 +38,6 @@ export const site = {
   ogImage: "/opengraph.jpg",
 } as const;
 
-/** 主导航。children 存在时渲染为下拉。 */
-export interface NavItem {
-  title: string;
-  path: string;
-  children?: { title: string; path: string }[];
-}
+// 2026-10-24 - 双语支持：导航与页脚栏目已迁至 src/i18n/ui.ts（需按语言给出不同文案与路径）。
+// 原 navigation / footerNav / NavItem 随之删除——保留两份会让中英文信息架构各自漂移。
 
-// 2026-10-24 - 产品线收敛为三大直播工具 Translate / Prompter / Recorder。
-// 下拉项与页脚 Product 栏共用此定义，避免两处各写一份导致信息架构漂移。
-export const navigation: NavItem[] = [
-  {
-    title: "Product",
-    path: "/#features",
-    children: [
-      { title: "Translate", path: "/#translate" },
-      { title: "Prompter", path: "/#prompter" },
-      { title: "Recorder", path: "/#recorder" },
-    ],
-  },
-  { title: "Pricing", path: "/pricing" },
-  { title: "About", path: "/about" },
-  { title: "Blog", path: "/blog" },
-  { title: "Contact", path: "/contact" },
-];
-
-/** 页脚栏位 */
-export const footerNav: { title: string; items: { title: string; path: string }[] }[] = [
-  {
-    title: "Product",
-    items: [
-      { title: "Translate", path: "/#translate" },
-      { title: "Prompter", path: "/#prompter" },
-      { title: "Recorder", path: "/#recorder" },
-      { title: "Pricing", path: "/pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    items: [
-      { title: "About", path: "/about" },
-      { title: "Blog", path: "/blog" },
-      { title: "Contact", path: "/contact" },
-    ],
-  },
-];

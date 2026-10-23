@@ -1,78 +1,12 @@
 ---
-// 2026-10-23 - XIYUE rebrand: 档位重构为 Free / Creator / Studio（原 Personal / Startup / Enterprise
-// 面向 B 端 SaaS，与创作者受众不符）；清理原先被注释的价格划线死代码，
-// 改由组件根据 price 是字符串还是 {monthly, annual} 决定展示方式。
+// 2026-10-24 - 双语支持：价格页收敛为薄壳，正文在 views/pricing-view.astro，中英共用。
 import Layout from "@/layouts/Layout.astro";
-import Container from "@/components/container.astro";
-import Sectionhead from "@/components/sectionhead.astro";
-import PricingCard from "@/components/pricing.astro";
-import type { Plan } from "@/types";
+import PricingView from "@/components/views/pricing-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
-// 2026-10-24 - 档位权益对齐三大产品线。原"generations per month / export formats"
-// 属通用生成式工具口径，与 Translate / Prompter / Recorder 的订阅方式不符，改为按工具列权益。
-// TODO: 具体额度（时长、分辨率、留存天数）待产品定价确认后补齐，当前不写数字以免误导。
-const pricing: Plan[] = [
-  {
-    name: "Free",
-    subtitle: "For trying things out",
-    price: "$0",
-    features: [
-      "All three tools, session limits apply",
-      "Translate: live subtitles",
-      "Prompter: basic script editor",
-      "Recorder: short retention",
-      "Community support",
-    ],
-    button: { text: "Start free", link: "/pricing" },
-  },
-  {
-    name: "Creator",
-    subtitle: "For people who stream every week",
-    price: { monthly: "$19", annual: "$16" },
-    popular: true,
-    features: [
-      "All three tools, no session limits",
-      "Translate: live voice + subtitles",
-      "Prompter: adaptive pacing, multi-device",
-      "Recorder: high-quality archive, long retention",
-      "Priority support",
-    ],
-    button: { text: "Start free", link: "/pricing" },
-  },
-  {
-    name: "Studio",
-    subtitle: "For teams running a channel",
-    price: "Custom",
-    features: [
-      "Everything in Creator",
-      "Shared library and team seats",
-      "Recorder: extended retention",
-      "SSO",
-      "Dedicated contact",
-    ],
-    button: { text: "Talk to us", link: "/contact" },
-  },
-];
+const t = useTranslations(getLangFromUrl(Astro.url));
 ---
 
-<Layout
-  title="Pricing"
-  description="Simple pricing for creators. Start free, upgrade when you publish every week. No seats to count, no annual lock-in."
->
-  <Container>
-    <Sectionhead>
-      <Fragment slot="title">Pricing</Fragment>
-      <Fragment slot="desc">
-        Simple pricing. No seats to count, no annual lock-in.
-      </Fragment>
-    </Sectionhead>
-
-    <div class="grid md:grid-cols-3 gap-8 mx-auto max-w-(--breakpoint-lg) mt-12">
-      {pricing.map((item) => <PricingCard plan={item} />)}
-    </div>
-
-    <p class="text-center text-sm text-slate-500 mt-10">
-      Prices in USD. Cancel anytime.
-    </p>
-  </Container>
+<Layout title={t.meta.pricing.title} description={t.meta.pricing.description}>
+  <PricingView />
 </Layout>

@@ -1,9 +1,12 @@
 ---
-// 2026-10-24 - 生态条文案对齐直播工作流：原"导出格式/无锁定"偏文件管理，
-// 与三大直播工具的定位脱节，改为描述接入现有直播环境、不改变既有流程。
+// 2026-10-24 - 双语支持：生态条文案改由字典提供。
+// 2026-10-24 - 文案对齐直播工作流：原"导出格式/无锁定"偏文件管理，与三大直播工具定位脱节。
 // 原模板此处为前端框架 logo 墙（React / Svelte / Astro…），面向开发者，与创作者受众不符；
 // 在无真实官方集成之前不放 logo，改用能力陈述，避免暗示未实现的集成。
-const points = ["No extra hardware", "No new workflow", "Your footage stays yours"];
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section class="mt-24">
@@ -11,12 +14,11 @@ const points = ["No extra hardware", "No new workflow", "Your footage stays your
     class="border-y border-gray-200 py-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-12 justify-between"
   >
     <p class="text-lg text-slate-600 max-w-xl">
-      Runs alongside the setup you already stream with. Nothing to re-install,
-      nothing to relearn.
+      {t.logos.text}
     </p>
     <ul class="flex flex-wrap gap-x-8 gap-y-3">
       {
-        points.map((point) => (
+        t.logos.points.map((point) => (
           <li class="text-sm text-slate-500 flex items-center gap-2">
             <span class="w-1 h-1 rounded-full bg-gray-400" />
             {point}

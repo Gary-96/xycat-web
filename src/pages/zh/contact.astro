@@ -1,0 +1,12 @@
+---
+// 2026-10-24 - 双语支持：中文联系页（/zh/contact）。
+import Layout from "@/layouts/Layout.astro";
+import ContactView from "@/components/views/contact-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout title={t.meta.contact.title} description={t.meta.contact.description}>
+  <ContactView />
+</Layout>

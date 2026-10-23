@@ -1,20 +1,26 @@
 ---
+// 2026-10-24 - 双语支持：页脚文案与链接改由字典提供，首页链接按语言加 /zh 前缀。
 // 2026-10-23 - XIYUE rebrand: 移除模板作者反链 "Made by Web3Templates"，改为 "Built with Astro"；
-// 版权改为 XIYUE；底部补充邮箱直跳。品牌与导航均由 src/config.ts 提供。
-import { site, footerNav } from "@/config";
+// 版权改为 XIYUE；底部补充邮箱直跳。
+import { site } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const homeHref = lang === "zh" ? "/zh/" : "/";
 ---
 
 <footer class="mt-24 pt-10 pb-14 border-t border-gray-200">
   <div class="max-w-(--breakpoint-xl) mx-auto px-5">
     <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
       <div>
-        <a href="/" class="text-base" aria-label={`${site.name} — home`}>
+        <a href={homeHref} class="text-base" aria-label={`${site.name} — home`}>
           <span class="font-bold text-slate-900 tracking-[0.28em]"
             >{site.name}</span
           >
         </a>
         <p class="mt-3 text-sm text-slate-500 max-w-xs leading-relaxed">
-          {site.tagline}
+          {t.footer.tagline}
         </p>
         <a
           href={`mailto:${site.email}`}
@@ -23,7 +29,7 @@ import { site, footerNav } from "@/config";
         >
       </div>
       {
-        footerNav.map((col) => (
+        t.footer.columns.map((col) => (
           <div>
             <h3 class="text-xs uppercase tracking-wider text-gray-400 font-semibold">
               {col.title}
@@ -53,7 +59,7 @@ import { site, footerNav } from "@/config";
           href={`mailto:${site.email}`}
           class="hover:text-gray-900 transition">{site.email}</a
         >
-        <span>Built with Astro</span>
+        <span>{t.footer.builtWith}</span>
       </div>
     </div>
   </div>

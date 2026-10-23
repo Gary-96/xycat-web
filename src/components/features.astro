@@ -1,57 +1,22 @@
 ---
-// 2026-10-24 - 产品架构重构：功能卡片由模板的六项泛化能力（写作/图像/剪辑/配音/素材库/团队）
-// 收敛为实际三大直播工具 Translate / Prompter / Recorder。
-// 每项独立成段并挂载锚点 id，供导航下拉与页脚链接平滑定位。
+// 2026-10-24 - 双语支持：产品分段文案改由字典提供，中英文共用同一套结构，
+// 锚点 id 仍来自数据（translate / prompter / recorder），保证切换语言后锚点行为一致。
+// 2026-10-24 - 产品架构重构：功能卡片由模板的六项泛化能力收敛为三大直播工具。
 // 同时移除已不再使用的 astro-icon 引入，避免留下废弃依赖引用。
-interface Product {
-  /** 锚点 id，与 src/config.ts 中导航路径保持一致 */
-  id: string;
-  name: string;
-  kicker: string;
-  headline: string;
-  subtext: string;
-  points: string[];
-}
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
-const products: Product[] = [
-  {
-    id: "translate",
-    name: "Translate",
-    kicker: "Real-time voice & subtitle translation",
-    headline: "Say it once. Stream it in every language.",
-    subtext:
-      "Real-time AI voice and subtitle translation for live streamers. Your audience hears you in their own language while the subtitles keep pace with the conversation.",
-    points: ["Live voice", "Synced subtitles", "Low latency"],
-  },
-  {
-    id: "prompter",
-    name: "Prompter",
-    kicker: "Adaptive teleprompter",
-    headline: "The script that keeps up with you.",
-    subtext:
-      "A smart adaptive teleprompter for creators and live shows. It follows your pace, reflows when you improvise, and stays out of the frame.",
-    points: ["Pace-adaptive", "Auto reflow", "Off-camera"],
-  },
-  {
-    id: "recorder",
-    name: "Recorder",
-    kicker: "Multi-platform stream recording",
-    headline: "Every platform, captured once.",
-    subtext:
-      "Automated multi-platform stream recording and archiving. Point it at a channel and it keeps a clean copy — no screen capture, no babysitting.",
-    points: ["Multi-platform", "Auto archive", "Clean source"],
-  },
-];
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const products = t.features.items;
 ---
 
 <section id="features" class="scroll-mt-24">
   <div class="mt-16 md:mt-0">
     <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-      Three tools for going live.
+      {t.features.title}
     </h2>
     <p class="text-lg mt-4 text-slate-600 max-w-2xl">
-      Translate what you say, prompt what you planned, record what happened —
-      without switching apps mid-stream.
+      {t.features.sub}
     </p>
   </div>
 

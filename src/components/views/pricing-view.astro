@@ -1,0 +1,26 @@
+---
+// 2026-10-24 - 双语支持：价格页正文抽为视图组件，中英页面共用同一套结构，
+// 差异只在字典数据，避免两份页面文件各改一遍导致漂移。
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import PricingCard from "@/components/pricing.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Container>
+  <Sectionhead>
+    <Fragment slot="title">{t.pricing.title}</Fragment>
+    <Fragment slot="desc">{t.pricing.sub}</Fragment>
+  </Sectionhead>
+
+  <div class="grid md:grid-cols-3 gap-8 mx-auto max-w-(--breakpoint-lg) mt-12">
+    {t.pricing.plans.map((plan) => <PricingCard plan={plan} />)}
+  </div>
+
+  <p class="text-center text-sm text-slate-500 mt-10">
+    {t.pricing.footnote}
+  </p>
+</Container>

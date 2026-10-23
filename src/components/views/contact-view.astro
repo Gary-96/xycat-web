@@ -1,0 +1,44 @@
+---
+// 2026-10-24 - 双语支持：联系页正文抽为视图组件，文案由字典提供，表单组件自身也会按语言渲染。
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import Contactform from "@/components/contactform.astro";
+import { Icon } from "astro-icon/components";
+import { site } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Container>
+  <Sectionhead>
+    <Fragment slot="title">{t.contact.title}</Fragment>
+    <Fragment slot="desc">{t.contact.sub}</Fragment>
+  </Sectionhead>
+
+  <div class="grid md:grid-cols-2 gap-12 mx-auto max-w-4xl mt-16">
+    <div>
+      <h2 class="font-medium text-2xl text-gray-800">{t.contact.heading}</h2>
+      <p class="text-lg leading-relaxed text-slate-500 mt-3">
+        {t.contact.body}
+      </p>
+
+      <div class="mt-8">
+        <div class="flex items-center gap-2 text-gray-600">
+          <Icon class="text-gray-400 w-4 h-4" name="uil:envelope" />
+          <a href={`mailto:${site.email}`} class="hover:text-gray-900 transition"
+            >{site.email}</a
+          >
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-400 mt-8 leading-relaxed">
+        {t.contact.emailNote}
+      </p>
+    </div>
+    <div>
+      <Contactform />
+    </div>
+  </div>
+</Container>

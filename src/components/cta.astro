@@ -1,20 +1,25 @@
 ---
+// 2026-10-24 - 双语支持：CTA 区块文案改由字典提供，按钮链接按语言加 /zh 前缀。
 import Link from "./ui/link.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 // TODO: 接入真实注册地址后替换
-const signupHref = "/pricing";
+const signupHref = lang === "zh" ? "/zh/pricing" : "/pricing";
 ---
 
 <div
   class="bg-black p-8 md:px-20 md:py-20 mt-20 mx-auto max-w-5xl rounded-lg flex flex-col items-center text-center"
 >
   <h2 class="text-white text-4xl md:text-6xl tracking-tight">
-    Start with one project.
+    {t.cta.title}
   </h2>
   <p class="text-slate-400 mt-4 text-lg md:text-xl">
-    Free to try. No card, no call, no onboarding deck.
+    {t.cta.sub}
   </p>
   <div class="flex mt-6">
-    <Link href={signupHref} style="inverted">Start free</Link>
+    <Link href={signupHref} style="inverted">{t.cta.button}</Link>
   </div>
 </div>

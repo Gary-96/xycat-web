@@ -18,6 +18,17 @@ export default defineConfig({
   // 站内跳转预取，降低跨页导航的感知延迟
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
 
+  // 2026-10-24 - 启用官方 i18n：英文为默认语言且不带 URL 前缀（/pricing），
+  // 中文走 /zh 前缀（/zh/pricing）。prefixDefaultLocale: false 是关键，
+  // 否则英文会被强制成 /en/pricing，与既有的 canonical 与站内链接全部冲突。
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "zh"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   integrations: [mdx(), sitemap(), icon()],
 
   vite: {

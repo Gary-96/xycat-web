@@ -1,50 +1,12 @@
 ---
-import Contactform from "@/components/contactform.astro";
-import Container from "@/components/container.astro";
-import Sectionhead from "@/components/sectionhead.astro";
+// 2026-10-24 - 双语支持：联系页收敛为薄壳，正文在 views/contact-view.astro，中英共用。
 import Layout from "@/layouts/Layout.astro";
-import { Icon } from "astro-icon/components";
-import { site } from "@/config";
+import ContactView from "@/components/views/contact-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
 ---
 
-<Layout
-  title="Contact"
-  description="Questions, bugs, or a project to talk through. Send a note and a human from XIYUE will reply within two business days."
->
-  <Container>
-    <Sectionhead>
-      <Fragment slot="title">Contact</Fragment>
-      <Fragment slot="desc">
-        Questions, bugs, or a project you want to talk through — we read
-        everything.
-      </Fragment>
-    </Sectionhead>
-
-    <div class="grid md:grid-cols-2 gap-12 mx-auto max-w-4xl mt-16">
-      <div>
-        <h2 class="font-medium text-2xl text-gray-800">Talk to a human.</h2>
-        <p class="text-lg leading-relaxed text-slate-500 mt-3">
-          No ticket queue, no chatbot loop. Send a note and one of us will reply
-          — usually within two business days.
-        </p>
-
-        <div class="mt-8">
-          <div class="flex items-center gap-2 text-gray-600">
-            <Icon class="text-gray-400 w-4 h-4" name="uil:envelope" />
-            <a href={`mailto:${site.email}`} class="hover:text-gray-900 transition"
-              >{site.email}</a
-            >
-          </div>
-        </div>
-
-        <p class="text-sm text-slate-400 mt-8 leading-relaxed">
-          Prefer email? Write to us directly — the form and the inbox reach the
-          same people.
-        </p>
-      </div>
-      <div>
-        <Contactform />
-      </div>
-    </div>
-  </Container>
+<Layout title={t.meta.contact.title} description={t.meta.contact.description}>
+  <ContactView />
 </Layout>

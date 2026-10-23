@@ -1,28 +1,46 @@
 ---
+// 2026-10-24 - 双语支持：导航文案与路径改由 src/i18n/ui.ts 提供，
+// 右上角增加语言切换器；中文站的首页锚点需带 /zh 前缀（/zh/#translate），
+// 不能简单给英文路径加前缀（英文首页是 /，不是 /en/）。
 // 2026-10-23 - XIYUE rebrand: 站名改 XIYUE 字标；删除 "Pro Version" 模板外链；
 // 移除无目标的 Log in / Sign up 死链，右侧只保留单一主行动 "Start free"。
-// 导航项由 src/config.ts 统一维护，避免与页脚、锚点重复定义。
 import Container from "@/components/container.astro";
 import Link from "@/components/ui/link.astro";
+import LangSwitcher from "@/components/lang-switcher.astro";
 import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
-import { site, navigation } from "@/config";
+import { site } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const pathname = Astro.url.pathname;
+
+// 中文页面的路径前缀；英文为空（默认语言不带前缀）
+const prefix = lang === "zh" ? "/zh" : "";
+
+const menuItems = [
+  { title: t.nav.product, path: `${prefix}/#features`, children: t.nav.products },
+  { title: t.nav.pricing, path: `${prefix}/pricing` },
+  { title: t.nav.about, path: `${prefix}/about` },
+  // 博客暂无中文版，中文站也指向英文列表，避免出现死链
+  { title: t.nav.blog, path: "/blog" },
+  { title: t.nav.contact, path: `${prefix}/contact` },
+];
 
 // 仅在无下拉的顶级链接上判定当前页
 const isActive = (path: string) =>
   path !== "/" && pathname.startsWith(path.replace(/\/$/, ""));
 
 // 主行动按钮。TODO: 接入真实注册地址后替换
-const signupHref = "/pricing";
+const signupHref = `${prefix}/pricing`;
 ---
 
 <Container>
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
     <Astronav>
       <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg" aria-label={`${site.name} — home`}>
+        <a href={`${prefix}/`} class="text-lg" aria-label={`${site.name} — home`}>
           <span
             class="font-bold text-slate-900 tracking-[0.28em] text-base align-middle"
             >{site.name}</span
@@ -35,7 +53,7 @@ const signupHref = "/pricing";
       <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
         <ul class="flex flex-col lg:flex-row lg:gap-3">
           {
-            navigation.map((item) => (
+            menuItems.map((item) => (
               <>
                 {item.children ? (
                   <Dropdown title={item.title} children={item.children} />
@@ -57,14 +75,17 @@ const signupHref = "/pricing";
             ))
           }
         </ul>
-        <div class="lg:hidden flex items-center mt-3">
-          <Link href={signupHref} size="md" block>Start free</Link>
+        <div class="lg:hidden flex items-center justify-between gap-4 mt-4 pt-4 border-t border-gray-100">
+          <LangSwitcher />
+          <Link href={signupHref} size="md">{t.nav.startFree}</Link>
         </div>
       </MenuItems>
     </Astronav>
     <div>
-      <div class="hidden lg:flex items-center">
-        <Link href={signupHref} size="md">Start free</Link>
+      <div class="hidden lg:flex items-center gap-5">
+        <LangSwitcher />
+        <span class="h-4 w-px bg-gray-200" aria-hidden="true"></span>
+        <Link href={signupHref} size="md">{t.nav.startFree}</Link>
       </div>
     </div>
   </header>

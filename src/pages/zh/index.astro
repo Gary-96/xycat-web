@@ -1,0 +1,21 @@
+---
+// 2026-10-24 - 双语支持：中文首页（/zh/）。组件按 URL 自动取中文文案，页面结构复用同一套。
+import Container from "@/components/container.astro";
+import Cta from "@/components/cta.astro";
+import Features from "@/components/features.astro";
+import Hero from "@/components/hero.astro";
+import Logos from "@/components/logos.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout title={t.meta.home.title} description={t.meta.home.description}>
+  <Container>
+    <Hero />
+    <Features />
+    <Logos />
+    <Cta />
+  </Container>
+</Layout>

@@ -1,4 +1,5 @@
 ---
+// 2026-10-24 - 双语支持：文案改由字典提供，CTA 链接按语言加 /zh 前缀。
 // 2026-10-24 - 副标题对齐三大产品线（Translate / Prompter / Recorder），
 // 替换原先"写作/剪辑/配音"等泛化能力描述。
 // 2026-10-23 - XIYUE rebrand: 替换模板 hero 文案为品牌主标；
@@ -8,10 +9,14 @@ import { Picture } from "astro:assets";
 import heroImage from "@/assets/hero.png";
 import Link from "@/components/ui/link.astro";
 import { Icon } from "astro-icon/components";
-import { site } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const prefix = lang === "zh" ? "/zh" : "";
 
 // TODO: 接入真实注册地址后替换
-const signupHref = "/pricing";
+const signupHref = `${prefix}/pricing`;
 ---
 
 <main
@@ -29,17 +34,15 @@ const signupHref = "/pricing";
   </div>
   <div>
     <p class="text-xs uppercase tracking-[0.18em] text-gray-400 font-semibold">
-      {site.positioning}
+      {t.hero.eyebrow}
     </p>
     <h1
       class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter mt-4"
     >
-      AI tools for people who make things.
+      {t.hero.title}
     </h1>
     <p class="text-lg mt-5 text-slate-600 max-w-xl">
-      {site.name} builds three tools for live creators — real-time translation,
-      an adaptive teleprompter, and automated recording. Set up once, then focus
-      on the stream.
+      {t.hero.sub}
     </p>
     <div class="mt-7 flex flex-col sm:flex-row gap-3">
       <Link
@@ -47,16 +50,16 @@ const signupHref = "/pricing";
         class="flex gap-2 items-center justify-center"
         rel="noopener">
         <Icon class="text-white w-5 h-5" name="bx:bxs-right-arrow-alt" />
-        Start free
+        {t.hero.ctaPrimary}
       </Link>
       <Link
         size="lg"
         style="outline"
         href="#features"
         class="flex gap-2 items-center justify-center">
-        See what's inside
+        {t.hero.ctaSecondary}
       </Link>
     </div>
-    <p class="mt-4 text-sm text-slate-400">Free to try. No card required.</p>
+    <p class="mt-4 text-sm text-slate-400">{t.hero.note}</p>
   </div>
 </main>
