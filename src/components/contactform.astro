@@ -114,7 +114,6 @@ const fieldClass =
 
 <script is:inline>
   (() => {
-    // 2026-10-24 - 校验只做显隐切换，错误文案由服务端按语言渲染，脚本内不再出现英文常量。
     const form = document.getElementById("contact-form");
     if (!form) return;
 
@@ -173,7 +172,7 @@ const fieldClass =
         return;
       }
 
-      // 未配置密钥：不发请求，直接给可执行的兜底方案
+      // 2026-10-24 - No key configured: skip the request and show the fallback path instead.
       if (!accessKey) {
         show(msgFailure, "text-red-600");
         return;

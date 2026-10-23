@@ -1,0 +1,15 @@
+---
+// 2026-10-24 - 英文隐私政策页
+import Layout from "@/layouts/Layout.astro";
+import LegalView from "@/components/views/legal-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout
+  title={t.legal.privacy.title}
+  description={t.legal.privacy.description}
+>
+  <LegalView kind="privacy" />
+</Layout>

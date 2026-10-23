@@ -55,8 +55,6 @@ const t = useTranslations(lang);
   </Container>
 
   <script is:inline>
-    // 2026-10-24 - 语言自适应：路径含 /zh/ 或浏览器语言为中文时，返回首页指向中文站。
-    // 只改 href 不改文案——页面本身已是双语并列，再换文案反而割裂。
     (function () {
       var path = window.location.pathname;
       var lang =

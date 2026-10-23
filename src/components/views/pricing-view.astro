@@ -1,6 +1,7 @@
 ---
 // 2026-10-24 - 双语支持：价格页正文抽为视图组件，中英页面共用同一套结构，
 // 差异只在字典数据，避免两份页面文件各改一遍导致漂移。
+// 2026-10-24 - 定价改为买断制三档，底部补单次付款说明，主推档由组件负责放大高亮。
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 import PricingCard from "@/components/pricing.astro";
@@ -16,11 +17,13 @@ const t = useTranslations(lang);
     <Fragment slot="desc">{t.pricing.sub}</Fragment>
   </Sectionhead>
 
-  <div class="grid md:grid-cols-3 gap-8 mx-auto max-w-(--breakpoint-lg) mt-12">
+  <div
+    class="grid md:grid-cols-3 gap-8 mx-auto max-w-(--breakpoint-lg) mt-12 items-start"
+  >
     {t.pricing.plans.map((plan) => <PricingCard plan={plan} />)}
   </div>
 
-  <p class="text-center text-sm text-slate-500 mt-10">
+  <p class="text-center text-sm text-slate-500 mt-12 max-w-xl mx-auto leading-relaxed">
     {t.pricing.footnote}
   </p>
 </Container>

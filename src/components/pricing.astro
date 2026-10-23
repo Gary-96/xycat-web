@@ -1,43 +1,45 @@
 ---
+// 2026-10-24 - 买断制定价卡片：支持划线原价、计费周期、主推档徽标与加深边框。
+// 主推档在 md 以上做轻微上浮与放大，不靠彩色，仅用黑色描边与留白区分层级。
 import { Tick } from "@/components/ui/icons";
 import Link from "@/components/ui/link.astro";
 import type { Plan } from "@/types";
 
 const { plan } = Astro.props as { plan: Plan };
-
-const isObjectPrice = typeof plan.price === "object";
 ---
 
 <div
   class:list={[
-    "flex flex-col w-full py-6 px-6 rounded-md border-2",
-    plan.popular ? "border-black" : "border-[#D8DEE9]/60",
+    "flex flex-col w-full py-6 px-6 rounded-md border-2 bg-white",
+    plan.popular ? "border-black md:-my-3 md:py-9" : "border-[#D8DEE9]/60",
   ]}
 >
-  <div class="flex items-start justify-between">
+  <div class="flex items-start justify-between gap-3">
     <div>
-      <h2 class="text-lg font-medium text-gray-800">{plan.name}</h2>
-      <p class="text-sm text-slate-500 mt-1">{plan.subtitle}</p>
+      <h2 class="text-lg font-medium text-gray-900">{plan.name}</h2>
+      <p class="text-sm text-slate-500 mt-1 leading-relaxed">{plan.tagline}</p>
     </div>
     {
-      plan.popular && (
-        <span class="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white bg-black rounded-full shrink-0">
-          Popular
+      plan.badge && (
+        <span class="shrink-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white bg-black rounded-full">
+          {plan.badge}
         </span>
       )
     }
   </div>
 
-  <p class="mt-6 text-4xl font-bold text-black tracking-tight">
-    {isObjectPrice ? (plan.price as { monthly: string }).monthly : plan.price}
-  </p>
-  {
-    isObjectPrice && (
-      <p class="mt-1 text-sm text-slate-500">
-        {(plan.price as { annual: string }).annual} billed yearly
-      </p>
-    )
-  }
+  <div class="mt-6 flex items-end gap-2 flex-wrap">
+    <p class="text-4xl font-bold text-black tracking-tight">{plan.price}</p>
+    {plan.period && <span class="text-sm text-slate-500 mb-1">{plan.period}</span>}
+    {
+      plan.original && (
+        <span class="text-lg text-slate-400 line-through mb-1">
+          {plan.original}
+        </span>
+      )
+    }
+  </div>
+  {plan.saving && <p class="text-xs text-slate-500 mt-1">{plan.saving}</p>}
 
   <ul class="grid mt-8 text-left gap-y-4 flex-1">
     {
@@ -52,12 +54,12 @@ const isObjectPrice = typeof plan.price === "object";
 
   <div class="flex mt-8">
     <Link
-      href={plan.button.link || "#"}
+      href={plan.button.link || "/contact"}
       block
       size="md"
       style={plan.popular ? "primary" : "outline"}
     >
-      {plan.button.text || "Start free"}
+      {plan.button.text}
     </Link>
   </div>
 </div>

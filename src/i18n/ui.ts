@@ -70,6 +70,8 @@ const en = {
           { title: "About", path: "/about" },
           { title: "Blog", path: "/blog" },
           { title: "Contact", path: "/contact" },
+          { title: "Privacy Policy", path: "/privacy" },
+          { title: "Terms of Service", path: "/terms" },
         ],
       },
     ],
@@ -132,81 +134,82 @@ const en = {
 
   pricing: {
     title: "Pricing",
-    sub: "Simple pricing. No seats to count, no annual lock-in.",
-    footnote: "Prices in USD. Cancel anytime.",
+    sub: "One-time payment. Own the tools for good — no subscription, no recurring charges.",
+    footnote: "One-time payment, no recurring subscription. WeChat Pay, Alipay and international cards accepted.",
+    // 2026-10-24 - 定价改为买断制三档：Starter 尝鲜 / Lifetime 永久主推 / Studio 公会团队。
+    // TODO: 三处按钮均暂指向 /contact，接入支付或购买页后替换。
     plans: [
       {
-        name: "Free",
-        subtitle: "For trying things out",
-        price: "$0",
-        popular: false,
+        name: "Starter",
+        tagline: "30-day starter pass",
+        price: "$29",
+        period: "/ 30 Days",
         features: [
-          "All three tools, session limits apply",
-          "Translate: live subtitles",
-          "Prompter: basic script editor",
-          "Recorder: short retention",
-          "Community support",
+          "Full access to Translate, Prompter and Recorder",
+          "Single device activation",
+          "Basic technical support",
         ],
-        button: { text: "Start free", link: "/pricing" },
+        button: { text: "Get 30-Day Pass", link: "/contact" },
       },
       {
-        name: "Creator",
-        subtitle: "For people who stream every week",
-        price: { monthly: "$19", annual: "$16" },
+        name: "Lifetime Pass",
+        tagline: "Early bird lifetime licence",
+        price: "$149",
+        original: "$299",
+        badge: "Early Bird Lifetime",
+        saving: "Save 50%",
         popular: true,
         features: [
-          "All three tools, no session limits",
-          "Translate: live voice + subtitles",
-          "Prompter: adaptive pacing, multi-device",
-          "Recorder: high-quality archive, long retention",
-          "Priority support",
+          "One payment, lifetime access to Translate + Prompter + Recorder",
+          "2 devices — activate, unbind and migrate anytime",
+          "Lifetime free major updates",
+          "Priority access to the low-latency streaming channel",
+          "Official creator VIP group and priority bug fixing",
         ],
-        button: { text: "Start free", link: "/pricing" },
+        button: { text: "Get Lifetime Access", link: "/contact" },
       },
       {
-        name: "Studio",
-        subtitle: "For teams running a channel",
-        price: "Custom",
-        popular: false,
+        name: "Agency / Studio",
+        tagline: "For guilds and multi-camera studios",
+        price: "$449",
+        period: "Lifetime",
         features: [
-          "Everything in Creator",
-          "Shared library and team seats",
-          "Recorder: extended retention",
-          "SSO",
-          "Dedicated contact",
+          "Built for multi-host guilds and multi-camera studios",
+          "5–10 devices working at the same time",
+          "Batch activation codes with team management",
+          "1-on-1 setup guidance from a dedicated engineer",
         ],
-        button: { text: "Talk to us", link: "/contact" },
+        button: { text: "Contact Studio Sales", link: "/contact" },
       },
     ],
   },
 
   about: {
-    title: "Built for the people who go live.",
-    sub: "A small team of creators and engineers, building low-latency translation, an on-screen teleprompter, and lossless recording — for people who actually stream.",
+    title: "Built for creators who actually go live.",
+    sub: "A small team tackling the unglamorous parts of content creation: real-time translation, floating prompters, and automated recording.",
     heading: "Streaming shouldn't take five apps and a second laptop.",
     paragraphs: [
       "Every tool we tried was built for a company buying software, not for someone going live at 11pm with an audience already waiting. The translation landed three seconds late. The teleprompter sat in a separate window. The recording was a screen capture that dropped frames.",
       "So we built the three things we kept rebuilding by hand: translation that keeps up with speech, a teleprompter that floats over the stream and follows your pace, and a recorder that keeps a clean, lossless copy. They run locally wherever they can, and they never touch your footage for training.",
     ],
-    // 2026-10-24 - 三列原则保留，第三列改为强调 local-first 与不训练创作者数据。
-    // 注意：这是对外的数据处理承诺，必须与隐私条款一致，条款未落地前不要上线该表述。
+    // 2026-10-24 - 三列价值主张重排：保留 Craft first，第二列改为零学习成本，第三列改为本地优先与隐私。
     values: [
       {
         title: "Craft first",
-        body: "If the output isn't good enough to publish, it isn't done. A translation that lags a second behind is worse than none at all.",
+        body: "We build a few core tools and build them properly, instead of piling on features nobody asked for.",
       },
       {
-        title: "Plain tools",
-        body: "If it needs a tutorial, it's not finished. Three tools, each obvious by the second use.",
+        title: "Zero learning curve",
+        body: "Configured in three minutes before you go live. It floats on top of your scene — nothing complicated to learn.",
       },
       {
-        title: "Your work stays yours",
-        body: "Local-first by default — your audio and footage are processed on your machine wherever possible. We don't train on creator data.",
+        title: "Local-first & Private",
+        body: "Recordings are written straight to your own machine. We never train models on a creator's voice or footage.",
       },
     ],
-    // 2026-10-24 - 底部 CTA 由单行文字链接改为极简双按钮模块
-    ctaTitle: "Start with the tools, or with a question.",
-    ctaPrimary: "Explore Tools & Pricing",
+    // 2026-10-24 - 底部 CTA 主按钮改为指向价格页，次按钮保持联系页。
+    ctaTitle: "See the plans, or start with a question.",
+    ctaPrimary: "Explore Pricing",
     ctaSecondary: "Contact Us",
   },
 
@@ -234,6 +237,60 @@ const en = {
       success: "Got it — we'll reply within two business days.",
       failure: "That didn't go through. Email {email} and we'll pick it up there.",
       subject: "New message from xycat.com",
+    },
+  },
+
+  // 2026-10-24 - 新增隐私政策与服务条款文案，供 /privacy 与 /terms 使用。
+  // TODO: 以下为按业务描述起草的初稿，上线前需法务确认，尤其退款期限与适用法律条款。
+  legal: {
+    lastUpdated: "October 2026",
+    privacy: {
+      title: "Privacy Policy",
+      description: "What we collect, what we don't do, and how to reach us about it.",
+      sections: [
+        {
+          heading: "What we collect",
+          body: "If you send a message through the contact form, we receive your name, email address and the content of your message. The form is handled by Web3Forms, a third-party delivery service. We don't require an account to use this website.",
+        },
+        {
+          heading: "What we don't do",
+          body: "We don't train models on your voice, your screen or your footage. Recordings produced by Recorder are written to your own machine, not to our servers. We don't sell or share your contact details for advertising.",
+        },
+        {
+          heading: "Payments",
+          body: "Purchases are processed by our payment providers. Card details never reach our servers; we only receive the payment status and the contact details you provide at checkout.",
+        },
+        {
+          heading: "Questions",
+          body: "For any privacy question, correction or deletion request, email hello@xycat.com and a human will reply.",
+        },
+      ],
+    },
+    terms: {
+      title: "Terms of Service",
+      description: "How the licences work, what is included, and what isn't.",
+      sections: [
+        {
+          heading: "Licences",
+          body: "All plans are one-time purchases, not subscriptions. The Starter pass grants 30 days of access to Translate, Prompter and Recorder on a single device. The Lifetime Pass grants perpetual access on two devices, which you can unbind and migrate yourself. The Agency licence grants perpetual access for 5–10 devices with batch activation codes.",
+        },
+        {
+          heading: "Updates",
+          body: "Lifetime and Agency licences include major version updates for the life of the product. The Starter pass includes updates within its 30-day window.",
+        },
+        {
+          heading: "Refunds",
+          body: "If a licence is unused, you may request a refund within 14 days of purchase by emailing hello@xycat.com. Activated licences are not refundable.",
+        },
+        {
+          heading: "Acceptable use",
+          body: "You may not resell, sublicense or redistribute the tools or activation codes, or use them for unlawful broadcasts. Licences are granted to a person or a team, not to the public.",
+        },
+        {
+          heading: "Contact",
+          body: "Anything unclear in these terms, email hello@xycat.com.",
+        },
+      ],
     },
   },
 
@@ -307,6 +364,8 @@ const zh: typeof en = {
           { title: "关于我们", path: "/zh/about" },
           // 2026-10-24 - 中文站隐藏博客入口，与导航保持一致（暂无中文内容）
           { title: "联系我们", path: "/zh/contact" },
+          { title: "隐私政策", path: "/zh/privacy" },
+          { title: "服务条款", path: "/zh/terms" },
         ],
       },
     ],
@@ -369,80 +428,82 @@ const zh: typeof en = {
 
   pricing: {
     title: "价格方案",
-    sub: "简单定价。不计席位，不锁年。",
-    footnote: "价格以美元计，可随时取消。",
+    sub: "一次付费，永久拥有。没有订阅，没有循环扣费。",
+    footnote: "所有购买均为单次付款，非循环扣费。支持微信、支付宝及国际信用卡。",
+    // 2026-10-24 - 定价改为买断制三档：Starter 尝鲜 / Lifetime 永久主推 / Studio 公会团队。
+    // TODO: 三处按钮均暂指向 /zh/contact，接入支付或购买页后替换。
     plans: [
       {
-        name: "免费版",
-        subtitle: "先试试看",
-        price: "$0",
-        popular: false,
+        name: "Starter 尝鲜版",
+        tagline: "30 天尝鲜通行",
+        price: "¥199",
+        period: "/ 30天",
         features: [
-          "三件工具全开放，单次时长有限制",
-          "同声传译：实时字幕",
-          "主播提词：基础稿件编辑",
-          "直播录制：较短留存",
-          "社区支持",
+          "Translate、Prompter、Recorder 三款工具完整可用",
+          "单设备激活",
+          "基础技术支持",
         ],
-        button: { text: "免费开始", link: "/zh/pricing" },
+        button: { text: "开通 30 天", link: "/zh/contact" },
       },
       {
-        name: "创作者版",
-        subtitle: "每周都要开播的人",
-        price: { monthly: "$19", annual: "$16" },
+        name: "Lifetime Pass 永久授权",
+        tagline: "创始特惠 · 永久买断",
+        price: "¥999",
+        original: "¥1,999",
+        badge: "🔥 创始特惠 · 永久买断",
+        saving: "立省 50%",
         popular: true,
         features: [
-          "三件工具全开放，不限时长",
-          "同声传译：实时语音 + 字幕",
-          "主播提词：自适应语速、多设备",
-          "直播录制：高清归档、长留存",
-          "优先支持",
+          "一次付费，终身拥有 Translate + Prompter + Recorder 全部三款工具",
+          "支持 2 台设备，随时激活、自主解绑与迁移",
+          "终身大版本免费更新",
+          "低延迟流媒体通道优先接入",
+          "官方专属创作者 VIP 交流群与优先排障",
         ],
-        button: { text: "免费开始", link: "/zh/pricing" },
+        button: { text: "立即获取永久授权", link: "/zh/contact" },
       },
       {
-        name: "工作室版",
-        subtitle: "运营一个频道的小团队",
-        price: "定制",
-        popular: false,
+        name: "Agency / Studio 公会版",
+        tagline: "适合多主播公会与多机位工作室",
+        price: "¥2,999",
+        period: "终身买断",
         features: [
-          "包含创作者版全部权益",
-          "共享素材库与团队席位",
-          "直播录制：更长留存",
-          "SSO 单点登录",
-          "专属对接人",
+          "适合多主播公会与多机位工作室",
+          "支持 5~10 台设备同时在线作业",
+          "团队批量激活码后台管理",
+          "专属工程师 1 对 1 部署指导",
         ],
-        button: { text: "联系我们", link: "/zh/contact" },
+        button: { text: "联系公会定制", link: "/zh/contact" },
       },
     ],
   },
 
   about: {
-    title: "为真正开播的人而做。",
-    sub: "一支由创作者和工程师组成的小团队，做低延迟传译、悬浮提词和无损录制——给真正在开播的人用。",
+    title: "为真正开播的创作者而生。",
+    sub: "一支小团队，专治内容创作里最不体面的部分：实时传译、悬浮提词与自动录制。",
     heading: "开播不该需要五个软件和一台备用电脑。",
     paragraphs: [
       "我们试过的工具，几乎都是卖给「采购软件的公司」的，而不是卖给晚上十一点还在播、观众已经在等的那个人。翻译慢三秒才出来，提词器在另一个窗口，录制是掉帧的屏幕捕获。",
       "所以我们把一直手工拼的那三件事做成了工具：跟得上语速的传译、悬浮在画面上并按你节奏滚动的提词器、以及留存干净无损副本的录制。能本地跑的就本地跑，也不会拿你的素材去训练模型。",
     ],
-    // 2026-10-24 - 三列原则保留，第三列改为强调本地优先与不训练创作者数据。
+    // 2026-10-24 - 三列价值主张重排：保留作品优先，第二列改零学习成本，第三列改本地优先与隐私。
     values: [
       {
         title: "作品优先",
-        body: "产出不够好到能直接发布，就是没做完。慢一秒的翻译，比没有翻译更糟。",
+        body: "只做少数几个核心工具，并把它们做到位，而不是堆一堆没人要的功能。",
       },
       {
-        title: "工具要简单",
-        body: "需要看教程才能用，就是没做完。三件工具，每一件在第二次使用时都该理所当然。",
+        title: "零学习成本",
+        body: "开播前 3 分钟即可配置就绪。悬浮置顶，不挡画面，没有繁复的学习过程。",
       },
       {
-        title: "你的作品属于你",
-        body: "默认本地优先：音频与画面尽可能在你的机器上处理。我们不会用创作者的素材训练模型。",
+        title: "本地优先与隐私",
+        body: "录制文件直存本地，绝不拿主播的声音和画面训练模型。",
       },
     ],
-    // 2026-10-24 - 底部 CTA 由单行文字链接改为极简双按钮模块
-    ctaTitle: "从工具开始，或从一个问题开始。",
-    ctaPrimary: "查看工具与价格",
+    // 2026-10-24 - 底部 CTA 主按钮改为指向价格页，次按钮保持联系页。
+    ctaTitle: "看看方案，或者先聊一个问题。",
+    ctaPrimary: "查看方案与价格",
     ctaSecondary: "联系我们",
   },
 
@@ -469,6 +530,60 @@ const zh: typeof en = {
       success: "已收到——我们会在两个工作日内回复。",
       failure: "没有发送成功。请发邮件到 {email}，我们在那边接着处理。",
       subject: "来自 xycat.com 的新消息",
+    },
+  },
+
+  // 2026-10-24 - 新增隐私政策与服务条款文案，供 /zh/privacy 与 /zh/terms 使用。
+  // TODO: 以下为按业务描述起草的初稿，上线前需法务确认，尤其退款期限与适用法律条款。
+  legal: {
+    lastUpdated: "2026 年 10 月",
+    privacy: {
+      title: "隐私政策",
+      description: "我们收集什么、不做什么，以及如何找到我们。",
+      sections: [
+        {
+          heading: "我们收集什么",
+          body: "如果你通过联系表单留言，我们会收到你的称呼、邮箱地址和留言内容。表单由第三方服务 Web3Forms 负责投递。浏览本站不需要注册账号。",
+        },
+        {
+          heading: "我们不做什么",
+          body: "我们不会用你的声音、画面或素材训练模型。Recorder 的录制文件保存在你自己的电脑上，不会上传到我们的服务器。我们不会出售或共享你的联系方式用于广告。",
+        },
+        {
+          heading: "支付",
+          body: "购买由支付服务商处理，卡号不会到达我们的服务器。我们只收到支付状态与你在下单时提供的联系方式。",
+        },
+        {
+          heading: "有问题",
+          body: "涉及隐私的咨询、更正或删除请求，请发邮件到 hello@xycat.com，会有人回复你。",
+        },
+      ],
+    },
+    terms: {
+      title: "服务条款",
+      description: "授权如何计算、包含什么、不包含什么。",
+      sections: [
+        {
+          heading: "授权方式",
+          body: "所有方案均为一次性购买，不是订阅。Starter 通行授权为 30 天内、单设备使用 Translate、Prompter 与 Recorder。Lifetime Pass 为永久授权，支持 2 台设备，可自行解绑与迁移。Agency 授权为永久授权，支持 5~10 台设备，并提供批量激活码。",
+        },
+        {
+          heading: "更新",
+          body: "Lifetime 与 Agency 授权在产品生命周期内包含大版本更新。Starter 通行在 30 天内包含更新。",
+        },
+        {
+          heading: "退款",
+          body: "授权未使用的情况下，可在购买后 14 天内发邮件到 hello@xycat.com 申请退款。已激活的授权不支持退款。",
+        },
+        {
+          heading: "使用边界",
+          body: "不得转售、再授权或再分发本工具及激活码，也不得将其用于违法违规的直播内容。授权授予个人或团队，而非公开传播。",
+        },
+        {
+          heading: "联系",
+          body: "对条款有不清楚的地方，发邮件到 hello@xycat.com。",
+        },
+      ],
     },
   },
 
