@@ -1,4 +1,8 @@
 ---
+// 2026-10-24 - 导航改为 sticky 固定顶栏：sticky 包裹层移出 Container 全宽铺满
+//（白底 + 底部细线），滚动时不再隐藏；header 原 my-5 改 py-5 保持纵向节奏。
+// 锚点偏移复用各 section 既有 scroll-mt-*（≥ 固定栏高度），无需额外处理；
+// z-40 保证滚动内容从栏下穿过，下拉面板 z-10 在栏的堆叠上下文内不受影响。
 // 2026-10-24 - 导航新增文档中心入口（en: Docs / zh: 使用说明），指向 /docs 与 /zh/docs。
 // 2026-10-24 - 双语支持：导航文案与路径改由 src/i18n/ui.ts 提供，
 // 右上角增加语言切换器；中文站的首页锚点需带 /zh 前缀（/zh/#translate），
@@ -45,57 +49,59 @@ const isActive = (path: string) =>
 const signupHref = `${prefix}/pricing`;
 ---
 
-<Container>
-  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href={`${prefix}/`} class="text-lg" aria-label={`${site.name} — home`}>
-          <span
-            class="font-bold text-slate-900 tracking-[0.28em] text-base align-middle"
-            >{site.name}</span
-          >
-        </a>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
+<div class="sticky top-0 z-40 border-b border-gray-100 bg-white">
+  <Container>
+    <header class="flex flex-col lg:flex-row justify-between items-center py-5">
+      <Astronav>
+        <div class="flex w-full lg:w-auto items-center justify-between">
+          <a href={`${prefix}/`} class="text-lg" aria-label={`${site.name} — home`}>
+            <span
+              class="font-bold text-slate-900 tracking-[0.28em] text-base align-middle"
+              >{site.name}</span
+            >
+          </a>
+          <div class="block lg:hidden">
+            <MenuIcon class="w-4 h-4 text-gray-800" />
+          </div>
         </div>
-      </div>
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuItems.map((item) => (
-              <>
-                {item.children ? (
-                  <Dropdown title={item.title} children={item.children} />
-                ) : (
-                  <li>
-                    <a
-                      href={item.path}
-                      aria-current={isActive(item.path) ? "page" : undefined}
-                      class:list={[
-                        "flex lg:px-3 py-2 items-center hover:text-gray-900",
-                        isActive(item.path) ? "text-gray-900" : "text-gray-600",
-                      ]}
-                    >
-                      <span>{item.title}</span>
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
-        </ul>
-        <div class="lg:hidden flex items-center justify-between gap-4 mt-4 pt-4 border-t border-gray-100">
+        <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+          <ul class="flex flex-col lg:flex-row lg:gap-3">
+            {
+              menuItems.map((item) => (
+                <>
+                  {item.children ? (
+                    <Dropdown title={item.title} children={item.children} />
+                  ) : (
+                    <li>
+                      <a
+                        href={item.path}
+                        aria-current={isActive(item.path) ? "page" : undefined}
+                        class:list={[
+                          "flex lg:px-3 py-2 items-center hover:text-gray-900",
+                          isActive(item.path) ? "text-gray-900" : "text-gray-600",
+                        ]}
+                      >
+                        <span>{item.title}</span>
+                      </a>
+                    </li>
+                  )}
+                </>
+              ))
+            }
+          </ul>
+          <div class="lg:hidden flex items-center justify-between gap-4 mt-4 pt-4 border-t border-gray-100">
+            <LangSwitcher />
+            <Link href={signupHref} size="md">{t.nav.startFree}</Link>
+          </div>
+        </MenuItems>
+      </Astronav>
+      <div>
+        <div class="hidden lg:flex items-center gap-5">
           <LangSwitcher />
+          <span class="h-4 w-px bg-gray-200" aria-hidden="true"></span>
           <Link href={signupHref} size="md">{t.nav.startFree}</Link>
         </div>
-      </MenuItems>
-    </Astronav>
-    <div>
-      <div class="hidden lg:flex items-center gap-5">
-        <LangSwitcher />
-        <span class="h-4 w-px bg-gray-200" aria-hidden="true"></span>
-        <Link href={signupHref} size="md">{t.nav.startFree}</Link>
       </div>
-    </div>
-  </header>
-</Container>
+    </header>
+  </Container>
+</div>
