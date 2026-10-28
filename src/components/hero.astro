@@ -1,12 +1,8 @@
 ---
+// 2026-10-24 - 替换 Hero 区域为纯 CSS 打造的桌面客户端拟真 UI。
 // 2026-10-24 - 双语支持：文案改由字典提供，CTA 链接按语言加 /zh 前缀。
-// 2026-10-24 - 副标题对齐三大产品线（Translate / Prompter / Recorder），
-// 替换原先"写作/剪辑/配音"等泛化能力描述。
-// 2026-10-23 - XIYUE rebrand: 替换模板 hero 文案为品牌主标；
-// 清理原组件重复书写的两个 href（"#" 与真实外链并存，后者覆盖前者）；
-// 图片 widths 收敛到原图 520px 以内，避免上采样导致的模糊。
-import { Picture } from "astro:assets";
-import heroImage from "@/assets/hero.png";
+// 2026-10-24 - 副标题对齐三大产品线（Translate / Prompter / Recorder）；
+// 右侧为纯 Tailwind 桌面客户端拟真窗口，移除原 hero.png 插画引用。
 import Link from "@/components/ui/link.astro";
 import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -20,24 +16,14 @@ const signupHref = `${prefix}/pricing`;
 ---
 
 <main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24"
+  class="grid gap-12 lg:grid-cols-2 lg:gap-16 place-items-center pt-16 pb-8 md:pt-12 md:pb-24"
 >
-  <div class="py-6 md:order-1 hidden md:block">
-    <Picture
-      src={heroImage}
-      alt=""
-      widths={[200, 400, 520]}
-      sizes="(max-width: 800px) 100vw, 620px"
-      loading="eager"
-      formats={["avif", "webp"]}
-    />
-  </div>
-  <div>
+  <div class="max-w-xl">
     <p class="text-xs uppercase tracking-[0.18em] text-gray-400 font-semibold">
       {t.hero.eyebrow}
     </p>
     <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter mt-4"
+      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter mt-4 text-balance"
     >
       {t.hero.title}
     </h1>
@@ -49,7 +35,7 @@ const signupHref = `${prefix}/pricing`;
         href={signupHref}
         class="flex gap-2 items-center justify-center"
         rel="noopener">
-        <Icon class="text-white w-5 h-5" name="bx:bxs-right-arrow-alt" />
+        <Icon size="20" name="bx:bxs-right-arrow-alt" />
         {t.hero.ctaPrimary}
       </Link>
       <Link
@@ -61,5 +47,89 @@ const signupHref = `${prefix}/pricing`;
       </Link>
     </div>
     <p class="mt-4 text-sm text-slate-400">{t.hero.note}</p>
+  </div>
+  <div class="w-full max-w-[540px]">
+    <div class="relative" aria-hidden="true">
+      <div class="absolute -inset-x-6 -bottom-10 top-10 rounded-[32px] bg-neutral-950/15 blur-2xl"></div>
+      <div class="relative overflow-hidden rounded-lg border border-neutral-800 bg-neutral-950 ring-1 ring-white/5 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.5)]">
+        <header class="flex items-center gap-2 border-b border-white/5 bg-neutral-900 px-4 py-3">
+          <span class="h-3 w-3 rounded-full bg-[#ff5f57]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#febc2e]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
+          <span class="ml-3 text-xs font-medium tracking-wide text-neutral-500">
+            XIYUE Studio
+          </span>
+          <span class="ml-auto font-mono text-[10px] text-neutral-600">v2.4.1</span>
+        </header>
+        <div class="space-y-3 p-4">
+          <section class="rounded-md border border-white/5 bg-neutral-900/70 p-3.5">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <span class="relative flex h-7 w-7 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10">
+                  <Icon name="bx:bxs-microphone" size={14} class="text-neutral-200" />
+                  <span class="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse"></span>
+                </span>
+                <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
+                  Live Translate
+                </span>
+              </div>
+              <span class="rounded-full bg-white/5 px-2 py-0.5 font-mono text-[10px] text-neutral-400 ring-1 ring-white/10">
+                ZH / EN
+              </span>
+            </div>
+            <div class="mt-3 space-y-1.5">
+              <p class="text-[15px] font-medium leading-snug text-white">
+                欢迎加入本期直播，我们正在实时翻译
+                <span class="ml-1 inline-block h-3.5 w-px translate-y-0.5 bg-neutral-300 motion-safe:animate-pulse"></span>
+              </p>
+              <p class="text-[13px] leading-snug text-neutral-400">
+                Welcome to this live session, translated in real time.
+              </p>
+              <p class="text-[13px] leading-snug text-neutral-600">
+                Next, let's look at the launch plan together.
+              </p>
+            </div>
+          </section>
+          <section class="rounded-md border border-white/5 bg-neutral-900/70 p-3.5">
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
+                Teleprompter
+              </span>
+              <span class="font-mono text-[10px] text-neutral-500">2 / 6</span>
+            </div>
+            <div class="mt-3 space-y-2 rounded-md bg-white/5 p-3 ring-1 ring-white/10">
+              <p class="text-[13px] leading-relaxed text-neutral-600">
+                大家好，欢迎来到本期直播。
+              </p>
+              <p class="text-[15px] font-medium leading-relaxed text-white">
+                今天我们聊一聊
+                <span class="mx-0.5 rounded bg-amber-400/15 px-1 text-amber-300">下一代实时翻译引擎</span>
+                ，它将如何改变跨语言沟通。
+              </p>
+              <p class="text-[13px] leading-relaxed text-neutral-600">
+                它让每一场跨语言对话都更自然。
+              </p>
+            </div>
+            <div class="mt-3 h-1 overflow-hidden rounded-full bg-white/10">
+              <div class="h-full w-1/3 rounded-full bg-white/60"></div>
+            </div>
+          </section>
+          <section class="flex items-center justify-between gap-3 rounded-md border border-white/5 bg-neutral-900/70 p-3.5">
+            <div class="flex items-center gap-2.5">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-40 motion-safe:animate-ping"></span>
+                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span>
+              </span>
+              <span class="font-mono text-[13px] font-medium tracking-wide text-neutral-100">
+                REC 00:42:15
+              </span>
+            </div>
+            <span class="font-mono text-[11px] tracking-wide text-neutral-500">
+              <span class="text-neutral-700">|</span> 4K 60FPS
+            </span>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </main>

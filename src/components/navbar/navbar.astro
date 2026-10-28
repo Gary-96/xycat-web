@@ -1,4 +1,5 @@
 ---
+// 2026-10-24 - 导航品牌升级：融合几何科技猫耳/声波图标、呼吸指示点与业务后缀，提升辨识度与高级感。
 // 2026-10-24 - 导航改为 sticky 固定顶栏：sticky 包裹层移出 Container 全宽铺满
 //（白底 + 底部细线），滚动时不再隐藏；header 原 my-5 改 py-5 保持纵向节奏。
 // 锚点偏移复用各 section 既有 scroll-mt-*（≥ 固定栏高度），无需额外处理；
@@ -24,8 +25,6 @@ const pathname = Astro.url.pathname;
 // 中文页面的路径前缀；英文为空（默认语言不带前缀）
 const prefix = lang === "zh" ? "/zh" : "";
 
-// 2026-10-24 - 中文站隐藏 Blog：博客暂无中文内容，保留入口只会把中文用户带到英文页。
-// 英文站保持原样。待中文博客上线后，删掉 lang === "en" 的判断即可恢复。
 interface MenuItem {
   title: string;
   path: string;
@@ -54,11 +53,25 @@ const signupHref = `${prefix}/pricing`;
     <header class="flex flex-col lg:flex-row justify-between items-center py-5">
       <Astronav>
         <div class="flex w-full lg:w-auto items-center justify-between">
-          <a href={`${prefix}/`} class="text-lg" aria-label={`${site.name} — home`}>
-            <span
-              class="font-bold text-slate-900 tracking-[0.28em] text-base align-middle"
-              >{site.name}</span
-            >
+          <a href={`${prefix}/`} class="flex items-center gap-2.5 group" aria-label={`${site.name} — home`}>
+            <div class="relative w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm group-hover:bg-black group-hover:scale-105 transition-all duration-200">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 18V8.5L7.5 12h9L20 8.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+                <circle cx="12" cy="15" r="1.5" fill="currentColor" />
+              </svg>
+              <span class="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="font-extrabold text-slate-900 tracking-tight text-lg leading-none">
+                {site.name}
+              </span>
+              <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase leading-none">
+                {lang === "zh" ? "创作者工具" : "Live Tools"}
+              </span>
+            </div>
           </a>
           <div class="block lg:hidden">
             <MenuIcon class="w-4 h-4 text-gray-800" />
