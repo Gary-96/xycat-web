@@ -1,7 +1,8 @@
 // 2026-10-23 - XIYUE rebrand: 图片字段改用 Astro 内置 image() 助手，frontmatter 走本地相对路径，
 // 不再依赖 Unsplash 外链（原实现构建期需联网抓取第三方图片，外链失效即构建失败）。
 // draft / tags 补默认值，避免新增文章时因漏字段导致构建报错。
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 /**

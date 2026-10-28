@@ -26,7 +26,10 @@ const t = useTranslations(lang);
 
       <div class="mt-8">
         <div class="flex items-center gap-2 text-gray-600">
-          <Icon class="text-gray-400 w-4 h-4" name="uil:envelope" />
+          <!-- 图标 fill=currentColor，颜色由外层 span 控制；astro-icon 未声明 class prop，size 走组件 prop -->
+          <span class="text-gray-400" aria-hidden="true">
+            <Icon size="16" name="uil:envelope" />
+          </span>
           <a href={`mailto:${site.email}`} class="hover:text-gray-900 transition"
             >{site.email}</a
           >

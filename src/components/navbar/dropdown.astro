@@ -1,6 +1,17 @@
 ---
 import { Dropdown as DropdownContainer, DropdownItems } from "astro-navbar";
-const { title, lastItem, children } = Astro.props;
+
+// 2026-10-24 - 给 props 补上显式类型（原为隐式 any），消除 astro check 的 ts(7044) 提示。
+interface DropdownChild {
+  title: string;
+  path: string;
+}
+
+const { title, lastItem, children } = Astro.props as {
+  title: string;
+  lastItem?: boolean;
+  children: DropdownChild[];
+};
 ---
 
 <li class="relative">
