@@ -1,4 +1,5 @@
 ---
+// 2026-10-24 - 导航新增文档中心入口（en: Docs / zh: 使用说明），指向 /docs 与 /zh/docs。
 // 2026-10-24 - 双语支持：导航文案与路径改由 src/i18n/ui.ts 提供，
 // 右上角增加语言切换器；中文站的首页锚点需带 /zh 前缀（/zh/#translate），
 // 不能简单给英文路径加前缀（英文首页是 /，不是 /en/）。
@@ -31,6 +32,7 @@ const menuItems: MenuItem[] = [
   { title: t.nav.product, path: `${prefix}/#features`, children: t.nav.products },
   { title: t.nav.pricing, path: `${prefix}/pricing` },
   { title: t.nav.about, path: `${prefix}/about` },
+  { title: t.nav.docs, path: `${prefix}/docs` },
   ...(lang === "en" ? [{ title: t.nav.blog, path: "/blog" }] : []),
   { title: t.nav.contact, path: `${prefix}/contact` },
 ];

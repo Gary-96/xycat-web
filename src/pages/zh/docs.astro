@@ -1,0 +1,13 @@
+---
+// 2026-10-24 - 新增文档中心：中文薄壳页面，正文结构在 views/docs-view.astro，
+// 与 /docs 共用同一视图，字典提供中文内容。
+import Layout from "@/layouts/Layout.astro";
+import DocsView from "@/components/views/docs-view.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<Layout title={t.meta.docs.title} description={t.meta.docs.description}>
+  <DocsView />
+</Layout>

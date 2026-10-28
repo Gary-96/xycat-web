@@ -1,0 +1,219 @@
+---
+// 2026-10-24 - 新增文档中心视图：/docs 与 /zh/docs 共用，内容全部来自字典 t.docs。
+// 桌面端两栏：左侧 sticky 目录（滚动定位高亮）+ 右侧分区卡片正文；
+// 移动端目录降级为横向滑动的胶囊条。卡片体系：边框卡片 + 编号步骤 +
+// kbd 快捷键芯片 + 左侧黑线的避坑提示框（tipLabel）。内联脚本注释一律英文。
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+// 2026-10-24 - 显式内容接口：字典经 typeof 推断后 cards 为异构联合类型，
+// map 回调用处会触发 ts(7044) 隐式 any；断言到结构接口后回调参数全部可推断。
+interface DocsContent {
+  title: string;
+  sub: string;
+  tocLabel: string;
+  tipLabel: string;
+  sections: {
+    id: string;
+    nav: string;
+    kicker: string;
+    title: string;
+    lead: string;
+    cards: {
+      title: string;
+      body?: string;
+      steps?: string[];
+      keys?: { key: string; action: string }[];
+      tip?: string;
+    }[];
+  }[];
+}
+
+const docs = t.docs as DocsContent;
+---
+
+<Container>
+  <Sectionhead>
+    <Fragment slot="title">{docs.title}</Fragment>
+    <Fragment slot="desc">{docs.sub}</Fragment>
+  </Sectionhead>
+
+  <nav class="lg:hidden -mx-5 mt-10 px-5" aria-label={docs.tocLabel}>
+    <ul class="docs-chips flex gap-2 overflow-x-auto pb-2">
+      {docs.sections.map((section) => (
+        <li>
+          <a
+            href={`#${section.id}`}
+            class="whitespace-nowrap rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-600"
+          >
+            {section.nav}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="mt-12 grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12">
+    <aside class="hidden lg:block">
+      <nav class="sticky top-28" aria-label={docs.tocLabel}>
+        <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          {docs.tocLabel}
+        </p>
+        <ul class="space-y-1">
+          {docs.sections.map((section) => (
+            <li>
+              <a
+                href={`#${section.id}`}
+                data-docs-link
+                class="docs-link block border-l-2 border-transparent py-1.5 pl-3 text-sm text-gray-500 transition hover:text-gray-900"
+              >
+                {section.nav}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="min-w-0">
+      {docs.sections.map((section) => (
+        <section id={section.id} class="scroll-mt-28 mt-16 first:mt-0">
+          <div class="flex items-baseline gap-3">
+            <span class="text-sm font-semibold tabular-nums text-gray-300">
+              {section.kicker}
+            </span>
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">
+              {section.title}
+            </h2>
+          </div>
+          <p class="mt-3 max-w-2xl leading-relaxed text-slate-500">
+            {section.lead}
+          </p>
+
+          <div class="mt-8 grid gap-5 md:grid-cols-2">
+            {section.cards.map((card) => (
+              <article
+                class:list={[
+                  "rounded-lg border border-gray-200 bg-white p-6",
+                  (card.steps || card.keys) && "md:col-span-2",
+                ]}
+              >
+                <h3 class="text-lg font-semibold text-gray-900">{card.title}</h3>
+                {card.body && (
+                  <p class="mt-2 text-[15px] leading-relaxed text-slate-500">
+                    {card.body}
+                  </p>
+                )}
+                {card.steps && (
+                  <ol class="mt-4 space-y-3">
+                    {card.steps.map((step, i) => (
+                      <li class="flex gap-3">
+                        <span
+                          class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold tabular-nums text-white"
+                        >
+                          {i + 1}
+                        </span>
+                        <span class="pt-0.5 text-[15px] leading-relaxed text-gray-700">
+                          {step}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {card.keys && (
+                  <ul class="mt-4 space-y-2.5">
+                    {card.keys.map((item) => (
+                      <li class="flex items-center gap-3">
+                        <span class="kbd shrink-0">{item.key}</span>
+                        <span class="text-sm text-gray-700">{item.action}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {card.tip && (
+                  <div
+                    class="mt-5 rounded-r-md border-l-2 border-gray-900 bg-gray-50 px-4 py-3"
+                  >
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                      {docs.tipLabel}
+                    </p>
+                    <p class="mt-1 text-sm leading-relaxed text-gray-700">
+                      {card.tip}
+                    </p>
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</Container>
+
+<style>
+  /* Keyboard key chip: black-and-white minimal, bottom border reads as a key */
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 1.5rem;
+    padding: 0 0.5rem;
+    border: 1px solid var(--color-gray-300);
+    border-bottom-width: 2px;
+    border-radius: 0.375rem;
+    background: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-gray-800);
+  }
+
+  /* Active TOC link, toggled by the scroll-spy script below */
+  .docs-link.is-active {
+    color: var(--color-gray-900);
+    border-left-color: var(--color-gray-900);
+  }
+
+  /* Hide the mobile chip bar scrollbar without losing the scroll itself */
+  .docs-chips {
+    scrollbar-width: none;
+  }
+  .docs-chips::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  // Scroll-spy: highlight the matching TOC link while the user scrolls.
+  (() => {
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>("a[data-docs-link]")
+    );
+    if (links.length === 0 || !("IntersectionObserver" in window)) return;
+    const byId = new Map<string, HTMLElement>();
+    links.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (href) byId.set(href.replace(/^#/, ""), link);
+    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const active = byId.get(entry.target.id);
+          links.forEach((link) =>
+            link.classList.toggle("is-active", link === active)
+          );
+        }
+      },
+      { rootMargin: "-25% 0px -65% 0px" }
+    );
+    document.querySelectorAll("section[id]").forEach((section) => {
+      observer.observe(section);
+    });
+  })();
+</script>

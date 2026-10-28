@@ -1,5 +1,6 @@
 /**
  * 2026-10-24 - i18n 工具函数。
+ * 2026-10-24 - 路由对照表补充文档中心：/docs ↔ /zh/docs，语言切换器在两页间互指。
  *
  * 语言判定以 URL 为准（/zh 前缀 → zh，其余 → en），而不是只依赖 Astro.currentLocale：
  * 前者在静态构建、预览、以及 i18n 配置被改动时行为一致，不会因为 currentLocale
@@ -36,6 +37,8 @@ const routes: { en: string; zh: string }[] = [
   { en: "/pricing", zh: "/zh/pricing" },
   { en: "/about", zh: "/zh/about" },
   { en: "/contact", zh: "/zh/contact" },
+  // 2026-10-24 - 文档中心：/docs 与 /zh/docs 互为译文，切换时不再回落首页
+  { en: "/docs", zh: "/zh/docs" },
 ];
 
 const normalize = (path: string) => {
