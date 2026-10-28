@@ -1,4 +1,8 @@
 ---
+// 2026-10-24 - 语言偏好 cookie：用户主动切换语言时写入 xiyue_lang（一年期），
+// 供 Cloudflare 边缘 Worker（deploy/geo-router/worker.js）识别显式选择，
+// 使 IP 默认语言逻辑不再重定向已手动选过语言的用户。
+// 注意：切换脚本注释只用英文（内联客户端脚本会进产物）。
 // 2026-10-24 - 极简语言切换器：EN / 中文。
 // 当前语言渲染为不可点的 <span>（带 aria-current），另一种语言渲染为链接，
 // 链接地址由 getAlternatePaths 从路由对照表推导，保证切语言后仍停在同一个页面。
@@ -32,6 +36,7 @@ const items = [
             hreflang={item.code}
             lang={item.code === "zh" ? "zh-CN" : "en"}
             class="text-gray-500 hover:text-gray-900 transition"
+            data-xiyue-lang={item.code}
           >
             {item.label}
           </a>
@@ -40,3 +45,12 @@ const items = [
     ))
   }
 </nav>
+
+<script>
+  // Persist the explicit language choice so the edge geo-router respects it.
+  document.querySelectorAll("a[data-xiyue-lang]").forEach((link) => {
+    link.addEventListener("click", () => {
+      document.cookie = `xiyue_lang=${link.dataset.xiyueLang}; path=/; max-age=31536000; samesite=lax`;
+    });
+  });
+</script>

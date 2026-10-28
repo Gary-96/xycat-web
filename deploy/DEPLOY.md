@@ -251,3 +251,53 @@ ssh root@<服务器IP> "cd /www/wwwroot && rm -rf xycat.com && tar -xzf xycat-ba
 ```
 
 代码侧的回滚用 Git：`git log --oneline` 找到基线提交 `chore: baseline before XIYUE rebrand`，可完整回到模板状态。
+
+## 11. IP 语言自动路由（Cloudflare Worker）
+
+> 2026-10-24 - 新增。站点「中文为主、全球默认英文」的语言落地策略：
+> 中国 IP 访问英文首页 `/` → 302 到 `/zh/`；非中国 IP 访问 `/zh/` → 302 到 `/`。
+> 用户在页面右上角主动切换语言会写入一年期 cookie `xiyue_lang`，此后 IP 逻辑不再干预。
+
+### 为什么放在 Cloudflare 层
+
+域名已接入 Cloudflare（响应头 `server: cloudflare`），真实访客 IP 只有 CF 边缘可见
+（源站 aaPanel 看到的是 CF 的 IP）。CF 自带 `cf.country` 地理位置字段，
+因此用 **Worker** 在边缘做 302 最干净：无第三方 IP 库、无客户端闪烁、每请求一行判断。
+
+### 组件
+
+- `deploy/geo-router/worker.js` —— 路由逻辑（仅对两个首页路径生效，深链保持 URL 语言不变）
+- `deploy/geo-router/wrangler.toml` —— CLI 部署配置（可选）
+- `src/components/lang-switcher.astro` —— 切换语言时写 `xiyue_lang` cookie（一年）
+
+### 部署（控制台方式，无需 CLI）
+
+1. Cloudflare 控制台 → 选 `xycat.com` 区域 → **Workers & Pages → Create → Worker**。
+2. 粘贴 `deploy/geo-router/worker.js` 全部内容，部署。
+3. **Settings → Triggers → Workers Routes**（旧版叫 "Add a route"）：
+   zone 选 `xycat.com`，route 填 `/*`，关联刚才的 Worker。
+4. 免费版 Workers 含 10 万次/天请求配额，本站流量远在配额内。
+
+### 验证
+
+```bash
+# 在中国大陆网络（IP 属 CN）：应 302 到 /zh/
+curl -sI https://xycat.com/ | rg "HTTP/|location"
+# 期望：302 ; location: https://xycat.com/zh/
+
+# 在境外网络（IP 非 CN）：访问 /zh/ 应 302 到 /
+curl -sI https://xycat.com/zh/ | rg "HTTP/|location"
+# 期望：302 ; location: https://xycat.com/
+
+# 带显式选择 cookie 时不再重定向（CN IP + 选过英文）
+curl -sI -H "Cookie: xiyue_lang=en" https://xycat.com/ | rg "HTTP/"
+# 期望：200（直出首页，不跳 /zh/）
+```
+
+也可在 Cloudflare 控制台 Worker 的 **Test/Preview** 里用 "Simulate request"
+手动指定 `cf.country` 测试两个方向，不必换网络。
+
+### 回滚
+
+删除 zone route（Triggers 里移除 `xycat.com/*`）即恢复原状；Worker 本体可留可删。
+`xiyue_lang` cookie 无副作用（没有 Worker 时它只是被浏览器存着，一年自动过期）。

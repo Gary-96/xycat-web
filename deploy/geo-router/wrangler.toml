@@ -1,0 +1,8 @@
+# 2026-10-24 - Cloudflare Worker 配置：xycat.com IP 语言路由。
+# 部署方式二选一（详见 DEPLOY.md 第 11 节）：
+# 1. 控制台手工建 Worker（把 worker.js 粘进去，Trigger 绑 xycat.com/*）——推荐，无需 CLI；
+# 2. wrangler deploy（需 API token，zone 绑定在控制台完成）。
+name = "xycat-geo-router"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+usage_model = "free"
