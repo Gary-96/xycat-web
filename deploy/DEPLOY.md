@@ -254,8 +254,8 @@ ssh root@<服务器IP> "cd /www/wwwroot && rm -rf xycat.com && tar -xzf xycat-ba
 
 ## 11. IP 语言自动路由（Cloudflare Worker）
 
-> 2026-10-24 - 新增。站点「中文为主、全球默认英文」的语言落地策略：
-> 中国 IP 访问英文首页 `/` → 302 到 `/zh/`；非中国 IP 访问 `/zh/` → 302 到 `/`。
+> 2026-10-30 - 架构翻转后更新。站点「中文为默认根路径 `/`、英文为 `/en` 前缀」的语言落地策略：
+> 中国 IP 访问英文首页 `/en/` → 302 到 `/`；非中国 IP 访问中文首页 `/` → 302 到 `/en/`。
 > 用户在页面右上角主动切换语言会写入一年期 cookie `xiyue_lang`，此后 IP 逻辑不再干预。
 
 ### 为什么放在 Cloudflare 层
@@ -281,17 +281,17 @@ ssh root@<服务器IP> "cd /www/wwwroot && rm -rf xycat.com && tar -xzf xycat-ba
 ### 验证
 
 ```bash
-# 在中国大陆网络（IP 属 CN）：应 302 到 /zh/
-curl -sI https://xycat.com/ | rg "HTTP/|location"
-# 期望：302 ; location: https://xycat.com/zh/
-
-# 在境外网络（IP 非 CN）：访问 /zh/ 应 302 到 /
-curl -sI https://xycat.com/zh/ | rg "HTTP/|location"
+# 在中国大陆网络（IP 属 CN）：访问英文首页 /en/ 应 302 到 /
+curl -sI https://xycat.com/en/ | rg "HTTP/|location"
 # 期望：302 ; location: https://xycat.com/
 
-# 带显式选择 cookie 时不再重定向（CN IP + 选过英文）
-curl -sI -H "Cookie: xiyue_lang=en" https://xycat.com/ | rg "HTTP/"
-# 期望：200（直出首页，不跳 /zh/）
+# 在境外网络（IP 非 CN）：访问中文首页 / 应 302 到 /en/
+curl -sI https://xycat.com/ | rg "HTTP/|location"
+# 期望：302 ; location: https://xycat.com/en/
+
+# 带显式选择 cookie 时不再重定向（非 CN IP + 选过中文）
+curl -sI -H "Cookie: xiyue_lang=zh" https://xycat.com/ | rg "HTTP/"
+# 期望：200（直出中文首页，不跳 /en/）
 ```
 
 也可在 Cloudflare 控制台 Worker 的 **Test/Preview** 里用 "Simulate request"

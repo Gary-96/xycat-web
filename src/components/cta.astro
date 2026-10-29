@@ -1,5 +1,6 @@
 ---
-// 2026-10-24 - 双语支持：CTA 区块文案改由字典提供，按钮链接按语言加 /zh 前缀。
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
+// 2026-10-24 - 双语支持：CTA 区块文案改由字典提供，英文站按钮链接加 /en 前缀。
 import Link from "./ui/link.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
@@ -7,7 +8,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // TODO: 接入真实注册地址后替换
-const signupHref = lang === "zh" ? "/zh/pricing" : "/pricing";
+// 2026-10-30 - 中文 CTA 指向根路径 /pricing，英文指向 /en/pricing
+const signupHref = lang === "en" ? "/en/pricing" : "/pricing";
 ---
 
 <div

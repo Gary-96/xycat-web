@@ -1,4 +1,5 @@
 ---
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 双语支持：html lang 按语言环境切换；补 hreflang 三向互指
 //（en / zh / x-default），避免中英两版被搜索引擎判为重复内容。
 // 2026-10-23 - XIYUE rebrand: Layout 支持逐页 title / description / ogImage / article 元数据；
@@ -84,7 +85,7 @@ const orgSchema = {
 
     <link rel="alternate" hreflang="en" href={alternateURL.en} />
     <link rel="alternate" hreflang="zh" href={alternateURL.zh} />
-    <link rel="alternate" hreflang="x-default" href={alternateURL.en} />
+    <link rel="alternate" hreflang="x-default" href={alternateURL.zh} />
 
     <SEO
       title={pageTitle}

@@ -1,4 +1,5 @@
 ---
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 语言偏好 cookie：用户主动切换语言时写入 xiyue_lang（一年期），
 // 供 Cloudflare 边缘 Worker（deploy/geo-router/worker.js）识别显式选择，
 // 使 IP 默认语言逻辑不再重定向已手动选过语言的用户。
@@ -11,6 +12,7 @@ import { getAlternatePaths, getLangFromUrl, languages } from "@/i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const paths = getAlternatePaths(Astro.url.pathname);
 
+// 2026-10-30 - 切换目标地址随架构翻转：中文页 ⇄ /en 对应页（utils.ts 路由表推导）
 const items = [
   { code: "en" as const, label: languages.en, href: paths.en },
   { code: "zh" as const, label: languages.zh, href: paths.zh },
@@ -48,7 +50,9 @@ const items = [
 
 <script>
   // Persist the explicit language choice so the edge geo-router respects it.
-  document.querySelectorAll("a[data-xiyue-lang]").forEach((link) => {
+  // 2026-10-30 - generic: querySelectorAll returns Element without .dataset;
+  // type it as HTMLAnchorElement so the dataset access passes astro check.
+  document.querySelectorAll<HTMLAnchorElement>("a[data-xiyue-lang]").forEach((link) => {
     link.addEventListener("click", () => {
       document.cookie = `xiyue_lang=${link.dataset.xiyueLang}; path=/; max-age=31536000; samesite=lax`;
     });

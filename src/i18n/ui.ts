@@ -1,3 +1,5 @@
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
+// 2026-10-30 - 修复默认中文判定与误放的文件位置。
 /**
  * 2026-10-24 - 全站文案字典（en / zh）。
  * 2026-10-24 - 新增文档中心：meta.docs / nav.docs / 页脚文档入口，
@@ -6,8 +8,8 @@
  * 设计原则：
  * 1. 文案与视图分离——组件只消费字典，不内嵌任何可见文案，新增语言时只加一个 locale 分支。
  * 2. zh 显式标注为 typeof en，缺键或多键都会在编译期报错，避免翻译漏项。
- * 3. 站内路径写在字典里而非组件里，因为 /pricing 与 /zh/pricing 是两套地址，
- *    不能在渲染时简单拼前缀（首页的 /zh/ 与英文的 / 形态就不同）。
+ * 3. 站内路径写在字典里而非组件里，因为 /pricing 与 /en/pricing 是两套地址，
+ *    不能在渲染时简单拼前缀（首页的 / 与英文的 /en 形态就不同）。
  */
 
 const en = {
@@ -55,9 +57,9 @@ const en = {
     startFree: "Start free",
     switchLabel: "Switch language",
     products: [
-      { title: "Translate", path: "/#translate" },
-      { title: "Prompter", path: "/#prompter" },
-      { title: "Recorder", path: "/#recorder" },
+      { title: "Translate", path: "/en/#translate" },
+      { title: "Prompter", path: "/en/#prompter" },
+      { title: "Recorder", path: "/en/#recorder" },
     ],
   },
 
@@ -67,21 +69,21 @@ const en = {
       {
         title: "Product",
         items: [
-          { title: "Translate", path: "/#translate" },
-          { title: "Prompter", path: "/#prompter" },
-          { title: "Recorder", path: "/#recorder" },
-          { title: "Pricing", path: "/pricing" },
-          { title: "Docs", path: "/docs" },
+          { title: "Translate", path: "/en/#translate" },
+          { title: "Prompter", path: "/en/#prompter" },
+          { title: "Recorder", path: "/en/#recorder" },
+          { title: "Pricing", path: "/en/pricing" },
+          { title: "Docs", path: "/en/docs" },
         ],
       },
       {
         title: "Company",
         items: [
-          { title: "About", path: "/about" },
-          { title: "Blog", path: "/blog" },
-          { title: "Contact", path: "/contact" },
-          { title: "Privacy Policy", path: "/privacy" },
-          { title: "Terms of Service", path: "/terms" },
+          { title: "About", path: "/en/about" },
+          { title: "Blog", path: "/en/blog" },
+          { title: "Contact", path: "/en/contact" },
+          { title: "Privacy Policy", path: "/en/privacy" },
+          { title: "Terms of Service", path: "/en/terms" },
         ],
       },
     ],
@@ -95,6 +97,21 @@ const en = {
     ctaPrimary: "Start free",
     ctaSecondary: "See what's inside",
     note: "Free to try. No card required.",
+    mock: {
+      windowTitle: "XIYUE Studio",
+      translateLabel: "Live Translate",
+      prompterLabel: "Teleprompter",
+      subActive: "Welcome to this live session, translated in real time",
+      subTranslated: "欢迎加入本期直播，我们正在实时翻译。",
+      subNext: "Next, let's look at the launch plan together.",
+      prompter: {
+        prev: "Hi everyone, welcome to today's live show.",
+        before: "Today we'll talk about ",
+        highlight: "the next-gen translation engine",
+        after: " and how it changes cross-language communication.",
+        next: "It makes every cross-language conversation more natural.",
+      },
+    },
   },
 
   features: {
@@ -147,7 +164,7 @@ const en = {
     sub: "One-time payment. Own the tools for good — no subscription, no recurring charges.",
     footnote: "One-time payment, no recurring subscription. WeChat Pay, Alipay and international cards accepted.",
     // 2026-10-24 - 定价改为买断制三档：Starter 尝鲜 / Lifetime 永久主推 / Studio 公会团队。
-    // TODO: 三处按钮均暂指向 /contact，接入支付或购买页后替换。
+    // TODO: 三处按钮均暂指向 /en/contact，接入支付或购买页后替换。
     plans: [
       {
         name: "Starter",
@@ -159,7 +176,7 @@ const en = {
           "Single device activation",
           "Basic technical support",
         ],
-        button: { text: "Get 30-Day Pass", link: "/contact" },
+        button: { text: "Get 30-Day Pass", link: "/en/contact" },
       },
       {
         name: "Lifetime Pass",
@@ -176,7 +193,7 @@ const en = {
           "Priority access to the low-latency streaming channel",
           "Official creator VIP group and priority bug fixing",
         ],
-        button: { text: "Get Lifetime Access", link: "/contact" },
+        button: { text: "Get Lifetime Access", link: "/en/contact" },
       },
       {
         name: "Agency / Studio",
@@ -189,7 +206,7 @@ const en = {
           "Batch activation codes with team management",
           "1-on-1 setup guidance from a dedicated engineer",
         ],
-        button: { text: "Contact Studio Sales", link: "/contact" },
+        button: { text: "Contact Studio Sales", link: "/en/contact" },
       },
     ],
   },
@@ -549,9 +566,9 @@ const zh: typeof en = {
     startFree: "免费开始",
     switchLabel: "切换语言",
     products: [
-      { title: "同声传译", path: "/zh/#translate" },
-      { title: "主播提词", path: "/zh/#prompter" },
-      { title: "直播录制", path: "/zh/#recorder" },
+      { title: "同声传译", path: "/#translate" },
+      { title: "主播提词", path: "/#prompter" },
+      { title: "直播录制", path: "/#recorder" },
     ],
   },
 
@@ -561,21 +578,21 @@ const zh: typeof en = {
       {
         title: "产品",
         items: [
-          { title: "同声传译", path: "/zh/#translate" },
-          { title: "主播提词", path: "/zh/#prompter" },
-          { title: "直播录制", path: "/zh/#recorder" },
-          { title: "价格方案", path: "/zh/pricing" },
-          { title: "使用文档", path: "/zh/docs" },
+          { title: "同声传译", path: "/#translate" },
+          { title: "主播提词", path: "/#prompter" },
+          { title: "直播录制", path: "/#recorder" },
+          { title: "价格方案", path: "/pricing" },
+          { title: "使用文档", path: "/docs" },
         ],
       },
       {
         title: "公司",
         items: [
-          { title: "关于我们", path: "/zh/about" },
+          { title: "关于我们", path: "/about" },
           // 2026-10-24 - 中文站隐藏博客入口，与导航保持一致（暂无中文内容）
-          { title: "联系我们", path: "/zh/contact" },
-          { title: "隐私政策", path: "/zh/privacy" },
-          { title: "服务条款", path: "/zh/terms" },
+          { title: "联系我们", path: "/contact" },
+          { title: "隐私政策", path: "/privacy" },
+          { title: "服务条款", path: "/terms" },
         ],
       },
     ],
@@ -589,6 +606,21 @@ const zh: typeof en = {
     ctaPrimary: "免费开始",
     ctaSecondary: "看看有什么",
     note: "免费试用，无需绑定银行卡。",
+    mock: {
+      windowTitle: "喜阅 Studio",
+      translateLabel: "实时传译",
+      prompterLabel: "智能提词",
+      subActive: "欢迎加入本期直播，我们正在实时翻译",
+      subTranslated: "Welcome to this live session, translated in real time.",
+      subNext: "接下来，一起看看发布计划。",
+      prompter: {
+        prev: "大家好，欢迎来到本期直播。",
+        before: "今天我们聊一聊",
+        highlight: "下一代实时翻译引擎",
+        after: "，它将如何改变跨语言沟通。",
+        next: "它让每一场跨语言对话都更自然。",
+      },
+    },
   },
 
   features: {
@@ -641,7 +673,7 @@ const zh: typeof en = {
     sub: "一次付费，永久拥有。没有订阅，没有循环扣费。",
     footnote: "所有购买均为单次付款，非循环扣费。支持微信、支付宝及国际信用卡。",
     // 2026-10-24 - 定价改为买断制三档：Starter 尝鲜 / Lifetime 永久主推 / Studio 公会团队。
-    // TODO: 三处按钮均暂指向 /zh/contact，接入支付或购买页后替换。
+    // TODO: 三处按钮均暂指向 /contact，接入支付或购买页后替换。
     plans: [
       {
         name: "Starter 尝鲜版",
@@ -653,7 +685,7 @@ const zh: typeof en = {
           "单设备激活",
           "基础技术支持",
         ],
-        button: { text: "开通 30 天", link: "/zh/contact" },
+        button: { text: "开通 30 天", link: "/contact" },
       },
       {
         name: "Lifetime Pass 永久授权",
@@ -670,7 +702,7 @@ const zh: typeof en = {
           "低延迟流媒体通道优先接入",
           "官方专属创作者 VIP 交流群与优先排障",
         ],
-        button: { text: "立即获取永久授权", link: "/zh/contact" },
+        button: { text: "立即获取永久授权", link: "/contact" },
       },
       {
         name: "Agency / Studio 公会版",
@@ -683,7 +715,7 @@ const zh: typeof en = {
           "团队批量激活码后台管理",
           "专属工程师 1 对 1 部署指导",
         ],
-        button: { text: "联系公会定制", link: "/zh/contact" },
+        button: { text: "联系公会定制", link: "/contact" },
       },
     ],
   },
@@ -743,7 +775,7 @@ const zh: typeof en = {
     },
   },
 
-  // 2026-10-24 - 新增隐私政策与服务条款文案，供 /zh/privacy 与 /zh/terms 使用。
+  // 2026-10-24 - 新增隐私政策与服务条款文案，供 /privacy 与 /terms 使用。
   // TODO: 以下为按业务描述起草的初稿，上线前需法务确认，尤其退款期限与适用法律条款。
   legal: {
     lastUpdated: "2026 年 10 月",

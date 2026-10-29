@@ -1,4 +1,5 @@
 ---
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-23 - XIYUE rebrand: 由「未被引用的死代码」改为详情页唯一实现；
 // 透传 description / type=article / publishedTime 给 Layout，补齐文章级 OG 元数据。
 import Container from "@/components/container.astro";
@@ -26,7 +27,7 @@ const { frontmatter } = Astro.props as { frontmatter: Frontmatter };
   <Container>
     <article class="mx-auto max-w-[735px] mt-14">
       <a
-        href="/blog"
+        href="/en/blog"
         class="text-sm text-slate-500 hover:text-gray-900 transition"
         >← Blog</a
       >
@@ -69,7 +70,7 @@ const { frontmatter } = Astro.props as { frontmatter: Frontmatter };
 
     <div class="text-center mt-14">
       <a
-        href="/blog"
+        href="/en/blog"
         class="bg-gray-100 px-5 py-3 rounded-md hover:bg-gray-200 transition text-sm"
         >← Back to blog</a
       >

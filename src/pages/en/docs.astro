@@ -1,6 +1,7 @@
 ---
-// 2026-10-24 - 新增文档中心：中文薄壳页面，正文结构在 views/docs-view.astro，
-// 与 /docs 共用同一视图，字典提供中文内容。
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
+// 2026-10-24 - 新增文档中心：英文薄壳页面，正文结构在 views/docs-view.astro，
+// 与 /docs（中文根路径）共用同一视图，差异全部在字典数据。
 import Layout from "@/layouts/Layout.astro";
 import DocsView from "@/components/views/docs-view.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";

@@ -1,12 +1,13 @@
-// 2026-10-24 - Cloudflare edge router for xycat.com: default landing language
-// by visitor country. China (cf.country === "CN") defaults to the Chinese
-// site (/zh/); every other country defaults to the English site (/).
+// 2026-10-30 - Cloudflare edge router for xycat.com: default landing language
+// by visitor country. The site now defaults to Chinese at the root path (/);
+// China (cf.country === "CN") stays on the root, every other country is
+// redirected from the root to the English site (/en/).
 //
 // An explicit in-app language switch writes a one-year "xiyue_lang" cookie
 // (see src/components/lang-switcher.astro). When that cookie is present the
 // redirect is skipped, so manual choice always wins over IP.
 //
-// Redirects only happen on the two home paths (/ and /zh/); deep links keep
+// Redirects only happen on the two home paths (/ and /en/); deep links keep
 // the language written in the URL, which keeps shared links stable.
 
 export default {
@@ -18,15 +19,17 @@ export default {
     const match = /(?:^|;\s*)xiyue_lang=([a-z]{2})/.exec(cookie);
     const explicit = match ? match[1] : null;
 
-    const isEnHome = url.pathname === "/" || url.pathname === "";
-    const isZhHome = url.pathname === "/zh" || url.pathname === "/zh/";
+    const isZhHome = url.pathname === "/" || url.pathname === "";
+    const isEnHome = url.pathname === "/en" || url.pathname === "/en/";
 
     if (!explicit) {
       if (country === "CN" && isEnHome) {
-        return homeRedirect(request, "/zh/");
+        // Chinese visitors who landed on the English home fall back to root
+        return homeRedirect(request, "/");
       }
       if (country !== "CN" && isZhHome) {
-        return homeRedirect(request, "/");
+        // Non-Chinese visitors who landed on the Chinese home get the /en site
+        return homeRedirect(request, "/en/");
       }
     }
 

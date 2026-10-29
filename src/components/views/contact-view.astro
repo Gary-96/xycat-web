@@ -1,5 +1,8 @@
 ---
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 双语支持：联系页正文抽为视图组件，文案由字典提供，表单组件自身也会按语言渲染。
+// 2026-10-30 - 邮箱图标技术说明（原 HTML 注释）并入 frontmatter，避免中文注释随产物泄露。
+// 图标 fill=currentColor，颜色由外层 span 控制；astro-icon 未声明 class prop，size 走组件 prop。
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 import Contactform from "@/components/contactform.astro";
@@ -26,7 +29,6 @@ const t = useTranslations(lang);
 
       <div class="mt-8">
         <div class="flex items-center gap-2 text-gray-600">
-          <!-- 图标 fill=currentColor，颜色由外层 span 控制；astro-icon 未声明 class prop，size 走组件 prop -->
           <span class="text-gray-400" aria-hidden="true">
             <Icon size="16" name="uil:envelope" />
           </span>

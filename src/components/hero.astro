@@ -1,6 +1,8 @@
 ---
+// 2026-10-30 - 修复默认中文判定与误放的文件位置。
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 替换 Hero 区域为纯 CSS 打造的桌面客户端拟真 UI。
-// 2026-10-24 - 双语支持：文案改由字典提供，CTA 链接按语言加 /zh 前缀。
+// 2026-10-24 - 双语支持：文案改由字典提供，CTA 链接英文按 /en 前缀。
 // 2026-10-24 - 副标题对齐三大产品线（Translate / Prompter / Recorder）；
 // 右侧为纯 Tailwind 桌面客户端拟真窗口，移除原 hero.png 插画引用。
 import Link from "@/components/ui/link.astro";
@@ -9,10 +11,15 @@ import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const prefix = lang === "zh" ? "/zh" : "";
+// 2026-10-30 - 英文站 CTA 走 /en 前缀；中文为默认根路径
+const prefix = lang === "en" ? "/en" : "";
 
 // TODO: 接入真实注册地址后替换
 const signupHref = `${prefix}/pricing`;
+
+// 桌面客户端拟真窗口的界面文字随语言字典切换（中文页全中文，
+// 仅保留一条演示转译输出的目标语字幕，体现中/英实时转译效果）。
+const mock = t.hero.mock;
 ---
 
 <main
@@ -57,7 +64,7 @@ const signupHref = `${prefix}/pricing`;
           <span class="h-3 w-3 rounded-full bg-[#febc2e]"></span>
           <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
           <span class="ml-3 text-xs font-medium tracking-wide text-neutral-500">
-            XIYUE Studio
+            {mock.windowTitle}
           </span>
           <span class="ml-auto font-mono text-[10px] text-neutral-600">v2.4.1</span>
         </header>
@@ -65,12 +72,12 @@ const signupHref = `${prefix}/pricing`;
           <section class="rounded-md border border-white/5 bg-neutral-900/70 p-3.5">
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-2.5">
-                <span class="relative flex h-7 w-7 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10">
-                  <Icon name="bx:bxs-microphone" size={14} class="text-neutral-200" />
+                <span class="relative flex h-7 w-7 items-center justify-center rounded-md bg-white/5 ring-1 ring-white/10 text-neutral-200">
+                  <Icon name="bx:bxs-microphone" size={14} />
                   <span class="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse"></span>
                 </span>
                 <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
-                  Live Translate
+                  {mock.translateLabel}
                 </span>
               </div>
               <span class="rounded-full bg-white/5 px-2 py-0.5 font-mono text-[10px] text-neutral-400 ring-1 ring-white/10">
@@ -79,35 +86,35 @@ const signupHref = `${prefix}/pricing`;
             </div>
             <div class="mt-3 space-y-1.5">
               <p class="text-[15px] font-medium leading-snug text-white">
-                欢迎加入本期直播，我们正在实时翻译
+                {mock.subActive}
                 <span class="ml-1 inline-block h-3.5 w-px translate-y-0.5 bg-neutral-300 motion-safe:animate-pulse"></span>
               </p>
               <p class="text-[13px] leading-snug text-neutral-400">
-                Welcome to this live session, translated in real time.
+                {mock.subTranslated}
               </p>
               <p class="text-[13px] leading-snug text-neutral-600">
-                Next, let's look at the launch plan together.
+                {mock.subNext}
               </p>
             </div>
           </section>
           <section class="rounded-md border border-white/5 bg-neutral-900/70 p-3.5">
             <div class="flex items-center justify-between gap-3">
               <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400">
-                Teleprompter
+                {mock.prompterLabel}
               </span>
               <span class="font-mono text-[10px] text-neutral-500">2 / 6</span>
             </div>
             <div class="mt-3 space-y-2 rounded-md bg-white/5 p-3 ring-1 ring-white/10">
               <p class="text-[13px] leading-relaxed text-neutral-600">
-                大家好，欢迎来到本期直播。
+                {mock.prompter.prev}
               </p>
               <p class="text-[15px] font-medium leading-relaxed text-white">
-                今天我们聊一聊
-                <span class="mx-0.5 rounded bg-amber-400/15 px-1 text-amber-300">下一代实时翻译引擎</span>
-                ，它将如何改变跨语言沟通。
+                {mock.prompter.before}
+                <span class="mx-0.5 rounded bg-amber-400/15 px-1 text-amber-300">{mock.prompter.highlight}</span>
+                {mock.prompter.after}
               </p>
               <p class="text-[13px] leading-relaxed text-neutral-600">
-                它让每一场跨语言对话都更自然。
+                {mock.prompter.next}
               </p>
             </div>
             <div class="mt-3 h-1 overflow-hidden rounded-full bg-white/10">

@@ -1,15 +1,20 @@
 ---
+// 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
+// 2026-10-30 - 修复默认中文判定与误放的文件位置。
 // 2026-10-24 - 页脚底部只保留版权行：邮箱已在上方品牌区出现一次（重复会稀释层级），
 // 模板签名 "Built with Astro" 一并移除。注：日期备注写在 frontmatter 而非 HTML 注释，
 // 因为 Astro 会把 HTML 注释原样输出到产物，既增加体积也把内部说明暴露给访客。
-// 2026-10-24 - 双语支持：页脚文案与链接改由字典提供，首页链接按语言加 /zh 前缀。
+// 2026-10-24 - 双语支持：页脚文案与链接改由字典提供，英文页链接统一加 /en 前缀。
 // 2026-10-23 - XIYUE rebrand: 移除模板作者反链 "Made by Web3Templates"；版权改为 XIYUE。
 import { site } from "@/config";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const homeHref = lang === "zh" ? "/zh/" : "/";
+// 2026-10-30 - 首页链接：中文落在根路径，英文走 /en 前缀
+const homeHref = lang === "en" ? "/en/" : "/";
+// 2026-10-30 - 版权行按语言本地化（中文页不再输出 "All rights reserved"）
+const year = new Date().getFullYear();
 ---
 
 <footer class="mt-24 pt-10 pb-14 border-t border-gray-200">
@@ -55,7 +60,11 @@ const homeHref = lang === "zh" ? "/zh/" : "/";
     <div
       class="mt-12 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3 justify-between text-xs text-slate-500"
     >
-      <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      <p>
+        {lang === "zh"
+          ? `© ${year} ${site.name}。版权所有`
+          : `© ${year} ${site.name}. All rights reserved.`}
+      </p>
     </div>
   </div>
 </footer>
