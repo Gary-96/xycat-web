@@ -1,4 +1,5 @@
 ---
+// 2026-10-30 - 移除英文博客功能（页面/布局/内容/字典/导航全量删除）。
 // 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 导航品牌升级：融合几何科技猫耳/声波图标、呼吸指示点与业务后缀，提升辨识度与高级感。
 // 2026-10-24 - 导航改为 sticky 固定顶栏：sticky 包裹层移出 Container 全宽铺满
@@ -38,7 +39,6 @@ const menuItems: MenuItem[] = [
   { title: t.nav.pricing, path: `${prefix}/pricing` },
   { title: t.nav.about, path: `${prefix}/about` },
   { title: t.nav.docs, path: `${prefix}/docs` },
-  ...(lang === "en" ? [{ title: t.nav.blog, path: `${prefix}/blog` }] : []),
   { title: t.nav.contact, path: `${prefix}/contact` },
 ];
 

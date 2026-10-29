@@ -1,5 +1,6 @@
 // 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-30 - 修复默认中文判定与误放的文件位置。
+// 2026-10-30 - 移除英文博客功能（页面/布局/内容/字典/导航全量删除）。
 /**
  * 2026-10-24 - 全站文案字典（en / zh）。
  * 2026-10-24 - 新增文档中心：meta.docs / nav.docs / 页脚文档入口，
@@ -52,7 +53,6 @@ const en = {
     pricing: "Pricing",
     about: "About",
     docs: "Docs",
-    blog: "Blog",
     contact: "Contact",
     startFree: "Start free",
     switchLabel: "Switch language",
@@ -80,7 +80,6 @@ const en = {
         title: "Company",
         items: [
           { title: "About", path: "/en/about" },
-          { title: "Blog", path: "/en/blog" },
           { title: "Contact", path: "/en/contact" },
           { title: "Privacy Policy", path: "/en/privacy" },
           { title: "Terms of Service", path: "/en/terms" },
@@ -561,7 +560,6 @@ const zh: typeof en = {
     pricing: "价格方案",
     about: "关于我们",
     docs: "使用说明",
-    blog: "博客",
     contact: "联系我们",
     startFree: "免费开始",
     switchLabel: "切换语言",
@@ -589,7 +587,6 @@ const zh: typeof en = {
         title: "公司",
         items: [
           { title: "关于我们", path: "/about" },
-          // 2026-10-24 - 中文站隐藏博客入口，与导航保持一致（暂无中文内容）
           { title: "联系我们", path: "/contact" },
           { title: "隐私政策", path: "/privacy" },
           { title: "服务条款", path: "/terms" },

@@ -47,8 +47,9 @@ dist/
 ├── index.html
 ├── about/index.html
 ├── pricing/index.html
-├── blog/index.html
-├── blog/why-we-built-xiyue/index.html
+├── en/index.html
+├── en/pricing/index.html
+├── en/（about / contact / docs / index / pricing / privacy / terms）
 ├── contact/index.html
 ├── 404.html
 ├── robots.txt
