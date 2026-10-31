@@ -40,4 +40,20 @@ export const site = {
 
 // 2026-10-24 - 双语支持：导航与页脚栏目已迁至 src/i18n/ui.ts（需按语言给出不同文案与路径）。
 // 原 navigation / footerNav / NavItem 随之删除——保留两份会让中英文信息架构各自漂移。
+// 2026-10-30 - 接入 Cloudflare R2 软件直链下载交互。
+/**
+ * Cloudflare R2 软件直链下载地址。
+ * 全站在 Home Hero 与 Features 下载卡片中复用；更换安装包或 CDN 域名时只改这里。
+ * 注意：跨域直链的「下载即保存 + 文件名」由 R2 桶的 Content-Disposition 决定，
+ * 前端的 download 属性仅在同源时生效。
+ */
+export const DOWNLOAD_LINKS = {
+  /** 全套套件包（推荐主推） */
+  suiteWin: "https://dl.xycat.com/XIYUE-Suite-Setup.exe",
+  suiteMac: "https://dl.xycat.com/XIYUE-Suite-Setup.dmg",
+  /** 单工具独立安装包 */
+  translateWin: "https://dl.xycat.com/XIYUE-Translate-Setup.exe",
+  prompterWin: "https://dl.xycat.com/XIYUE-Prompter-Setup.exe",
+  recorderWin: "https://dl.xycat.com/XIYUE-Recorder-Setup.exe",
+} as const;
 

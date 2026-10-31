@@ -1,8 +1,9 @@
 ---
+// 2026-11-01 - 主 CTA 回退为跳转 pricing 页（免费开始）：Hero 不再承载直链下载，
+// 直链下载交互保留在 Features 区三张工具卡片与 config.ts 的 DOWNLOAD_LINKS。
 // 2026-10-30 - 修复默认中文判定与误放的文件位置。
 // 2026-10-30 - 翻转全站架构为中文默认根路径，英文加 /en 前缀，修复 TS 错误。
 // 2026-10-24 - 替换 Hero 区域为纯 CSS 打造的桌面客户端拟真 UI。
-// 2026-10-24 - 双语支持：文案改由字典提供，CTA 链接英文按 /en 前缀。
 // 2026-10-24 - 副标题对齐三大产品线（Translate / Prompter / Recorder）；
 // 右侧为纯 Tailwind 桌面客户端拟真窗口，移除原 hero.png 插画引用。
 import Link from "@/components/ui/link.astro";
@@ -11,10 +12,8 @@ import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-// 2026-10-30 - 英文站 CTA 走 /en 前缀；中文为默认根路径
+// 2026-11-01 - 主 CTA 走 pricing 页：中文页 /pricing（根路径），英文页 /en/pricing。
 const prefix = lang === "en" ? "/en" : "";
-
-// TODO: 接入真实注册地址后替换
 const signupHref = `${prefix}/pricing`;
 
 // 桌面客户端拟真窗口的界面文字随语言字典切换（中文页全中文，

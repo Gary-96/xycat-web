@@ -1,13 +1,37 @@
 ---
+// 2026-10-30 - 接入 Cloudflare R2 软件直链下载交互。
 // 2026-10-24 - 双语支持：产品分段文案改由字典提供，中英文共用同一套结构，
 // 锚点 id 仍来自数据（translate / prompter / recorder），保证切换语言后锚点行为一致。
 // 2026-10-24 - 产品架构重构：功能卡片由模板的六项泛化能力收敛为三大直播工具。
 // 同时移除已不再使用的 astro-icon 引入，避免留下废弃依赖引用。
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { Icon } from "astro-icon/components";
+import { DOWNLOAD_LINKS } from "@/config";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const products = t.features.items;
+const downloads = t.downloads.items;
+
+// 2026-10-30 - Map each tool id to its Cloudflare R2 direct-link and file name.
+const linkFor = (id: string) =>
+  id === "translate"
+    ? DOWNLOAD_LINKS.translateWin
+    : id === "prompter"
+      ? DOWNLOAD_LINKS.prompterWin
+      : DOWNLOAD_LINKS.recorderWin;
+const fileFor = (id: string) =>
+  id === "translate"
+    ? "XIYUE-Translate-Setup.exe"
+    : id === "prompter"
+      ? "XIYUE-Prompter-Setup.exe"
+      : "XIYUE-Recorder-Setup.exe";
+const iconFor = (id: string) =>
+  id === "translate"
+    ? "bx:bxs-microphone"
+    : id === "prompter"
+      ? "bx:bxs-book-reader"
+      : "bx:bxs-video";
 ---
 
 <section id="features" class="scroll-mt-24">
@@ -57,5 +81,41 @@ const products = t.features.items;
         </article>
       ))
     }
+  </div>
+
+  <div class="mt-16 md:mt-20 border-t border-gray-200 pt-12 md:pt-16">
+    <div class="mb-8">
+      <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">
+        {t.downloads.title}
+      </h2>
+      <p class="text-lg mt-3 text-slate-600 max-w-2xl">
+        {t.downloads.sub}
+      </p>
+    </div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {
+        downloads.map((item) => (
+          <div class="group flex flex-col rounded-lg border border-gray-200 bg-white p-6 transition hover:border-gray-300 hover:shadow-md">
+            <div class="flex h-11 w-11 items-center justify-center rounded-md bg-slate-900 text-white shadow-sm">
+              <Icon size={22} name={iconFor(item.id)} />
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mt-4">
+              {item.name}
+            </h3>
+            <p class="text-sm leading-relaxed text-slate-500 mt-1.5 flex-1">
+              {item.desc}
+            </p>
+            <a
+              href={linkFor(item.id)}
+              download={fileFor(item.id)}
+              class="mt-5 inline-flex items-center justify-center gap-2 rounded-sm border-2 border-transparent bg-black px-4 py-2.5 text-sm text-white transition hover:bg-gray-800 focus-visible:ring-2 ring-offset-2 ring-gray-200"
+            >
+              <Icon size={15} name="bx:bxs-download" />
+              {item.button}
+            </a>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </section>

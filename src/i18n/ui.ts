@@ -96,6 +96,9 @@ const en = {
     ctaPrimary: "Start free",
     ctaSecondary: "See what's inside",
     note: "Free to try. No card required.",
+    // 2026-10-30 - 接入 Cloudflare R2 软件直链下载交互：Hero 主按钮改直链下载。
+    downloadCta: "Download for Windows (v1.0)",
+    downloadNote: "Translate · Prompter · Recorder, all included | Windows 10/11 & macOS",
     mock: {
       windowTitle: "XIYUE Studio",
       translateLabel: "Live Translate",
@@ -143,6 +146,31 @@ const en = {
         subtext:
           "Automated multi-platform stream recording and archiving. Point it at a channel and it keeps a clean copy — no screen capture, no babysitting.",
         points: ["Multi-platform", "Auto archive", "Clean source"],
+      },
+    ],
+  },
+
+  downloads: {
+    title: "Download the module you need",
+    sub: "One-click downloads from the Cloudflare R2 CDN. Install and try it free.",
+    items: [
+      {
+        id: "translate",
+        name: "XIYUE Translate",
+        desc: "Real-time voice & subtitle translation so your audience hears you in their own language.",
+        button: "Download Translate",
+      },
+      {
+        id: "prompter",
+        name: "Teleprompter",
+        desc: "An adaptive prompter that keeps up with your pace — the script just flows.",
+        button: "Download Prompter",
+      },
+      {
+        id: "recorder",
+        name: "Stream Recorder",
+        desc: "Multi-platform stream capture and archive, with no screen recording or babysitting.",
+        button: "Download Recorder",
       },
     ],
   },
@@ -603,6 +631,9 @@ const zh: typeof en = {
     ctaPrimary: "免费开始",
     ctaSecondary: "看看有什么",
     note: "免费试用，无需绑定银行卡。",
+    // 2026-10-30 - 接入 Cloudflare R2 软件直链下载交互：Hero 主按钮改直链下载。
+    downloadCta: "立即下载客户端 (v1.0)",
+    downloadNote: "包含同传 · 提词 · 录制全部模块 | Windows 10/11 & macOS",
     mock: {
       windowTitle: "喜阅 Studio",
       translateLabel: "实时传译",
@@ -650,6 +681,31 @@ const zh: typeof en = {
         subtext:
           "自动化的多平台直播录制与归档。指定频道即可持续留存干净副本——无需录屏，也无需守着。",
         points: ["多平台", "自动归档", "原始画质"],
+      },
+    ],
+  },
+
+  downloads: {
+    title: "直接下载你需要的模块",
+    sub: "全部模块支持 Cloudflare R2 直链一键下载，安装即用，免费试用。",
+    items: [
+      {
+        id: "translate",
+        name: "喜阅同传",
+        desc: "实时语音与字幕翻译，让全球观众用自己的语言听到你。",
+        button: "下载同传",
+      },
+      {
+        id: "prompter",
+        name: "主播提词器",
+        desc: "自适应提词，跟随你的语速，让稿子自然顺嘴。",
+        button: "下载提词器",
+      },
+      {
+        id: "recorder",
+        name: "直播录屏",
+        desc: "多平台直播录制与归档，无需录屏、无需值守。",
+        button: "下载录屏器",
       },
     ],
   },
